@@ -637,10 +637,10 @@ auth.get('/verify/:userId/:token', function (req, res) {
 });
 
 // Passport session setup.
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
     try {
         logger.log("This is user id serializwd -----" + user.user_id);
-
+        logger.log(user);
         if (user) {
             done(null, user);
         } else {
@@ -651,7 +651,7 @@ passport.serializeUser(function (user, done) {
     }
 });
 
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser((user, done) => {
     try {
         if (user) {
             done(null, user);

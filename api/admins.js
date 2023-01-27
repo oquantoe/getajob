@@ -39,9 +39,9 @@ router.get("/", (req, res, next) => {
     helpers.checkifAuthenticated(req, res);
 });
 
-router.get('/dashboard', function(req, res) {
+router.get('/dashboard', async (req, res) => {
     try {
-        helpers.checkifAuthenticated(req, res);
+        await helpers.checkifAuthenticated(req, res);
 
         var userData = req.session.passport.user;
 

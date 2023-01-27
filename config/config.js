@@ -91,11 +91,17 @@ module.exports = {
     "prod_domain": "https://getajobng.com",
 
     // DB setting
+    // "use_database": true,
+    // "local_db_host": process.env.DB_HOST || "localhost",
+    // "local_db_username": process.env.DB_USER || "root",
+    // "local_db_password": process.env.DB_PASS || "",
+    // "local_database": process.env.DB_NAME || "getajobng_prod_sample",
+
     "use_database": true,
-    "local_db_host": process.env.DB_HOST || "localhost",
-    "local_db_username": process.env.DB_USER || "root",
-    "local_db_password": process.env.DB_PASS || "",
-    "local_database": process.env.DB_NAME || "getajobng_prod_sample",
+    "local_db_host": "c-ileasingmysqlserver.mysql.database.azure.com",
+    "local_db_username": "ServerAdmin@c-ileasingmysqlserver",
+    "local_db_password": "@!234getaXlease",
+    "local_database": "getajobng",
 
     "sql_server_host": "sa",
     "sql_server_username": "sa",

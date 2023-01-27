@@ -213,6 +213,10 @@ function processCandidateLogin(req, res, user, user_role) {
         var resume = new Resume();
         resume.getAllUserResumeInformation(req, user.user_id);
 
+        // serialize and deserialize user
+        serializeUser();
+        deserializeUser();
+
         //Redirect to dashboard
         res.redirect('/candidates/dashboard');
     } catch (error) {
@@ -235,6 +239,9 @@ function processRecruiterAdminLogin(req, res, user, user_role) {
                     //    user.last_name, user.email, user.phone_number, user_role, true, company_id, 
                     //    company_name, user.is_activated, user.is_first_login, user.photo_url);
 
+                    // serialize and deserialize user
+                    serializeUser();
+                    deserializeUser();
                     // Redirect to dashboard
                     res.redirect('/recruiters/dashboard');
                 }
@@ -260,6 +267,10 @@ function processRecruiterLogin(req, res, user, user_role) {
                     //    user.last_name, user.email, user.phone_number, user_role, true, company_id, 
                     //    company_name, user.is_activated, user.is_first_login, user.photo_url)
 
+                    // serialize and deserialize user
+                    serializeUser();
+                    deserializeUser();
+
                     // Redirect to dashboard
                     res.redirect('/recruiters/dashboard');
                 }
@@ -274,6 +285,10 @@ function processAdminLogin(req, res, user, user_role) {
     try {
         logger.log("User is an ADMIN. Getting all info ");
 
+        // serialize and deserialize user
+        serializeUser();
+        deserializeUser();
+
         res.redirect('/admin/dashboard');
     } catch (error) {
         logger.log(error);
@@ -283,6 +298,10 @@ function processAdminLogin(req, res, user, user_role) {
 function processCandidateLoginToAssessment(req, res, user, token) {
     try {
         logger.log("User is a CANDIDATE. Redirecting to Assessment");
+
+        // serialize and deserialize user
+        serializeUser();
+        deserializeUser();
 
         //Redirect to assessment
         res.redirect('/assessments/take-assessment/' + token);
@@ -294,6 +313,10 @@ function processCandidateLoginToAssessment(req, res, user, token) {
 function processCandidateLoginToCVFix(req, res, user, token) {
     try {
         logger.log("User is a CANDIDATE. Redirecting to CV Fix");
+
+        // serialize and deserialize user
+        serializeUser();
+        deserializeUser();
 
         //Redirect to assessment
         res.redirect('/candidates/cv-fix');
@@ -636,31 +659,42 @@ auth.get('/verify/:userId/:token', function (req, res) {
 });
 
 // Passport session setup.
-passport.serializeUser((user, done) => {
-    try {
-        logger.log("This is user id serializwd -----" + user.user_id);
-        logger.log(user);
-        if (user) {
-            done(null, user);
-        } else {
-            done(new Error("THAT_USER_DOESNT_EXIST"));
+function serializeUser() {
+    passport.serializeUser((user, done) => {
+        try {
+            console.log(user)
+            logger.log("This is user id serializwd -----" + user.user_id);
+            if (user) {
+                done(null, user);
+            } else {
+                done(new Error("THAT_USER_DOESNT_EXIST"));
+            }
+        } catch (error) {
+            logger.log(error);
         }
-    } catch (error) {
-        logger.log(error);
-    }
-});
+    });
+}
 
-passport.deserializeUser((user, done) => {
-    try {
-        logger.log(user);
-        if (user) {
-            done(null, user);
-        } else {
-            done(new Error("THAT_USER_DOESNT_EXIST"));
+function deserializeUser() {
+    passport.deserializeUser((user, done) => {
+        try {
+            logger.log(user);
+            if (user) {
+                done(null, user);
+            } else {
+                done(new Error("THAT_USER_DOESNT_EXIST"));
+            }
+        } catch (error) {
+            logger.log(error);
         }
-    } catch (error) {
-        logger.log(error);
-    }
-});
+    });
+
+}
+
+serializeUser();
+deserializeUser();
+
+
+
 
 module.exports = auth, ensureAuthenticated;

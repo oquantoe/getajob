@@ -653,6 +653,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
     try {
+        logger.log(user);
         if (user) {
             done(null, user);
         } else {

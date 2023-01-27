@@ -98,7 +98,6 @@ module.exports = {
     "local_database": process.env.DB_NAME || "getajobng_prod_sample",
 
 
-
     "sql_server_host": "sa",
     "sql_server_username": "sa",
     "sql_server_password": "Password@2019",

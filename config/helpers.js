@@ -686,9 +686,9 @@ var helpers = {
 
     checkifAuthenticated: async (req, res) => {
         try {
-            const session = await req.session.passport;
-            logger.log("this is the session" + " " + JSON.stringify(session));
-            if (session) {
+            const session = await req.session;
+
+            if (session["user"]) {
                 logger.log("Main here - user is not authenticated..back to login");
 
                 var go_to_login_file = `${appRoot}/views/go_to_login.html`;

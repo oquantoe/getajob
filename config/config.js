@@ -74,7 +74,7 @@ module.exports = {
     "session_secret": "%#*G3tAj0bNg*#%",
     "session_resave": true,
     "session_key": "user_id",
-    "session_save_uninitialized": true,
+    "session_save_uninitialized": false,
     "session_cookie_max_age": 86400000,
 
     // Redis Setting

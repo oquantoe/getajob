@@ -30,7 +30,12 @@ auth.use(session({
     resave: config.session_resave,
     key: config.session_key,
     saveUninitialized: config.session_save_uninitialized,
-    cookie: { maxAge: config.session_cookie_max_age }
+    // cookie: { maxAge: config.session_cookie_max_age }
+    cookie: {
+        sameSite: "none", // cross site // set lax while working with http:localhost, but none when in prod
+        secure: "true", // only https // auto when in development, true when in prod
+        maxAge: config.session_cookie_max_age,
+    },
 }));
 
 auth.use(passport.initialize());

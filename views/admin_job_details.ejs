@@ -1,0 +1,303 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section class="job_edit_n_desc">
+                <div class="flex_row_justify_between_align_center top">
+                    <div class="flex_row">
+                        <div>
+                            <h5>
+                                Job Details
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="view_job_desc_btn">
+                        <form action="/admin/application-info/<%=jobData.job_id%>">
+                            <button>
+                                View Candidates
+                            </button>
+                        </form>
+
+                        <% if(jobData.is_approved == 1){%>
+                            <div data-toggle="modal" data-target="#disapprove_job_modal">
+                                <button>Disapprove Job</button>
+                            </div>
+                            <% } else{ %>
+                                <div data-toggle="modal" data-target="#approve_job_modal">
+                                    <button>Approve Job</button>
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <div class="site_row job_desc_details job_desc_content">
+                    <div class="flex_row_justify_between job_role_n_time">
+                        <div>
+                            <p>
+                                <%=jobData.company_name%> -
+                                    <%=jobData.job_name%>
+                                        <span>(<%=jobData.job_type_name%>)</span>
+                            </p>
+                        </div>
+
+                        <div class="flex_row desc_actions">
+                            <div class="mr-3">
+                                <a href="/admin/edit-job/<%=jobData.job_id%>">
+                                    <i style="color:#bfbfbf" class="fas fa-pencil-alt"></i>
+                                </a>
+                            </div>
+                            <div data-toggle="modal" data-target="#delete_job_modal">
+                                <i class="far fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="site_row main_job_desc">
+                        <h6>
+                            Job Description
+                        </h6><br>
+                        <div id="job_description_box">
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="site_row job_responsibilities">
+                        <h6>
+                            Responsibilities
+                        </h6>
+                        <%=//jobData.job_responsibilities%>
+                    </div>-->
+                </div>
+            </section>
+            </div>
+            </section>
+
+
+
+            <!-- The Modal -->
+            <div class="modal fade job_desc_modal" id="delete_job_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="site_row text-center">
+                                <h5>
+                                    Warning!
+                                </h5>
+                                <p>Are you sure you want to delete?</p>
+                            </div><br>
+
+                            <div class="flex_row_justify_between">
+                                <div class="close cancel_opt" data-dismiss="modal">
+                                    <button>
+                            Cancel
+                        </button>
+                                </div>
+                                <div class="delete_opt" id="delete_job_post_btn">
+                                    <button>
+                            Delete
+                        </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade job_desc_modal" id="disapprove_job_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="site_row text-center">
+                                <h5>
+                                    Warning!
+                                </h5>
+                                <p>Do you want to disapprove this job? This job will NOT go Live on the site.</p>
+                            </div><br>
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="close continue_btn" data-dismiss="modal">
+                                    <button>Cancel</button>
+                                </div>
+                                <div id="disapprove_job_post_btn">
+                                    <button class="normal_btn">Disapprove Job</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade job_desc_modal" id="approve_job_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="site_row text-center">
+                                <h5>
+                                    Warning!
+                                </h5>
+                                <p>Do you want to approve this job? This job ad will NOW go live on the site.</p>
+                            </div><br>
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="close continue_btn" data-dismiss="modal">
+                                    <button>Cancel</button>
+                                </div>
+                                <div id="approve_job_post_btn">
+                                    <button class="normal_btn">Approve Job</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    function unescapeHTML(escapedHTML) {
+                        return escapedHTML.replace(/&#34;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, "&").replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&rsquo;/g, "'").replace(/(?:\r\n|\r|\n)/g, '<br>');
+                    }
+
+                    $(document).ready(function() {
+                        //Load Job Description
+                        var job_description = "<%=jobData.job_description%>";
+
+                        var job_description_after_edit = unescapeHTML(job_description);
+
+                        $("#job_description_box").html(job_description_after_edit);
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        var job_id = "<%=jobData.job_id%>";
+
+                        $("#delete_job_post_btn").click(function() {
+                            //Delete Job
+                            $.ajax({
+                                url: '/jobs/delete-job',
+                                type: 'post',
+                                data: {
+                                    job_id: job_id
+                                },
+                                success: function(data) {
+                                    if (data.affectedRows > 0) {
+                                        swal({
+                                                title: 'Job Deleted Successfully',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/admin/job-approvals');
+                                                }
+                                            });
+                                    } else {
+                                        swal({
+                                            title: 'An error occurred',
+                                            text: 'Something happened when deleting this job. Please try again',
+                                            type: 'error'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Deleting Job Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        var job_id = "<%=jobData.job_id%>";
+
+                        $("#approve_job_post_btn").click(function() {
+                            //Approve Job
+                            $.ajax({
+                                url: '/admin/approve-job',
+                                type: 'post',
+                                data: {
+                                    job_id: job_id
+                                },
+                                success: function(data) {
+                                    if (data) {
+                                        swal({
+                                                title: 'Job Approved Successfully',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/admin/job-approvals');
+                                                }
+                                            });
+                                    } else {
+                                        swal({
+                                            title: 'An error occurred',
+                                            text: 'Something happened when approving this job. Please try again',
+                                            type: 'error'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Approve Job Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        var job_id = "<%=jobData.job_id%>";
+
+                        $("#disapprove_job_post_btn").click(function() {
+                            //Delete Job
+                            $.ajax({
+                                url: '/admin/disapprove-job',
+                                type: 'post',
+                                data: {
+                                    job_id: job_id
+                                },
+                                success: function(data) {
+                                    if (data) {
+                                        swal({
+                                                title: 'Job Disapproved Successfully',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/admin/job-approvals');
+                                                }
+                                            });
+
+                                    } else {
+                                        swal({
+                                            title: 'An error occurred',
+                                            text: 'Something happened when disapproving this job. Please try again',
+                                            type: 'error'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Disapprove Job Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

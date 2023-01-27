@@ -1,0 +1,109 @@
+<% include includes/dashboard_header %>
+<% include includes/candidate_nav %>
+<% include includes/dashboard_top_bar %>       
+
+            
+            <section>
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div>
+                        <h5>
+                            Job Application History
+                        </h5>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="create_job_table_section">
+                <div class="site_row create_job_table">
+
+                    <table id="jobs_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Job Title
+                                </th>
+                                <th>
+                                    Company Name
+                                </th>
+                                <th>
+                                    Job Type
+                                </th>
+                                <th>
+                                    Date Applied
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="jobs_data"></tbody>
+                    </table>
+
+                </div>
+            </section>
+            
+        </div>
+    </section>
+
+
+<% include includes/global_dashboard_scripts %>
+
+<script>
+    $(document).ready(function(){
+        //Get all jobs applications
+        $.ajax({
+            url: '/jobs/get-all-candidate-job-applications',
+            type: 'get',
+                      
+            success: function(data){
+                var content = '';
+    
+                if(!data || data.jobs.length == 0){
+                    content = '';
+                } else{
+                    for(var i = 0; i < data.jobs.length; i++){
+                        var location = data.jobs[i].state + ', ' + data.jobs[i].country;
+
+                        content += '<tr> \
+                                        <td class="assess_title"> \
+                                            <p>' +data.jobs[i].job_name+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].company_name+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].job_type+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].date_applied+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].application_status+ '</p> \
+                                        </td> \
+                                    </tr>';
+                    }
+                }
+              
+                $('#jobs_data').html(content);
+    
+                $("#jobs_table").DataTable({
+                    'paging' : true,
+                    'processing': true,
+                    'aaSorting': [],
+                    'language': {
+                        'loadingRecords': '&nbsp;',
+                        'processing': 'Loading...'
+                    }   
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'All job applications Request failed: ' + xhr.responseText;
+                console.log(errorMsg)
+            }
+        });
+    });
+</script>
+
+<% include includes/global_dashboard_bottom %>

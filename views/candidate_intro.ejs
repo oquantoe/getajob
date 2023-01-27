@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- CSS Animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsiveness.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    
+    <title>Dashboard</title>
+
+  </head>
+<body>
+
+    <aside>
+        <div class="flex_col side_nav">
+
+            <div class="dashboard_logo">
+                <img src="/images/logo.png" alt="">
+            </div>
+            <div class="dashboard_links">
+                <a href="#" class="active">
+                    <i class="fab fa-buromobelexperte"></i> Dashborad
+                </a>
+                <a href="#">
+                    <i class="far fa-user"></i> Profile
+                </a>
+                <a href="#">
+                    <i class="far fa-heart"></i> Saved Jobs
+                </a>
+                <a href="#">
+                    <i class="far fa-file-alt"></i> Recommended Jobs
+                </a>
+                <a href="#">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+    <section>
+        <div class="dashboard_body">
+
+            <header>
+
+            <div class="flex_row_justify_between dasboard_nav">
+
+                <div class="flex_row dash_nav_input_group">
+                    <input type="text" name="" id="" placeholder="Search">
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div class="flex_row_align_center">
+
+                    <div class="notification_bell">
+
+                        <i class="far fa-bell"></i>
+                        <div class="bell_red"></div>
+
+                    </div>
+
+                    <div class="flex_row_align_center user_info">
+                        
+                        <div class="user_image">
+                            <img src="/images/logo.png" alt="">
+                        </div>
+                        <div class="user_name">
+                            <span>
+                                Audrey Nguyen
+                            </span>
+                        </div>
+                        <div class="user_dropdown">
+                            <i class="fas fa-angle-down"></i>                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            </header>
+
+            <section>
+                <div class="welcome_center_section">
+
+                    <div class="site_row center_text welcome_note">
+                        <h4>
+                            Welcome, <span> Adebimpe </span>
+                        </h4>
+                        <p>
+                            Let’s get started
+                        </p>
+                    </div>
+
+                    <div class="flex_row_justify_between account_progress">
+
+                        <div class="active" id="create_account_link"></div>
+                        <div class="" id="upload_resume_link"></div>
+                        <div id="start_applying_link"></div>
+
+                    </div>
+
+                    <div class="site_row center_text welcome_steps_content" id="dashB_wellcome_create_account">
+                        
+                        <img src="/images/dd1.png" alt="">
+                        <h5>
+                            Create your profile
+                        </h5>
+                        <p>
+                            Your resume will be visible to anyone, in accordance with our terms. Employers who are interested in your resume may contact you via Indeed's email relay system.
+                        </p>
+                        <button class="normal_btn">
+                            Create your profile
+                        </button>
+                        
+
+                    </div>
+
+                    <div class="site_row center_text welcome_steps_content" id="dashB_wellcome_upload_resume">
+                        
+                            <img src="/images/dd2.png" alt="">
+                            <h5>
+                                Upload your resume
+                            </h5>
+                            <p>
+                                Your resume will be visible to anyone, in accordance with our terms. Employers who are interested in your resume may contact you via Indeed's email relay system.
+                            </p>
+                            <button class="normal_btn">
+                                 Upload Resume
+                            </button>
+                            
+    
+                    </div>
+
+                    <div class="site_row center_text welcome_steps_content" id="dashB_wellcome_start_applying">
+                        
+                            <img src="/images/dd3.png" alt="">
+                            <h5>
+                                Start applying for jobs
+                            </h5>
+                            <p>
+                                    Your resume will be visible to anyone, in accordance with our terms. Employers who are interested in your resume may contact you via Indeed's email relay system.
+                            </p>
+                            <button class="normal_btn">
+                                Start applying
+                            </button>
+                            
+    
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/js/jQuery.min.js"></script>    
+    <script src="/js/main.js"></script>
+    
+</body>
+</html>

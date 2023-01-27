@@ -1,0 +1,467 @@
+* {
+    box-sizing: border-box;
+}
+
+/* General Site style */
+
+body, html {
+    padding: 0;
+    margin: 0;   
+}
+
+:root {
+    --main_green: #06942A;
+    --main_green_hover: rgb(5, 118, 33);
+    --main_txt_color: ##465A61;
+    --holder_text: #c4c4c4;
+}
+
+p, a, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.site_row {
+    width: 100%;
+    overflow: auto;
+}
+
+.site_center {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.flex_row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex_row_wrap {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex_row_align_center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex_row_justify_center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.flex_row_justify_between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flex_col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex_col_wrap {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.normal_btn {
+    width: 209px;
+    height: 45px;
+    background: var(--main_green);
+    border-radius: 50px;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+
+    transition: .4s;
+}
+
+.normal_btn:hover {
+    background-color: var(--main_green_hover);
+}
+
+.normal_btn:focus {
+    outline: none;
+}
+
+.normal_btn:active {
+    transform: translateY(4px);
+}
+
+/* End of general syte style */
+
+/* welcome Page */
+
+/* side nav */
+
+.side_nav {
+    width: 15%;
+    height: 100vh;
+    box-shadow: 3px 0 10px 10px rgba(0,0,0,0.0134);
+    background-color: #fff;
+    position: fixed;
+}
+
+.dashboard_logo {
+    text-align: center;
+    width: 100%;
+    padding: 40px 5px;
+}
+
+.dashboard_links {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.dashboard_links a {
+    display: block;
+    padding: 15px 0 15px 30px;
+    border-right: 4px solid transparent;
+    color: var(--main_txt_color);
+    font-size: 14px;
+
+    transition: .4s;
+}
+
+.dashboard_links a > i {
+    margin-right: 16px;
+    font-size: 16px;
+}
+
+.dashboard_links a:hover {
+    background-color: rgba(118, 196, 138, 0.04);
+    color: var(--main_green);
+    text-decoration: none;
+    border-right-color: var(--main_green);
+}
+
+.dashboard_links a.active {
+    background-color: rgba(118, 196, 138, 0.04);
+    color: var(--main_green);
+    text-decoration: none;
+    border-right-color: var(--main_green);
+}
+
+/* End of side nav */
+
+/* dashboard body */
+
+.dashboard_body {
+    width: calc(100% - 15%);
+    margin-left: 15%;
+    padding: 30px 50px 100px;
+    height: 200px;
+    
+}
+
+.user_info > .user_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user_info > .user_image > img {
+    width: 100%;
+    height: 100%;
+}
+
+.notification_bell {
+    margin-right: 30px;
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.notification_bell .bell_red {
+    position: absolute;
+    transform: translate(13px, -30px);
+    background-color: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.user_info > .user_name {
+    padding: 0 15px;
+}
+
+.user_info {
+    cursor: pointer;
+}
+
+.dash_nav_input_group {
+    width: 45%;
+    border: 1px solid rgb(213, 213, 213);
+    border-radius: 50px;
+    background-color: #F4F5F9;
+}
+
+.dash_nav_input_group input {
+    border: none;
+    border-radius: 50px 0 0 50px;
+    background-color: transparent;
+    padding: 8px 20px;
+    font-size: 14px;
+    color: #c4c4c4;
+}
+
+.dash_nav_input_group input::placeholder {
+    color: var(--holder_text);
+}
+
+.dash_nav_input_group button {
+    border: none;
+    border-radius: 0 50px 50px 0;
+    background-color: transparent;
+    width: 60px;
+    color: var(--holder_text);
+
+    transition: .3s;
+}
+
+.dash_nav_input_group button:hover {
+    background-color: rgb(231, 231, 231);
+}
+
+.dash_nav_input_group button:focus {
+    outline: none;
+}
+
+.welcome_center_section {
+    /* background-color: red; */
+
+    width: 40%;
+    margin: 30px auto 0;
+    height: 500px;
+    padding: 40px 0;
+}
+
+.welcome_note > h4 {
+    font-size: 24px;
+    color: #3F403F;
+}
+
+.welcome_note > h4 > span {
+    color: var(--main_green);
+}
+
+.welcome_note > p {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 13px;
+    color: #3F403F;
+}
+
+.account_progress {
+    width: 70%;
+    margin: 10px auto;
+    padding: 30px 0;
+    /* background-color: black; */
+}
+
+.welcome_steps_content {
+    /* height: 400px; */
+    width: 100%;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.0134);
+    background-color: rgb(240, 240, 240);
+    padding: 90px 60px 120px;
+}
+
+.account_progress > div {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px dashed var(--main_green);
+    cursor: pointer;
+
+    position: relative;
+}
+
+.account_progress > div:hover {
+    background-color: rgba(6, 148, 42, 0.05);;
+}
+
+.account_progress > div:before {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: calc(50% - (1px / 2));
+    width: 1020%;
+    height: 1px;
+    border-top: 1px dashed var(--main_green);
+}
+
+.account_progress > div.active {
+    background-color: var(--main_green);
+}
+
+.account_progress > div.active:before {
+    border-top: 1px solid var(--main_green);    
+}
+
+.account_progress > div:last-child:before {
+    display: none;
+}
+
+.welcome_steps_content > h5 {
+    font-size: 18px;
+    color: #465A61;
+    margin: 15px 0 25px;
+}
+
+.welcome_steps_content > p {
+    margin-bottom: 35px;
+    font-size: 15px;
+    line-height: 150%;
+    color: var(--main_txt_color);
+}
+
+#dashB_wellcome_upload_resume,
+#dashB_wellcome_start_applying {
+    display: none;
+}
+
+/* End of dashboard body */
+
+/* End of welcome page */
+
+/* User Dashboard  */
+
+.user_dashboard_header {
+    padding: 30px 0;
+}
+
+.user_welcome_note h4 {
+    font-size: 24px;
+    color: #3F403F;    
+}
+
+.user_welcome_note h3 > span {
+    color: var(--main_green);
+}
+
+.user_welcome_note {
+    padding: 40px 0;
+}
+
+.dasboard_cards > div {
+    width: 23%;
+    height: 150px;
+    box-shadow: 0 10px 10px 10px rgba(0,0,0,0.0164);   
+    background-color: #fff; 
+    border-radius: 5px;
+}
+
+.account_history_n_recomendation {
+    padding: 20px 0 100px;
+}
+
+.recomendation {
+    width: 64%;
+    /* height: 100px; */
+    overflow: auto;
+    /* background-color: #fff; */
+}
+
+.history {
+    width: 33%;
+    /* height: 100px; */
+    overflow: auto;
+    /* background-color: #fff; */
+}
+
+.recomm_header {
+    padding-bottom: 20px;
+}
+
+.recomm_header h4 {
+    font-size: 19px;
+    color: #465A61;
+}
+
+.recomm_header a {
+    font-size: 16px;
+    color: #9B9B9B;
+    font-weight: 500;
+}
+.jobs_sub_header {
+    padding: 18px 0;
+}
+
+.jobs_to_apply {
+    padding: 35px 30px 45px;
+    width: 100%;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    background-color: #fff;
+
+    box-shadow: 0 10px 10px 10px rgba(0,0,0,0.0134);
+}
+
+.jobs_header > div a {
+    font-size: 13px;
+    line-height: 150%;
+    color: var(--main_green);
+    transition: .4s;
+    font-weight: 500;
+}
+
+.jobs_header > div a:hover {
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.jobs_sub_header p > span {
+    font-weight: bold;
+    font-size: 13px;
+    color: #465A61;
+}
+
+.jobs_sub_header p {
+    font-size: 13px;
+    color: #465A61;
+}
+
+
+.jobs_sub_header span {
+    font-size: 12px;
+    color: #C4C4C4;        
+}
+
+.job_desc p {
+    font-size: 14px;
+    color: var(--main_txt_color);
+    line-height: 200%;
+
+}
+
+.histories {
+    /* background-color: #fff; */
+    padding: 25px 35px;
+    border-bottom: 1px solid #F4F5F9;
+}
+
+.histories > p {
+    font-size: 14px;
+    color: #596C76;
+}
+
+.histories_wrapper {
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+
+
+
+
+/* End of user dashboard */

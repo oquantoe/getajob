@@ -1,0 +1,326 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+                <div class="dashboard_center">
+                    <div class="profile_form_div">
+                        <div class="row">
+                            <div class="site_row center_text profile_form_header step_one_header">
+                                <h3>
+                                    CV Fix Pricing
+                                </h3>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="self_service_plan">Self Service Plan:   </label>
+                                <input type="hidden" name="self_service_plan_id" id="self_service_plan_id" value="<%=selfServicePlan.plan_id%>">
+                                <input type="text" name="self_service_plan" id="self_service_plan" placeholder="Enter Price" value="<%=selfServicePlan.amount%>">
+
+                                <label for="self_service_is_free"> Check if price is free:   </label>
+                                <% if(selfServicePlan.is_free == 1){ %>
+                                    <input type="checkbox" id="self_service_is_free" name="self_service_is_free" value="<%=midLevelPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="self_service_is_free" name="self_service_is_free" value="<%=midLevelPlan.is_free%>">
+                                        <% }%>
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <label for="entry_level_plan">Entry Level Plan:   </label>
+                                <input type="hidden" name="entry_level_plan_id" id="entry_level_plan_id" value="<%=entryLevelPlan.plan_id%>">
+                                <input type="text" name="entry_level_plan" id="entry_level_plan" placeholder="Enter Price" value="<%=entryLevelPlan.amount%>">
+
+                                <label for="entry_level_is_free"> Check if price is free:   </label>
+                                <% if(entryLevelPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="entry_level_is_free" name="entry_level_is_free" value="<%=entryLevelPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="entry_level_is_free" name="entry_level_is_free" value="<%=entryLevelPlan.is_free%>">
+                                        <% }%>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="junior_level_plan">Junior Level Plan: </label>
+                                <input type="hidden" name="junior_level_plan_id" id="junior_level_plan_id" value="<%=juniorLevelPlan.plan_id%>">
+                                <input type="text" name="junior_level_plan" id="junior_level_plan" placeholder="Enter Price" value="<%=juniorLevelPlan.amount%>">
+
+                                <label for="junior_level_is_free"> Check if price is free:   </label>
+                                <% if(juniorLevelPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="junior_level_is_free" name="junior_level_is_free" value="<%=juniorLevelPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="junior_level_is_free" name="junior_level_is_free" value="<%=juniorLevelPlan.is_free%>">
+                                        <% }%>
+                            </div>
+
+                            <div class="col-md-6 ">
+                                <label for="mid_level_plan">Mid Level Plan: </label>
+                                <input type="hidden" name="mid_level_plan_id" id="mid_level_plan_id" value="<%=midLevelPlan.plan_id%>">
+                                <input type="text" name="mid_level_plan" id="mid_level_plan" placeholder="Enter Price" value="<%=midLevelPlan.amount%>">
+
+                                <label for="mid_level_is_free"> Check if price is free:   </label>
+                                <% if(midLevelPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="mid_level_is_free" name="mid_level_is_free" value="<%=midLevelPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="mid_level_is_free" name="mid_level_is_free" value="<%=midLevelPlan.is_free%>">
+                                        <% }%>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="senior_level_plan">Senior Level Plan: </label>
+                                <input type="hidden" name="senior_level_plan_id" id="senior_level_plan_id" value="<%=seniorLevelPlan.plan_id%>">
+                                <input type="text" name="senior_level_plan" id="senior_level_plan" placeholder="Enter Price" value="<%=seniorLevelPlan.amount%>">
+
+                                <label for="senior_level_is_free"> Check if price is free:   </label>
+                                <% if(seniorLevelPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="senior_level_is_free" name="senior_level_is_free" value="<%=seniorLevelPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="senior_level_is_free" name="senior_level_is_free" value="<%=seniorLevelPlan.is_free%>">
+                                        <% }%>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div id="save_cv_fix_pricing">
+                                <button class="normal_btn">Save</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <br> <br>
+
+                    <div class="profile_form_div">
+                        <div class="row">
+                            <div class="site_row center_text profile_form_header step_one_header">
+                                <h3>
+                                    Recruiter Subscription Pricing
+                                </h3>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <!-- <div class="col-md-6 ">
+                                <label for="basic_plan">Basic Plan:   </label>
+                                <input type="hidden" name="basic_plan_id" id="basic_plan_id" value="<%=basicPlan.plan_id%>">
+                                <input type="text" name="basic_plan" id="basic_plan" placeholder="Enter Price" value="<%=basicPlan.amount%>">
+
+                                <label for="basic_plan_is_free"> Check if price is free:   </label>
+                                <% if(basicPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="basic_plan_is_free" name="basic_plan_is_free" value="1" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="basic_plan_is_free" name="basic_plan_is_free" value="1">
+                                        <% }%>
+                            </div> -->
+
+                            <div class="col-md-6 ">
+                                <label for="classic_plan">Classic Plan:   </label>
+                                <input type="hidden" name="classic_plan_id" id="classic_plan_id" value="<%=classicPlan.plan_id%>">
+                                <input type="text" name="classic_plan" id="classic_plan" placeholder="Enter Price" value="<%=classicPlan.amount%>">
+
+                                <label for="classic_plan_is_free"> Check if price is free:   </label>
+                                <% if(classicPlan.is_free == 1){ %>
+                                    <input type="checkbox" id="classic_plan_is_free" name="classic_plan_is_free" value="<%=classicPlan.is_free%>" checked>
+                                    <% } else {%>
+                                        <input type="checkbox" id="classic_plan_is_free" name="classic_plan_is_free" value="<%=classicPlan.is_free%>">
+                                        <% }%>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div id="save_recruiter_pricing">
+                                <button class="normal_btn">Save</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script type="text/javascript">
+                    // Defining a function to display error message
+                    function printError(elemId, hintMsg) {
+                        document.getElementById(elemId).innerHTML = hintMsg;
+                    }
+                </script>
+
+                <script>
+                    $("#save_cv_fix_pricing").click(function() {
+                        var ifConfirmed = confirm("Do you want to set these changes to the CV Fix prices?");
+
+                        if (ifConfirmed) {
+                            var self_service_arr = [];
+                            var entry_level_arr = [];
+                            var junior_level_arr = [];
+                            var mid_level_arr = [];
+                            var senior_level_arr = [];
+                            var cv_fix_plans = [];
+
+                            var self_service_is_free = $("#self_service_is_free").is(":checked") ? 1 : 0;
+                            var entry_level_is_free = $("#entry_level_is_free").is(":checked") ? 1 : 0;
+                            var junior_level_is_free = $("#junior_level_is_free").is(":checked") ? 1 : 0;
+                            var mid_level_is_free = $("#mid_level_is_free").is(":checked") ? 1 : 0;
+                            var senior_level_is_free = $("#senior_level_is_free").is(":checked") ? 1 : 0;
+
+                            self_service_arr = {
+                                "plan_id": $.trim($('#self_service_plan_id').val()),
+                                "amount": $.trim($('#self_service_plan').val()),
+                                "is_free": self_service_is_free
+                            }
+
+                            entry_level_arr = {
+                                "plan_id": $.trim($('#entry_level_plan_id').val()),
+                                "amount": $.trim($('#entry_level_plan').val()),
+                                "is_free": entry_level_is_free
+                            }
+
+                            junior_level_arr = {
+                                "plan_id": $.trim($('#junior_level_plan_id').val()),
+                                "amount": $.trim($('#junior_level_plan').val()),
+                                "is_free": junior_level_is_free
+                            }
+
+                            mid_level_arr = {
+                                "plan_id": $.trim($('#mid_level_plan_id').val()),
+                                "amount": $.trim($('#mid_level_plan').val()),
+                                "is_free": mid_level_is_free
+                            }
+
+                            senior_level_arr = {
+                                "plan_id": $.trim($('#senior_level_plan_id').val()),
+                                "amount": $.trim($('#senior_level_plan').val()),
+                                "is_free": senior_level_is_free
+                            }
+
+                            cv_fix_plans.push(self_service_arr, entry_level_arr, junior_level_arr, mid_level_arr, senior_level_arr);
+
+
+                            $.ajax({
+                                url: '/admin/save-cv-fix-prices',
+                                type: 'post',
+                                data: {
+                                    cv_fix_plans: JSON.stringify(cv_fix_plans),
+                                },
+
+                                success: function(data) {
+                                    if (!data) {
+                                        swal({
+                                            title: 'An error occured. Please try again',
+                                            type: 'error'
+                                        });
+                                    } else {
+                                        swal({
+                                                title: 'Success!',
+                                                text: 'CV Fix prices updated successfully.',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/admin/pricing');
+                                                }
+                                            });
+                                    }
+
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Update CV Fix prices Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+
+                        }
+                    });
+                </script>
+
+                <script>
+                    $("#save_recruiter_pricing").click(function() {
+                        var ifConfirmed = confirm("Do you want to set these changes to the Recruiter prices?");
+
+                        if (ifConfirmed) {
+                            var basic_plan_arr = [];
+                            var classic_plan_arr = [];
+                            var recruiter_plans = [];
+
+                            var basic_plan_is_free = $("#basic_plan_is_free").is(":checked") ? 1 : 0;
+                            var classic_plan_is_free = $("#classic_plan_is_free").is(":checked") ? 1 : 0;
+
+                            basic_plan_arr = {
+                                "plan_id": $.trim($('#basic_plan_id').val()),
+                                "amount": $.trim($('#basic_plan').val()),
+                                "is_free": basic_plan_is_free
+                            }
+
+                            classic_plan_arr = {
+                                "plan_id": $.trim($('#classic_plan_id').val()),
+                                "amount": $.trim($('#classic_plan').val()),
+                                "is_free": classic_plan_is_free
+                            }
+
+                            recruiter_plans.push(classic_plan_arr);
+
+
+                            $.ajax({
+                                url: '/admin/save-recruiter-prices',
+                                type: 'post',
+                                data: {
+                                    recruiter_plans: JSON.stringify(recruiter_plans),
+                                },
+
+                                success: function(data) {
+                                    if (!data) {
+                                        swal({
+                                            title: 'An error occured. Please try again',
+                                            type: 'error'
+                                        });
+                                    } else {
+                                        swal({
+                                                title: 'Success!',
+                                                text: 'Recruiter prices updated successfully.',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/admin/pricing');
+                                                }
+                                            });
+                                    }
+
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Update Recruiter prices Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+
+                        }
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

@@ -1,0 +1,127 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div id="candidates_title">
+                    </div>
+                    <!--<div class="">
+                        <form action="/admin/post-a-job">
+                            <button>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div> -->
+                </div>
+
+            </section>
+
+            <section>
+                <div class="site_row create_job_table">
+
+                    <table id="candidates_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Date Registered
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="candidates_data"></tbody>
+
+                    </table>
+
+                </div>
+            </section>
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/admin/get-all-candidates',
+                            type: 'post',
+
+                            success: function(data) {
+                                var content = '';
+                                var candidatesTitleContent = '';
+
+                                if (!data || data.candidates.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.candidates.length; i++) {
+                                        var candidateFullName = data.candidates[i].first_name + ' ' + data.candidates[i].last_name;
+
+                                        var candidatePicture = typeof data.candidates[i].photo_url != 'undefined' &&
+                                            data.candidates[i].photo_url != 'null' && data.candidates[i].photo_url != null &&
+                                            (data.candidates[i].photo_url != '') ? data.candidates[i].photo_url : '/images/no-user.png';
+
+                                        var status = data.candidates[i].is_deleted == '0' ? 'Active' : 'In-active';
+
+                                        content += '<tr> \
+                                                        <td class="cand_image"> \
+                                                            <div> \
+                                                                <img src="' + candidatePicture + '" alt="User Image"> \
+                                                            </div>' +
+                                            '</td> \
+                                                        <td>' + candidateFullName + '</td> \
+                                                        <td>' + data.candidates[i].email + '</td> \
+                                                        <td>' + data.candidates[i].phone_number + '</td> \
+                                                        <td>' + data.candidates[i].date_time_ago + '</td> \
+                                                        <td>' + status + '</td> \
+                                                        <td class="view_candd_link"> \
+                                                            <a href="/admin/candidate-info/' + data.candidates[i].user_id + '"> \
+                                                                View Profile \
+                                                            </a> \
+                                                        </td> \
+                                                    </tr>';
+
+                                    }
+
+                                    candidatesTitleContent = '<h5>All Candidates (' + data.candidates.length + ')</h5>';
+                                }
+
+                                $('#candidates_data').html(content);
+                                $('#candidates_title').html(candidatesTitleContent);
+
+                                $("#candidates_table").DataTable({
+                                    "paging": true,
+                                    "aaSorting": [],
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Candidates Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

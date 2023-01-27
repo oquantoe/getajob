@@ -1,0 +1,256 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section>
+                <div class="site_row user_dashboard_header">
+                    <div class="site_row user_welcome_note">
+                        <h3> Welcome,
+                            <span>
+                                <%=data.company_name%>
+                            </span>
+                        </h3>
+                    </div>
+
+                    <div class="flex_row_wrap_align_center_justify_between dasboard_cards">
+                        <div id="job_openings_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="qualified_candidates_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="assessments_created_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="saved_resumes_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="site_row flex_row_justify_between account_history_n_recomendation">
+                    <div class="recomendation">
+                        <div class="flex_row_justify_between recomm_header">
+                            <div>
+                                <h4>
+                                    Job Openings (Last 5)
+                                </h4>
+                            </div>
+                            <div class="view_all_opening_jobs">
+                                <a href="/recruiters/created-jobs">
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+
+                        <div id="posted_jobs"></div>
+
+                    </div>
+                    <div class="history">
+                        <div class="flex_row_justify_between recomm_header">
+                            <div>
+                                <h4>
+                                    History
+                                </h4>
+                            </div>
+                            <!--
+                            <div>
+                                <a href="#">
+                                    View all
+                                </a>
+                            </div> -->
+                        </div>
+
+                        <div class="histories_wrapper">
+                            <div id="activity_history_content"></div>
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="https://getajobng.com/cv-fix" target="_blank">
+                                    <img src="/images/ads/gaj/CV_Fix.gif" alt="gaj_ad">
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="https://c-ileasing.com/360fleet" target="_blank">
+                                    <img src="/images/ads/360_solutions/FMS Chief GDN Graphic_320x250@0,75x.png" alt="360_solutions_ad">
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="#" target="_blank">
+                                    <img src="/images/ads/hertz/Inline Rectangle.png" alt="hertz_ad">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get last 5 jobs posted with application count
+                        $.ajax({
+                            url: '/jobs/get-last-5-jobs',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.jobs.length == 0) {
+                                    content = '<div class="site_row flex_row_center_all Empty_recruiter_job">\
+                                    <p>You have no job openings yet. <a href="/recruiters/post-a-job">Create a Job Post</a></p>\
+                               </div>';
+                                } else {
+                                    for (var i = 0; i < data.jobs.length; i++) {
+                                        content += '<div class="site_row jobs_to_apply">\
+                                        <div class="flex_row_justify_between jobs_sub_header">\
+                                            <div class="open_job_name">\
+                                                <p>' + data.jobs[i].job_name + '</p>\
+                                            </div>\
+                                            <div class="candidates_for_open_job">\
+                                                <a href="/recruiters/application-info/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].no_of_applications + ' Candidates Applied' +
+                                            '</a> \
+                                            </div> \
+                                        </div> \
+                                        <div class="site_row job_desc"> \
+                                            <p>' + truncate_long_text(data.jobs[i].job_description) + '</p>\
+                                        </div> </br>\
+                                        <div class="candidates_for_open_job">\
+                                            <a href="/recruiters/job-detail/' + data.jobs[i].job_id + '"> \
+                                                View more \
+                                            </a> \
+                                        </div> \
+                                    </div>';
+
+                                    }
+                                }
+
+                                $('#posted_jobs').html(content);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Posted Jobs Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+
+                        function truncate_long_text(long_text) {
+                            var truncated_string = '';
+
+                            if (long_text.length > 100) {
+                                truncated_string = long_text.substr(0, 200 - 1) + ' ...  ';
+                            } else {
+                                truncated_string = long_text;
+                            }
+
+                            return truncated_string;
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Recruiter Activity History
+                        $.ajax({
+                            url: '/recruiters/get-recruiter-activity-history',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.activityHistory.length == 0) {
+                                    content = ' <div class="histories_wrapper flex_row_center_all empty_history"> \
+                                    <p>You have no history yet</p>\
+                                </div>';
+                                } else {
+                                    for (var i = 0; i < data.activityHistory.length; i++) {
+                                        content += '<div class="site_row histories"> \
+                                        <p>' + data.activityHistory[i].description + '<br> \
+                                            <b>' + data.activityHistory[i].date_time_ago + '</b> \
+                                        </p> \
+                                    </div>';
+
+                                    }
+                                }
+
+
+                                $('#activity_history_content').html(content);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Activity History Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Candidate Statistics
+                        $.ajax({
+                            url: '/recruiters/get-recruiter-statistics',
+                            type: 'get',
+
+                            success: function(data) {
+                                var jobOpeningsCountContent = '';
+                                var totalQualifiedCandidatesCountContent = '';
+                                var savedCandidatesContent = '';
+                                var assessmentsCreatedContent = '';
+
+                                // Process Job Openings Count
+                                if (!data || data.jobOpeningsCount == 0 || typeof data.jobOpeningsCount == 'undefined') {
+                                    jobOpeningsCountContent = '<h4 class="mb-2">0</h4><p>Job Openings</p>';
+                                } else {
+                                    jobOpeningsCountContent = '<h4 class="mb-2">' + data.jobOpeningsCount + '</h4><p>Job Openings</p>';
+                                }
+
+                                // Process Qualified Candidates Count
+                                if (!data || data.totalQualifiedCandidatesCount == 0 || typeof data.totalQualifiedCandidatesCount == 'undefined') {
+                                    totalQualifiedCandidatesCountContent = '<h4 class="mb-2">0</h4><p>Qualified Candidates</p>';
+                                } else {
+                                    totalQualifiedCandidatesCountContent = '<h4 class="mb-2">' + data.totalQualifiedCandidatesCount + '</h4><p>Qualified Candidates</p>';
+                                }
+
+                                // Process Saved Candidates Count
+                                if (!data || data.savedCandidatesCount == 0 || typeof data.savedCandidatesCount == 'undefined') {
+                                    savedCandidatesContent = '<h4 class="mb-2">0</h4><p>Saved Candidates</p>';
+                                } else {
+                                    savedCandidatesContent = '<h4 class="mb-2">' + data.savedCandidatesCount + '</h4><p>Saved Candidates</p>';
+                                }
+
+                                // Process Assessments Created Count
+                                if (!data || data.assessmentsCreatedCount == 0 || typeof data.assessmentsCreatedCount == 'undefined') {
+                                    assessmentsCreatedContent = '<h4 class="mb-2">0</h4><p>Assessments Created</p>';
+                                } else {
+                                    assessmentsCreatedContent = '<h4 class="mb-2">' + data.assessmentsCreatedCount + '</h4><p>Assessments Created</p>';
+                                }
+
+                                $('#job_openings_count').html(jobOpeningsCountContent);
+                                $('#qualified_candidates_count').html(totalQualifiedCandidatesCountContent);
+                                $('#assessments_created_count').html(assessmentsCreatedContent);
+                                $('#saved_resumes_count').html(savedCandidatesContent);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Recruiter Statistics Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <% include includes/snippets/meta_tags%>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- CSS Animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsiveness.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    
+    <% include includes/snippets/gtag %> 
+    
+    <title>Profile Form - GetaJobNG</title>
+
+  </head>
+<body>
+
+    <aside>
+        <div class="flex_col side_nav">
+
+            <div class="dashboard_logo">
+                <img src="/images/logo.png" alt="">
+            </div>
+            <div class="dashboard_links">
+                <a href="#" class="active">
+                    <i class="fab fa-buromobelexperte"></i> Dashborad
+                </a>
+                <a href="#">
+                    <i class="far fa-user"></i> Profile
+                </a>
+                <a href="#">
+                    <i class="far fa-heart"></i> Saved Jobs
+                </a>
+                <a href="#">
+                    <i class="far fa-file-alt"></i> Recommended Jobs
+                </a>
+                <a href="#">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+
+        </div>
+    </aside>
+
+    <section>
+        <div class="dashboard_body">
+
+            <header>
+
+            <div class="flex_row_justify_between dasboard_nav">
+
+                <div class="flex_row dash_nav_input_group">
+                    <input type="text" name="" id="" placeholder="Search">
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div class="flex_row_align_center">
+
+                    <div class="notification_bell">
+
+                        <i class="far fa-bell"></i>
+                        <div class="bell_red"></div>
+
+                    </div>
+
+                    <div class="flex_row_align_center user_info">
+                        
+                        <div class="user_image">
+                            <img src="/images/img2.png" alt="">
+                        </div>
+                        <div class="user_name">
+                            <span>
+                                Audrey Nguyen
+                            </span>
+                        </div>
+                        <div class="user_dropdown">
+                            <i class="fas fa-angle-down"></i>                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            </header>
+
+            <section>
+
+                <div class="dashboard_center">
+
+                    <!-- Steps header text -->
+
+                    <div class="site_row center_text profile_form_header step_one_header" id="step_one">
+                        <h3>
+                                Step 1 - Tell us who you are<span> ( 0% completed )</span>
+                        </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_two_header" id="step_two">
+                            <h3>
+                                    Step 1 - Personal Information
+                            </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_three_four_header" id="step_three_four">
+                            <h3>
+                                    Step 2 - What jobs have you have held?
+                            </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_five_header" id="step_five">
+                            <h3>
+                                    Step 3 - Where did you go to school?
+                            </h3>
+                    </div> 
+
+                    <div class="site_row center_text profile_form_header step_six_header" id="step_six">
+                            <h3>
+                                    Step 4 - What are your skill sets?
+                            </h3>
+                    </div>
+
+
+
+                    <!-- End of Steps header text -->
+
+                    <!-- Step Progress Bar -->
+
+                    <div class="flex_row_justify_between profile_reg_progress">
+                        <div class="step_one_link active"></div>
+                        <div class="step_two_link"></div>
+                        <div class="step_three_link"></div>
+                        <div class="step_four_link"></div>
+                    </div>
+
+                    <!-- End of Step Progress Bar -->
+
+                     <!-- Steps header text -->
+
+                    <div class="profile_form_div" id="form_step_one">
+
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for=""> First Name </label>
+                                <input type="text">
+                            </div>
+                            <div class="col-md-6 input_div">
+                                <label for=""> Last Name </label>
+                                    <input type="text">
+                                </div>
+                        </div>
+
+                        <div class="row">
+                                
+                            <div class="col md-12 input_div">
+                                    <label for=""> Title </label>
+                                <input type="text">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="col md-12 input_div">
+                                        <label for=""> Profile Description</label>
+                                   <textarea name="" id="" cols="30" rows="4"></textarea>
+                                </div>
+                        </div>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div class="cancel_link">
+                                <a href="#"> Cancel </a>
+                            </div>
+
+                            <div class="continue_btn">
+                                <button id="goto_next_two">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_two">
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for=""> First Name </label>
+                                    <input type="text" class="error">
+                                    <span class="error"> Please enter your first name </span>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                    
+                                <div class="col md-12 input_div">
+                                        <label for=""> Title </label>
+                                    <input type="text">
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                    <div class="col md-12 input_div">
+                                            <label for=""> Profile Description</label>
+                                       <textarea name="" id="" cols="30" rows="4"></textarea>
+                                    </div>
+                            </div>
+    
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_three">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_three">
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for=""> Company Name </label>
+                                    <input type="text" class="">
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                    
+                                <div class="col md-6 input_div">
+                                        <label for=""> Job Title </label>
+                                    <input type="text">
+                                </div>
+
+                                <div class="col md-6 input_div">
+                                        <label for=""> Location </label>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-7 input_div">
+                                                <label for=""> Start Month </label>
+                                                <select name="" form="">
+                                                        <option value="volvo">January</option>
+                                                        <option value="saab">February</option>
+                                                        <option value="opel">April</option>
+                                                        <option value="audi">May</option>
+                                                </select>
+                                        </div>
+                                        <div class="col-md-5 input_div">
+                                                <label for=""> Start Year </label>
+                                                <select name="" form="">
+                                                        <option value="volvo">2001</option>
+                                                        <option value="saab">2002</option>
+                                                        <option value="opel">2003</option>
+                                                        <option value="audi">2004</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                        <div class="row">
+                                                <div class="col-md-7 input_div">
+                                                        <label for=""> End Month </label>
+                                                        <select name="" form="">
+                                                                <option value="volvo">January</option>
+                                                                <option value="saab">February</option>
+                                                                <option value="opel">April</option>
+                                                                <option value="audi">May</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-5 input_div">
+                                                        <label for=""> End Year </label>
+                                                        <select name="" form="">
+                                                                <option value="volvo">2001</option>
+                                                                <option value="saab">2002</option>
+                                                                <option value="opel">2003</option>
+                                                                <option value="audi">2004</option>
+                                                        </select>
+                                                </div>
+                                            </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 py-3">
+                                    <input type="checkbox" name="vehicle1" value="Bike"> I have a bike
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                    <div class="col md-12 input_div">
+                                            <label for=""> Job Description</label>
+                                       <textarea name="" id="" cols="30" rows="4"></textarea>
+                                    </div>
+                            </div>
+    
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_four">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_four">
+
+                         
+                            <div class="site_row pb-4 mb-3 headx">
+                                <h4>
+                                    Experiences
+                                </h4>
+                            </div>
+
+                            <div class="site_row profile_experience mb-4">
+                                <div class="flex_row_justify_between mb-2">
+                                    <div class="Product_Analyst_txt">
+
+                                        <h6>
+                                                Senior Product Analyst
+                                        </h6>
+
+                                    </div>
+                                    <div class="Product_Analyst_actions">
+
+                                            <i class="fas fa-pencil-alt mr-3"></i>
+                                            <i class="far fa-trash-alt"></i>
+
+                                    </div>
+                                </div>
+
+                                <div class="flex_row_justify_between job_n_year">
+                                        <div class="">
+    
+                                            <h6>
+                                                    Uber Technology
+                                            </h6>
+    
+                                        </div>
+                                        <div class="">
+    
+                                                2017-2018
+    
+                                        </div>
+                                    </div>
+
+
+
+                            </div>
+
+
+                            <div class="flex_row_center_all add_worl_exp">
+                                <a href="#"> Add more work experience </a>
+                            </div>
+
+
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_five">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_five">
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for=""> School </label>
+                                    <input type="text" class="">
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                    <div class="col-md-12 input_div">
+                                        <label for=""> Degree / Certificate </label>
+                                        <input type="text" class="">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                        <div class="col-md-12 input_div">
+                                            <label for="">Field of Study</label>
+                                            <input type="text" class="">
+                                        </div>
+                                    </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-7 input_div">
+                                                <label for=""> Start Month </label>
+                                                <select name="" form="">
+                                                        <option value="volvo">January</option>
+                                                        <option value="saab">February</option>
+                                                        <option value="opel">April</option>
+                                                        <option value="audi">May</option>
+                                                </select>
+                                        </div>
+                                        <div class="col-md-5 input_div">
+                                                <label for=""> Start Year </label>
+                                                <select name="" form="">
+                                                        <option value="volvo">2001</option>
+                                                        <option value="saab">2002</option>
+                                                        <option value="opel">2003</option>
+                                                        <option value="audi">2004</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                        <div class="row">
+                                                <div class="col-md-7 input_div">
+                                                        <label for=""> End Month </label>
+                                                        <select name="" form="">
+                                                                <option value="volvo">January</option>
+                                                                <option value="saab">February</option>
+                                                                <option value="opel">April</option>
+                                                                <option value="audi">May</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-5 input_div">
+                                                        <label for=""> End Year </label>
+                                                        <select name="" form="">
+                                                                <option value="volvo">2001</option>
+                                                                <option value="saab">2002</option>
+                                                                <option value="opel">2003</option>
+                                                                <option value="audi">2004</option>
+                                                        </select>
+                                                </div>
+                                            </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 py-3">
+                                    <input type="checkbox" name="vehicle1" value="Bike"> I Currently attenf here
+                                </div>
+                            </div>
+    
+                            
+    
+                            <div class="flex_row_justify_between_align_center prof_link_btns mt-5">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_six">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_six">
+
+                       
+                            <div class="site_row pb-4 mb-3 headx">
+                                <h4>
+                                    Experiences
+                                </h4>
+                            </div>
+
+                            <div class="site_row profile_experience mb-4">
+                                <div class="flex_row_justify_between mb-3">
+                                    <div class="Product_Analyst_txt">
+
+                                        <h6>
+                                                Bachelor of Science, Industrial Design
+                                        </h6>
+
+                                    </div>
+                                    <div class="Product_Analyst_actions">
+
+                                            <i class="fas fa-pencil-alt mr-3"></i>
+                                            <i class="far fa-trash-alt"></i>
+
+                                    </div>
+                                </div>
+
+                                <div class="flex_row_justify_between job_n_year">
+                                        <div class="">
+    
+                                            <h6>
+                                                    Covenant University
+                                            </h6>
+    
+                                        </div>
+                                        <div class="">
+    
+                                                2017-2018
+    
+                                        </div>
+                                    </div>
+
+
+
+                            </div>
+
+
+                            <div class="flex_row_center_all add_worl_exp">
+                                <a href="#"> Add more school experience </a>
+                            </div>
+
+
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_seven">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_seven">
+
+
+                            <div class="row">
+                                    <div class="col-md-12 input_div">
+                                        <label for=""> Skillset 1 </label>
+                                        <input type="text" class="">
+                                    </div>
+                                </div>
+        
+                                <div class="row">
+                                        <div class="col-md-12 input_div">
+                                            <label for=""> Skillset 2 </label>
+                                            <input type="text" class="">
+                                        </div>
+                                    </div>
+
+                      
+
+                            <div class="flex_row_center_all add_worl_exp">
+                                <a href="#"> Add more skillsets </a>
+                            </div>
+
+
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+    
+                                <div class="">
+                                    <button class="normal_btn" id="goto_next_seven">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+    
+                    </div>
+                
+
+                    
+
+                     <!-- End of Steps form  -->
+
+
+                </div>
+
+            </section>
+
+            
+            
+
+        </div>
+    </section>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/js/jQuery.min.js"></script>    
+    <script src="/js/main.js"></script>
+    
+</body>
+</html>

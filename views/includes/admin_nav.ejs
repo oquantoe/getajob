@@ -1,0 +1,62 @@
+<body>
+
+    <aside>
+        <div class="flex_col side_nav">
+
+            <div class="close_nav_container">
+                <div class="flex_row_center_all dash_close_nav">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="dashboard_logo">
+                <img src="/images/logo.png" alt="">
+            </div>
+            <div class="dashboard_links">
+                <a href="/admin/dashboard" class="<%= view == 'dashboard' ? 'active' : ''%>">
+                    <i class="fab fa-buromobelexperte"></i> Dashboard
+                </a>
+                <a href="/admin/post-a-job" class="<%= view == 'post-a-job' ? 'active' : ''%>">
+                    <i class="far fa-file-alt"></i> Post a Job
+                </a>
+                <a href="/admin/created-jobs" class="<%= view == 'created-jobs' ? 'active' : ''%>">
+                    <i class="far fa-copy"></i> Created Jobs
+                </a>
+                <a href="/admin/post-a-job-by-proxy" class="<%= view == 'post-a-job-by-proxy' ? 'active' : ''%>">
+                    <i class="far fa-building"></i> Post Job by Proxy
+                </a>
+                <a href="/admin/job-approvals" class="<%= view == 'approve-jobs' ? 'active' : ''%>">
+                    <i class="far fa-thumbs-up"></i> Approve Jobs
+                </a>
+                <!--<a href="/admin/assessments" class="<%= view == 'assessments' ? 'active' : ''%>">
+                    <i class="fas fa-laptop"></i> Assessments
+                </a> -->
+                <a href="/admin/interviews" class="<%= view == 'interviews' ? 'active' : ''%>">
+                    <i class="far fa-comments"></i> Interviews
+                </a>
+                <a href="/admin/talent-pool" class="<%= view == 'talent-pool' ? 'active' : ''%>">
+                    <i class="far fa-address-book"></i> Talent Pool
+                </a>
+                <a href="/admin/all-candidates" class="<%= view == 'candidates' ? 'active' : ''%>">
+                    <i class="fas fa-user-tie"></i> Candidates
+                </a>
+                <a href="/admin/all-recruiters" class="<%= view == 'recruiters' ? 'active' : ''%>">
+                    <i class="fas fa-users"></i> Recruiters
+                </a>
+                <!--<a href="/admin/reports" class="<%= view == 'reports' ? 'active' : ''%>">
+                    <i class="far fa-chart-bar"></i> Reports
+                </a> -->
+                <a href="/admin/pricing" class="<%= view == 'pricing' ? 'active' : ''%>">
+                    <i class="fas fa-hand-holding-usd"></i> Pricing
+                </a>
+                <!-- <a href="/admin/ad-manager" class="<%= view == 'ad-manager' ? 'active' : ''%>">
+                    <i class="fas fa-ad"></i> Ad Manager
+                </a>
+                <a href="/admin/settings" class="<%= view == 'settings' ? 'active' : ''%>">
+                    <i class="fas fa-cog"></i> Settings
+                </a> -->
+                <a href="/auth/logout">
+                    <i class="fas fa-sign-out-alt" style="color: red;"></i> Logout
+                </a>
+            </div>
+        </div>
+    </aside>

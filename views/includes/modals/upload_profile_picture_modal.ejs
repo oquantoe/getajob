@@ -1,0 +1,32 @@
+<div class="modal fade job_desc_modal" id="upload_profile_pic_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+              
+            <!-- Modal body -->
+            <div class="modal-body modal_interview_invite">
+                <form method="post" action="/<%=currentView == 'candidate' ? 'candidates' : 'recruiters' %>/upload-profile-picture">
+                    <div class="site_row">
+                        <div class="site_row py-5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input_div">
+                                    <label for="note">Upload Profile Picture</label>
+                                    <input type="file" id="profile_picture" name="profile_picture" accept=".png,.jpeg,.jpg">
+                                </div>                
+                            </div>
+                        </div>                  
+                    </div>
+            
+                    <!--
+                    <div class="site_row text-center upload_btn">
+                        <button>
+                            Upload
+                        </button>
+                    </div>  -->
+                </form>
+            </div>  
+        </div>
+    </div>
+</div>

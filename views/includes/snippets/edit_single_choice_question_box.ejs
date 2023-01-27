@@ -1,0 +1,69 @@
+<div class="site_row3 recruiters_question pb-5"> \
+    <div class="flex_row_justify_between_align_center recruiters_question_top"> \
+        <div class="questions_txxt"> \
+            <p>Question '+question_count+'</p> \
+        </div> \
+        <!--<div class="flex_row questions_functions"> \
+            <div class="mx-3"> \
+                <i class="far fa-copy"></i> \
+            </div> \
+            <div> \
+                <i class="fas fa-pencil-alt"></i> \
+            </div> \
+        </div>-->\
+    </div> \
+    <div class="row"> \
+        <div class="col-md-9 input_div"> \
+            <label for="question_'+question_count+'">Question</label> \
+            <input type="text" id="question_'+question_count+'" name="questions[]" \ placeholder="Enter the question you want to ask" value="'+allQuestions[i-1].questions+'"> \
+        </div> \
+        <div class="col-md-3 input_div"> \
+            <label for="question_type_'+question_count+'"> Select Question Type </label> \
+            <select name="question_types[]" id="question_type_'+question_count+'"> \
+                    <option value="1">Single Choice</option> \
+                    <option value="2">Multiple Choice</option> \
+                </select> \
+        </div> \
+    </div> \
+    <input type="hidden" name="q_ids[]" id="q_id_'+question_count+'" value="'+allQuestions[i-1].question_id+'"> \
+    <div class="row"> \
+        <div class="col-md-3 input_div"> \
+            <label for="weigted_score_'+question_count+'">Weighted Score</label> \
+            <input type="text" name="weigted_scores[]" id="weigted_score_'+question_count+'" \ value="'+allQuestions[i-1].score+'"> \
+        </div> \
+        <div class="col-md-3 input_div"> \
+            <label for="time_for_question_'+question_count+'">Time (In seconds)</label> \
+            <input type="text" name="times[]" id="time_for_question_'+question_count+'" placeholder="00 Secs" \ value="'+allQuestions[i-1].time_to_answer+'"> \
+        </div> \
+    </div> \
+    <div class="site_row3 questions_options"> \
+        <div class="row"> \
+            <div class="col-md-6 flex_row_align_center_justify_start"> \
+                <input type="radio" value="1" name="single_correct_answer_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="checkbox" value="1" name="multiple_correct_answers_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="text" placeholder="Option 1" class="mx-3" name="question_options[]" id="question_'+question_count+'_optionA" \ value="'+allQuestions[i-1].possible_answera+'"> \
+            </div> \
+        </div> \
+        <div class="row mt-3"> \
+            <div class="col-md-6 flex_row_align_center_justify_start"> \
+                <input type="radio" value="2" name="single_correct_answer_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="checkbox" value="2" name="multiple_correct_answers_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="text" placeholder="Option 2" class="mx-3" name="question_options[]" id="question_'+question_count+'_optionB" \ value="'+allQuestions[i-1].possible_answerb+'"> \
+            </div> \
+        </div> \
+        <div class="row mt-3"> \
+            <div class="col-md-6 flex_row_align_center_justify_start"> \
+                <input type="radio" value="3" name="single_correct_answer_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="checkbox" value="3" name="multiple_correct_answers_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="text" placeholder="Option 3" class="mx-3" name="question_options[]" id="question_'+question_count+'_optionC" \ value="'+allQuestions[i-1].possible_answerc+'"> \
+            </div> \
+        </div> \
+        <div class="row mt-3"> \
+            <div class="col-md-6 flex_row_align_center_justify_start"> \
+                <input type="radio" value="4" name="single_correct_answer_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="checkbox" value="4" name="multiple_correct_answers_'+question_count+'" id="correct_answer_'+question_count+'"> \
+                <input type="text" placeholder="Option 4" class="mx-3" name="question_options[]" id="question_'+question_count+'_optionD" \ value="'+allQuestions[i-1].possible_answerd+'"> \
+            </div> \
+        </div> \
+    </div> \
+</div>

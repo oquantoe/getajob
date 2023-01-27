@@ -1,0 +1,175 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div id="created_jobs_title">
+                    </div>
+                    <div class="">
+                        <form action="/recruiters/post-a-job">
+                            <button>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="site_row create_job_table">
+
+                    <table id="jobs_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Job Title
+                                </th>
+                                <th>
+                                    Job Type
+                                </th>
+                                <th>
+                                    Number of Applicants
+                                </th>
+                                <th>
+                                    Date Created
+                                </th>
+                                <th>
+                                    Deadline Date
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="jobs_data"></tbody>
+
+                    </table>
+
+                </div>
+            </section>
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all recruiter's posted jobs
+                        $.ajax({
+                            url: '/jobs/get-all-recruiter-posted-jobs',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+                                var createdJobsTitleContent = '';
+
+                                if (!data || data.jobs.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.jobs.length; i++) {
+                                        content += '<tr> \
+                                        <td> \
+                                            <a href="/admin/job-detail/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].job_name +
+                                            '</a> \
+                                        </td> \
+                                        <td>' + data.jobs[i].job_type_name + '</td> \
+                                        <td> \
+                                            <a href="/admin/application-info/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].no_of_applications +
+                                            '</a> \
+                                        </td>  \
+                                        <td>' + data.jobs[i].date_time_ago + '</td> \
+                                        <td>' + data.jobs[i].application_deadline + '</td> \
+                                        <td>' + data.jobs[i].status + '</td> \
+                                        <td> \
+                                            <a href="/admin/job-detail/' + data.jobs[i].job_id + '"> \
+                                                <i style="color:#00ff00" class="far fa-eye"></i> \
+                                            </a> \
+                                            <a href="/admin/edit-job/' + data.jobs[i].job_id + '"> \
+                                                <i style="color:#0000ff" class="far fa-edit"></i> \
+                                            </a> \
+                                            <a id="delete_job_link" title="Delete Job Post" href="#" onclick="deleteJobPost(' + data.jobs[i].job_id + ');return false;"> \
+                                                <i style="color:#ff0000" class="far fa-trash-alt"></i> \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+
+                                    }
+
+                                    createdJobsTitleContent = '<h5>Created Jobs (' + data.jobs.length + ')</h5>';
+                                }
+
+                                $('#jobs_data').html(content);
+                                $('#created_jobs_title').html(createdJobsTitleContent);
+
+                                $("#jobs_table").DataTable({
+                                    "paging": true,
+                                    "aaSorting": [],
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Posted Jobs Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    function deleteJobPost(job_id) {
+                        $(document).ready(function() {
+                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                            if (ifConfirm) {
+                                //Delete Job
+                                $.ajax({
+                                    url: '/jobs/delete-job',
+                                    type: 'post',
+                                    data: {
+                                        job_id: job_id
+                                    },
+                                    success: function(data) {
+                                        if (data.affectedRows > 0) {
+                                            swal({
+                                                    title: 'Job Deleted Successfully',
+                                                    type: 'success',
+                                                    confirmButtonText: 'Ok',
+                                                },
+                                                function(isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.replace('/admin/created-jobs');
+                                                    }
+                                                });
+                                        } else {
+                                            swal({
+                                                title: 'An error occurred',
+                                                text: 'Something happened when deleting this job. Please try again',
+                                                type: 'error'
+                                            });
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Deleting Job Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    }
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

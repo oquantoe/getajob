@@ -1,0 +1,119 @@
+<% include includes/dashboard_header %>
+<% include includes/recruiter_nav %>
+<% include includes/dashboard_top_bar %>  
+
+            <section>
+
+                <div class="dashboard_center">
+                    <div class="profile_form_div">
+                        <div class="row pb-4">
+                            <div class="col-md-12 text-center search_cv_head">
+                                <h5>
+                                    Search Talents/CVs
+                                </h5>
+                            </div>
+                        </div>
+
+                        <form action="/recruiters/go-to-search-talents" method="post">
+                            <div class="row">                                
+                                <div class="col md-12 input_div">
+                                    <label for="job_title"> Job Title <sup class="form_asterisk">*</sup> </label>
+                                    <input type="text" id="job_title" name="job_title" placeholder="Enter Job Title">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="keyword"> Keyword </label>
+                                    <input type="text" id="keyword" name="keyword" placeholder="Skill, School etc.">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for="location">City or Region</label>
+                                    <select name="location" id="location">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="education_level">Level of Education</label>
+                                    <select name="education_level" id="education_level">
+                                    </select>
+                                </div>
+                            </div>            
+
+                            <div class="flex_row_center_all prof_link_btns">
+                                <div class="">
+                                    <button class="normal_btn">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                     <!-- End of Steps form  -->
+
+                </div>
+            </section>
+        </div>
+    </section>
+
+
+<% include includes/global_dashboard_scripts %>
+
+<!-- Get All CV Search Params Script-->
+<script>
+    $(document).ready(function(){
+    
+        $.ajax({
+            url: '/jobs/get-all-cv-search-params',
+            type: 'get',
+                                              
+            success: function(data){
+                var stateContent = '';
+                var qualificationContent = '';
+                                  
+                //Load all States
+                if(!data.states){
+                    stateContent = '<option value="">Select Location</option>';
+                } else{
+                    stateContent = '<option value="">Select Location</option>';                  
+    
+                    for(var i = 0; i < data.states.length; i++){
+                        stateContent += '<option value="' +data.states[i].state_id+ '">' +
+                                            data.states[i].state_name +
+                                        '</option>';                                                                
+                    }
+                }                    
+    
+                //Load all Qualifications
+                if(!data.qualifications){
+                    qualificationContent = '<option value="">Select Qualification</option>';
+                } else{  
+                    qualificationContent = '<option value="">Select Qualification</option>';
+    
+                    for(var i = 0; i < data.qualifications.length; i++){
+                        qualificationContent += '<option value="' +data.qualifications[i].qualification_id+ '">' +
+                                            data.qualifications[i].qualification_name +
+                                        '</option>';                                                                
+                    }
+                }
+    
+                                
+                $('#location').html(stateContent);
+                $('#education_level').html(qualificationContent);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'All CV Search Params Request failed: ' + xhr.responseText;
+                console.log(errorMsg)
+            }
+        });
+    });
+</script>
+<!-- End All CV Search Params Script-->
+
+<% include includes/global_dashboard_bottom %>

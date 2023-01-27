@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <% include includes/snippets/meta_tags%>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- CSS Animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+    <!-- Cookie Consent CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsiveness.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    
+    <% include includes/snippets/drift_snippet %>
+    <% include includes/snippets/gtag %> 
+    
+    <title>Sign In - GetaJobNG</title>
+
+  </head>
+  <body>
+
+    <div class="left_side_2">
+      <div class="logo mr-5" style="margin-top:10px;margin-left: 10px;">
+        <a href="/"> <img src="/images/logo.png" alt="logo"></a>
+      </div>
+    </div>
+
+    <div class="right_side">
+
+      <div class="shadow form_container">
+
+        <div class="row">
+          <div class="col-md-12 h_green_text">
+            <h4>
+                Welcome Back!
+            </h4>
+          </div>
+          <div class="col-md-12 pt-3 sub_text">
+            <p>
+                Sign in to your account
+            </p></br>
+          </div>
+        </div>
+
+        <form action="/auth/login" method="post">
+            <div class="row">
+                <div class="input_div">
+                    <label for="username">Email</label>
+                    <input type="email" name="username" id="username">
+                </div>
+
+                <div class="input_div">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" autocomplete="false">
+                </div>
+
+                <input type="hidden" name="returnUrl" id="returnUrl">
+                <input type="hidden" name="token" id="token">
+
+                <div class="input_footer d-flex">
+                    <div class="ml-auto">
+                    <a href="/forgot-password"> Forgot Password? </a>
+                    </div>
+                </div>
+                
+            </div> 
+
+            <div class="row pt-4"> 
+            
+                <button class="full_btn">
+                  Log In
+                </button>
+            
+            </div>
+        </form>
+
+        <div class="row py-4">
+          <div class="col-sm-12 text-center green_link">
+            <p>
+              Don’t have an account? <a href="/register"> Register </a>
+            </P>
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+
+
+<% include includes/global_dashboard_scripts%>
+
+<script>
+  $(document).ready(function(){
+    
+    if(getParameterByName('f')){
+      var returnUrlParam = getParameterByName('f');
+      console.log(returnUrlParam);
+      $('#returnUrl').val(returnUrlParam)
+    }
+
+    if(getParameterByName('t')){
+      var tokenParam = getParameterByName('t');
+      console.log(tokenParam);
+      $('#token').val(tokenParam)
+    }
+    
+    function getParameterByName(name, url) {
+          if(!url){
+              url = window.location.href;
+          } 
+          name = name.replace(/[\[\]]/g, '\\$&');
+          var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
+          if (!results){ return null };
+          if (!results[2]){ return '' };
+
+          return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+  });
+</script>
+
+<% include includes/global_dashboard_bottom%>

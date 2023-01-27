@@ -1,0 +1,141 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <!--html codes go here-->
+
+            <section class="section-cv-fix">
+                <div class="site_row">
+                    <h5 class="header-text__primary">Upgrade your Plan</h5>
+                    <p class="header-text__primary--sub">
+                        Pick one of our Professional CV Writing service bundle offers to get started!
+                    </p>
+                </div>
+
+                <div class="site_row cv-package-cards__wrapper">
+                    <div class="cv-package-cards">
+                        <div class="top">
+                            <div class="cv-package__name">
+                                <h5>Classic</h5>
+                                <p>Most Popular</p>
+                            </div>
+
+                            <div class="cv-package__price">
+                                <h5>
+                                    <span class="cv-package__price--currency">₦</span> 50,000.00
+                                </h5>
+                            </div>
+
+                            <div class="cv-package-buy-button__wrapper">
+                                <a href="#" class="cv-package-buy-button" onclick="processPlanUpgrade(6)">Choose plan</a>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="cv-package-list">
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>All the benefits of the "Basic" plan</p>
+                                </div>
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>Set Assessments</p>
+                                </div>
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>Search for talents from our database</p>
+                                </div>
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>Schedule interviews</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cv-package-cards">
+                        <div class="top">
+                            <div class="cv-package__name">
+                                <h5>Premium</h5>
+                                <p>Let us handle it for you</p>
+                            </div>
+
+                            <div class="cv-package__price">
+                                <h5>
+                                    Contact Us
+                                </h5>
+                            </div>
+
+                            <div class="cv-package-buy-button__wrapper">
+                                <a href="/contact-us" class="cv-package-buy-button">Choose plan</a>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="cv-package-list">
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>All the benefits of the "Basic" and "Classic" plan</p>
+                                </div>
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>We would find and shortlist candidates for you</p>
+                                </div>
+                                <div class="cv-package-list__items">
+                                    <i class="fas fa-check"></i>
+                                    <p>Custom assessments, interviews and special requests</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <% include includes/modals/upload_resume_modal %>
+
+                <% include includes/global_dashboard_scripts %>
+
+                    <!--Custom scripts go here-->
+                    <script>
+                        function processPlanUpgrade(payment_plan_id) {
+                            swal({
+                                    title: 'Processing...',
+                                    text: 'Re-directing you to a secured payment gateway. Please wait',
+                                    allowEscapeKey: false,
+                                    allowOutsideClick: false,
+                                    timer: 3500,
+                                    showConfirmButton: false,
+                                    showCancelButton: false,
+                                    onOpen: () => {
+                                        swal.showLoading();
+                                    }
+                                },
+                                function() {
+                                    $.ajax({
+                                        url: '/payments/make-payment',
+                                        type: 'post',
+                                        data: {
+                                            payment_plan_id: payment_plan_id
+                                        },
+                                        success: function(data) {
+                                            if (data.result.status == true) {
+                                                window.location.replace(data.result.data.authorization_url);
+                                            } else {
+                                                swal({
+                                                    title: 'An error occured',
+                                                    text: 'An error occurred processing payment. You were not debited. Please try again.',
+                                                    type: 'warning',
+                                                    confirmButtonText: 'Close',
+                                                });
+                                            }
+                                        },
+                                        error: function(xhr, ajaxOptions, thrownError) {
+                                            var errorMsg = 'Process Payment failed: ' + xhr.responseText;
+                                            console.log(errorMsg)
+                                        }
+                                    });
+                                }
+
+                            )
+                        }
+                    </script>
+
+                    <% include includes/global_dashboard_bottom %>

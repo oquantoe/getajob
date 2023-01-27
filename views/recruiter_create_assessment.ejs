@@ -1,0 +1,594 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section class="settings_section">
+
+                <div class="flex_row_justify_between">
+                    <div class="settings_toggle">
+                        <div class="site_row xxxx">
+                            <div class="flex_row justify-content-between settings_toggle_each active" id="personal_profile_settings">
+                                <div class="settings_icon">
+                                    Information
+                                </div>
+                                <div class="settings_title">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+
+                            <div class="flex_row justify-content-between settings_toggle_each" id="set_questions_btn">
+                                <div class="settings_icon">
+                                    Set Questions
+                                </div>
+                                <div class="settings_title" id="questions_lock">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings_form">
+
+                        <!-- Assessment Info-->
+                        <div class="site_row update_profile" id="assessment_info_div">
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="assessment_name">Assessment Title <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="assessment_name" id="assessment_name" placeholder="Give your assessment a name" required>
+                                    <div class="form_error_msg" id="assessmentNameErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="assessment_type">Assessment Type <sup class="form_asterisk">*</sup></label>
+                                    <select name="assessment_type" id="assessment_type" required>
+                                    </select>
+                                    <div class="form_error_msg" id="assessmentTypeErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="job_assigned_to">Assign to a Job <sup class="form_asterisk">*</sup></label>
+                                    <span id="jobs_autocomplete_select" class="jobs-autocomplete-select"></span>
+                                    <input type="hidden" id="job_assigned_to" name="job_assigned_to" required>
+                                    <div class="form_error_msg" id="jobAssignedToErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 input_div">
+                                    <label for="assessment_time">Time for Assessment (In Minutes) <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="assessment_time" id="assessment_time" placeholder="e.g. 60" required>
+                                    <div class="form_error_msg" id="assessmentTimeErr"></div>
+                                </div>
+
+                                <div class="col-md-4 input_div">
+                                    <label for="pass_percentage">Pass Mark Percentage (Do not add a %) <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="pass_percentage" id="pass_percentage" placeholder="e.g. 80" required>
+                                    <div class="form_error_msg" id="passPercentageErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for="assessment_description">Assessment Description <sup class="form_asterisk">*</sup></label>
+                                    <textarea name="assessment_description" id="assessment_description" placeholder="Some information or instructions about the assessment" cols="30" rows="10" required></textarea>
+                                    <div class="form_error_msg" id="assessmentDescriptionErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="/recruiters/create-assessment">Cancel</a>
+                                </div>
+
+                                <div class="" id="create_assessment_btn">
+                                    <button class="normal_btn" id="goto_next_two">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of Assessment Info -->
+
+
+                        <!-- Assessment Questions-->
+                        <div class="site_row change_password" id="assessment_questions_div">
+                            <div id="questions_box">
+                                <div class="site_row3 recruiters_question pb-5">
+
+                                    <input type="hidden" id="assessment_id">
+
+                                    <div class="flex_row_justify_between_align_center recruiters_question_top">
+                                        <div class="questions_txxt">
+                                            <p>
+                                                Question 1
+                                            </p>
+                                        </div>
+                                        <!--<div class="flex_row questions_functions">
+                                            <div class="mx-3">
+                                                <i class="far fa-copy"></i>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-9 input_div">
+                                            <label for="">Question</label>
+                                            <input type="text" id="question_1" name="questions[]" placeholder="Enter the question you want to ask">
+                                        </div>
+
+                                        <div class="col-md-3 input_div">
+                                            <label for="question_type_1">Select Question Type</label>
+                                            <select name="question_types[]" id="question_type_1">
+                                                <option value="1">Single Choice</option>
+                                                <option value="2">Multiple Choice</option>
+                                                <!--<option value="3">Paragraph</option> -->
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3 input_div">
+                                            <label for="weigted_score_1">Weighted Score</label>
+                                            <input type="text" name="weigted_scores[]" id="weigted_score_1">
+                                        </div>
+
+                                        <div class="col-md-3 input_div">
+                                            <label for="time_for_question_1">Time (In Seconds)</label>
+                                            <input type="text" name="times[]" id="time_for_question_1" placeholder="00 Secs">
+                                        </div>
+                                    </div>
+
+                                    <div class="site_row3 questions_options">
+                                        <div class="row">
+                                            <div class="col-md-6 flex_row_align_center_justify_start">
+                                                <input type="radio" value="1" name="single_correct_answer_1" id="correct_answer_1">
+                                                <input type="checkbox" value="1" name="multiple_correct_answers_1" id="correct_answer_1">
+                                                <input type="text" placeholder="Option 1" class="mx-3" name="question_options[]" id="question_1_optionA">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 flex_row_align_center_justify_start">
+                                                <input type="radio" value="2" name="single_correct_answer_1" id="correct_answer_1">
+                                                <input type="checkbox" value="2" name="multiple_correct_answers_1" id="correct_answer_1">
+                                                <input type="text" placeholder="Option 2" class="mx-3" name="question_options[]" id="question_1_optionB">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 flex_row_align_center_justify_start">
+                                                <input type="radio" value="3" name="single_correct_answer_1" id="correct_answer_1">
+                                                <input type="checkbox" value="3" name="multiple_correct_answers_1" id="correct_answer_1">
+                                                <input type="text" placeholder="Option 3" class="mx-3" name="question_options[]" id="question_1_optionC">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 flex_row_align_center_justify_start">
+                                                <input type="radio" value="4" name="single_correct_answer_1" id="correct_answer_1">
+                                                <input type="checkbox" value="4" name="multiple_correct_answers_1" id="correct_answer_1">
+                                                <input type="text" placeholder="Option 4" class="mx-3" name="question_options[]" id="question_1_optionD">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--    
+
+                                <div class="site_row3 recruiters_question pb-5">
+                                    <div class="flex_row_justify_between_align_center recruiters_question_top">
+                    
+                                        <div class="questions_txxt">
+                                            <p>
+                                                Question 2
+                                            </p>
+                                        </div>
+                                        <div class="flex_row questions_functions">
+                                            <div>
+                                                <i class="far fa-copy"></i>
+                                            </div>
+                                            <div class="mx-3">
+                                                <i class="far fa-images"></i>
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-pencil-alt"></i>
+                                        </div>
+                                    </div>
+                                    </div>
+                    
+                                    <div class="row">                                           
+                                        <div class="col-md-9 input_div">
+                                            <label for=""> Add Question </label>
+                                            <input type="text" placeholder="Enter the question you want to ask">
+                                        </div>
+
+                                        <div class="col-md-3 input_div">
+                                            <label for=""> Select Question Type </label>
+                                            <select name="" id="">
+                                                <option value=""> Paragraph</option>
+                                                <option value="">QA Interview</option>
+                                                <option value="">QA Interview</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            -->
+                            </div>
+
+                            <div id="add_question_btn" class="site_row text-center green_link_underline py-5">
+                                <a href="#">
+                                    Add New Question
+                                </a>
+                            </div>
+
+                            <div class="site_row text-center">
+                                <b>NOTE:</b> Make sure the correct answer to questions are selected.
+                            </div>
+
+                            <div class="flex_row_justify_between_align_center mt-4 prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="#"> Cancel </a>
+                                </div>
+
+                                <div class="" id="save_questions_btn">
+                                    <button class="normal_btn" id="goto_next_three">
+                                        Continue
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End of Assessment Questions-->
+                    </div>
+                </div>
+
+            </section>
+
+
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script type="text/javascript">
+                    // Defining a function to display error message
+                    function printError(elemId, hintMsg) {
+                        document.getElementById(elemId).innerHTML = hintMsg;
+                    }
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#set_questions_btn').click(function(e) {
+                            e.preventDefault();
+
+                            var assessmentId = $("#assessment_id").val();
+                            if (typeof assessmentId != 'undefined' && assessmentId) {
+                                $(".update_profile").fadeOut(300);
+                                $(".change_password").delay(300).fadeIn();
+                            } else {
+                                swal({
+                                    title: 'You need to create an Assessment first',
+                                    type: 'warning'
+                                });
+                            }
+                        })
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/assessments/get-create-assessment-params',
+                            type: 'get',
+
+                            success: function(data) {
+                                var assessmentTypeContent = '';
+
+                                //Load all Assessment Types
+                                if (!data.assessment_types) {
+                                    assessmentTypeContent = '<option value="">Select Assessment Type</option>';
+                                } else {
+                                    assessmentTypeContent = '<option value="">Select Assessment Type</option>';
+
+                                    for (var i = 0; i < data.assessment_types.length; i++) {
+                                        assessmentTypeContent += '<option value="' + data.assessment_types[i].assessment_type_id + '">' +
+                                            data.assessment_types[i].assessment_type_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                $('#assessment_type').html(assessmentTypeContent);
+
+                                //Load all jobs
+                                var jobsAutoCompleteSelect = new SelectPure(".jobs-autocomplete-select", {
+                                    options: data.jobs,
+                                    value: [],
+                                    multiple: false,
+                                    autocomplete: true,
+                                    icon: "fa fa-times",
+                                    onChange: value => {
+                                        // console.log(value);
+                                        $('#job_assigned_to').val(value);
+                                    },
+                                });
+                            },
+
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#create_assessment_btn").click(function() {
+                            var assessment_name = $('#assessment_name').val();
+                            var assessment_type = $('#assessment_type').val();
+                            var job_assigned_to = $('#job_assigned_to').val();
+                            var assessment_time = $('#assessment_time').val();
+                            var assessment_description = $('#assessment_description').val();
+                            var pass_percentage = $('#pass_percentage').val();
+
+
+                            var ifValidated = validateCreateAssessmentForm(assessment_name, assessment_type, job_assigned_to,
+                                assessment_time, assessment_description, pass_percentage);
+
+                            if (ifValidated) {
+                                createAssessment(assessment_name, assessment_type, job_assigned_to, assessment_time,
+                                    assessment_description, pass_percentage);
+                            }
+                        });
+
+                        function createAssessment(assessment_name, assessment_type, job_assigned_to, assessment_time,
+                            assessment_description, pass_percentage) {
+
+                            $.ajax({
+                                url: '/assessments/add',
+                                type: 'post',
+                                data: {
+                                    assessment_name: assessment_name,
+                                    assessment_type: assessment_type,
+                                    job_assigned_to: job_assigned_to,
+                                    assessment_time: assessment_time,
+                                    assessment_description: assessment_description,
+                                    pass_percentage: pass_percentage
+                                },
+
+                                success: function(data) {
+                                    $("#assessment_id").val(data.assessmentId);
+
+                                    if (!data) {
+                                        swal({
+                                            title: 'An error occured. Please try again',
+                                            type: 'error'
+                                        });
+
+                                    } else {
+                                        $("#questions_lock").replaceWith('<div class="settings_title" id="questions_lock"><i class="fas fa-check-circle"></i>')
+                                            //location.replace('/recruiters/post-a-job?f=p_j&r=s')
+
+                                        swal({
+                                            title: 'Assessment Created Successfully. Click the "Set Questions" tab to create questions',
+                                            type: 'success'
+                                        });
+                                    }
+
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Create Assessment Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        var question_count = 1;
+
+                        processSingleAndMultipleOptions(question_count);
+
+                        $("#add_question_btn").click(function() {
+                            question_count += 1;
+
+                            var newQuestionBox = '<% include includes/snippets/single_choice_question_box %>';
+
+                            $('#questions_box').append(newQuestionBox);
+
+                            processSingleAndMultipleOptions(question_count);
+                        });
+
+                        function processSingleAndMultipleOptions(no) {
+                            var id = "#question_type_" + no;
+
+                            var radioGroup = "input:radio[id='correct_answer_" + no + "']";
+                            var checkboxGroup = "input:checkbox[id='correct_answer_" + no + "']";
+
+                            $(checkboxGroup).hide();
+                            // $(radioGroup).show();
+
+                            $(id).change(function() {
+                                if ($(this).val() == '1') {
+                                    $(checkboxGroup).hide();
+                                    $(radioGroup).show();
+                                } else if ($(this).val() == '2') {
+                                    $(checkboxGroup).show();
+                                    $(radioGroup).hide();
+                                } else if ($(this).val() == '3') {
+                                    $(checkboxGroup).hide();
+                                    $(radioGroup).hide();
+                                }
+
+                            });
+                        }
+
+                        $("#save_questions_btn").click(function() {
+                            var ifConfirmed = confirm("Are you sure these Question set are correct?");
+
+                            if (ifConfirmed) {
+                                var question_set = [];
+                                var questions = [];
+                                var question_types = [];
+                                var all_options = [];
+                                var options = [];
+                                var scores = [];
+                                var times = [];
+                                var correct_answers = [];
+
+                                //Get all questions
+                                $("input[name='questions[]']").each(function() {
+                                    questions.push($(this).val());
+                                });
+
+                                //Get all question types
+                                $("select[name='question_types[]']").each(function() {
+                                    question_types.push($(this).val());
+                                });
+
+                                //Get all weighted scores
+                                $("input[name='weigted_scores[]']").each(function() {
+                                    scores.push($(this).val());
+                                });
+
+                                //Get all times
+                                $("input[name='times[]']").each(function() {
+                                    times.push($(this).val());
+                                });
+
+                                //Get all options
+                                $("input[name='question_options[]']").each(function() {
+                                    all_options.push($(this).val());
+                                });
+
+
+                                // Divide options array into 4s i.e each question has option a to d
+                                while (all_options.length) {
+                                    options.push(all_options.splice(0, 4));
+                                }
+
+                                //Get all Single & multiple choice correct answers
+                                for (var i = 1; i <= questions.length; i++) {
+                                    //Get single choice correct answer
+                                    var radio_name = "input[name='single_correct_answer_" + i + "']:checked";
+                                    var single_choice_answer = $(radio_name).val();
+
+                                    if (typeof single_choice_answer != 'undefined') {
+                                        correct_answers.push({
+                                            "question": i,
+                                            "correct_answer": single_choice_answer
+                                        });
+                                    }
+
+                                    //Get multiple choice correct answers
+                                    var checkbox_name = "input[name='multiple_correct_answers_" + i + "']:checked";
+                                    var answers = [];
+
+                                    $(checkbox_name).each(function() {
+                                        answers.push($(this).val());
+                                    });
+
+                                    if (answers.length > 0) {
+                                        correct_answers.push({
+                                            "question": i,
+                                            "correct_answer": answers
+                                        });
+                                    }
+                                }
+
+
+                                //Create question set
+                                for (var i = 0; i < questions.length; i++) {
+                                    var answer = [];
+
+                                    if (question_types[i] == '1') {
+                                        answer.push(options[i][(correct_answers[i].correct_answer - 1)]);
+
+                                    } else if (question_types[i] == '2') {
+                                        var ans = correct_answers[i].correct_answer;
+                                        var len = correct_answers[i].correct_answer.length;
+
+                                        for (var j = 0; j < len; j++) {
+                                            var x = parseInt(ans[j]);
+                                            answer.push(options[i][(x - 1)]);
+                                        }
+                                    }
+
+                                    question_set.push({
+                                        "index": i + 1,
+                                        "question": questions[i],
+                                        "question_type": question_types[i],
+                                        "options": options[i],
+                                        "score": scores[i],
+                                        "time": times[i],
+                                        "correct_answer": answer
+                                    });
+                                }
+
+                                //console.log(question_set);
+
+                                submitQuestions(question_set);
+
+                            }
+
+                            function submitQuestions(question_set) {
+                                var assessment_id = $('#assessment_id').val();
+
+                                $.ajax({
+                                    url: '/assessments/create-questions',
+                                    type: 'post',
+                                    data: {
+                                        question_set: JSON.stringify(question_set),
+                                        assessment_id: assessment_id
+                                    },
+
+                                    success: function(data) {
+                                        if (!data) {
+                                            swal({
+                                                title: 'An error occured. Please try again.',
+                                                type: 'error'
+                                            });
+                                        } else {
+                                            swal({
+                                                    title: 'Questions Created Successfully',
+                                                    type: 'success',
+                                                    confirmButtonText: 'Ok',
+                                                },
+                                                function(isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.replace('/recruiters/assessments');
+                                                    }
+                                                });
+                                        }
+
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Create Questions Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

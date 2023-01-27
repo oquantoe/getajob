@@ -1,0 +1,195 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <!-- 728 x 90 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads seven28xx90">
+                    <a href="#" target="_blank">
+                        <img src="/images/ads/hertz/Leaderboard.png" alt="hertz_ad">
+                    </a>
+                </div>
+            </div>
+
+            <section>
+                <div class="flex_row job_categories">
+                    <div class="saved_job_txt" id="all_applicants_title">
+                    </div>
+                    <div class="jobs_all">
+                        <% var allCandidatesUrl = '/recruiters/all-job-candidates/' + job_id; %>
+                            <a href="<%=allCandidatesUrl%>" class="active"> All Applicants</a>
+                    </div>
+                    <div class="jobs_all">
+                        <% var allShortlistedCandidatesUrl = '/recruiters/application-info/' + job_id; %>
+                            <a href="<%=allShortlistedCandidatesUrl%>" class="active"> Shortlisted </a>
+                    </div>
+                    <div class="jobs_all">
+                        <% var allRejectedCandidatesUrl = '/recruiters/all-rejected-candidates/' + job_id; %>
+                            <a href="<%=allRejectedCandidatesUrl%>" class="active"> Rejected </a>
+                    </div>
+                    <div class="jobs_all">
+                        <div class="invite_btn" id="download_rejected_candidates_btn">
+                            <button>
+                                <i class="fas fa-cloud-download-alt mr-1"></i> Download List
+                            </button>
+                        </div>
+                    </div>
+                    <!--<div class="jobs_full_time">
+                        <a href="#"> Best Matches </a>
+                    </div> -->
+                </div>
+
+            </section>
+
+            <section>
+                <div class="site_row mt-4 jod_desc_tabul">
+                    <table id="applicants_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>State/Location</th>
+                                <th>Date Applied</th>
+                                <th>View Profile</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="applicants_data"></tbody>
+
+                    </table>
+                </div>
+
+                <!-- 728 x 90 Ad size -->
+                <div class="ads-row ads-margin-bottom-medium">
+                    <div class="ads seven28xx90">
+                        <a href="https://getajobng.com/cv-fix" target="_blank">
+                            <img src="/images/ads/gaj/Leaderboard_Banner.png" alt="gaj_ad">
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all job applicants
+                        $.ajax({
+                            url: '/jobs/get-all-rejected-job-applicants',
+                            type: 'post',
+                            data: {
+                                job_id: '<%=job_id%>'
+                            },
+
+                            success: function(data) {
+                                var content = '';
+                                var allApplicantsTitleContent = '';
+                                var job_name = '<%=job_name%>';
+
+                                if (!data || data.applicants.length == 0) {
+                                    content = '';
+                                    allApplicantsTitleContent = '<p>All Applicants for ' + job_name + ' (0)</p>';
+
+                                } else {
+                                    for (var i = 0; i < data.applicants.length; i++) {
+                                        var applicantFullName = data.applicants[i].first_name + ' ' + data.applicants[i].last_name;
+
+                                        var applicantPicture = typeof data.applicants[i].photo_url != 'undefined' &&
+                                            data.applicants[i].photo_url != 'null' &&
+                                            (data.applicants[i].photo_url != '') ? data.applicants[i].photo_url : '/images/no-user.png';
+
+                                        var applicantState = typeof data.applicants[i].state_name != 'undefined' &&
+                                            data.applicants[i].state_name != 'null' && data.applicants[i].state_name != null &&
+                                            (data.applicants[i].state_name != '') ? data.applicants[i].state_name : 'N/A';
+
+                                        var job_id = '<%=job_id%>';
+
+                                        content += '<tr> \
+                                        <td class="cand_image"> \
+                                            <div> \
+                                                <img src="' + applicantPicture + '" alt="User Image"> \
+                                            </div>' +
+                                            '</td> \
+                                        <td>' + applicantFullName + '</td> \
+                                        <td>' + data.applicants[i].email + '</td> \
+                                        <td>' + data.applicants[i].phone_number + '</td> \
+                                        <td>' + applicantState + '</td> \
+                                        <td>' + data.applicants[i].date_applied + '</td> \
+                                        <td class="view_candd_link"> \
+                                            <a href="/recruiters/candidate-info/' + data.applicants[i].user_id + '/?l=' + job_id + '"> \
+                                                View Profile \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+
+                                        allApplicantsTitleContent = '<p>All Rejected Applicants for ' + job_name + ' (' + data.applicants.length + ')</p>';
+                                    }
+                                }
+
+                                $('#applicants_data').html(content);
+                                $('#all_applicants_title').html(allApplicantsTitleContent);
+
+                                $("#applicants_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Rejected Applicants Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Download script-->
+                <script>
+                    $(document).ready(function() {
+                        $("#download_rejected_candidates_btn").click(function() {
+                            var job_id = '<%=job_id%>';
+                            var job_name = '<%=job_name%>';
+
+                            $.ajax({
+                                url: '/recruiters/download-excel-file',
+                                type: 'post',
+                                data: {
+                                    job_id: job_id,
+                                    job_name: job_name,
+                                    excel_file_to_download: 'non_shortlist'
+                                },
+                                xhrFields: {
+                                    responseType: 'blob'
+                                },
+
+                                success: function(response, status, xhr) {
+                                    var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                    fileName = fileName.substring(1, fileName.length - 1);
+                                    var a = document.createElement('a');
+                                    var url = window.URL.createObjectURL(response);
+                                    a.href = url;
+                                    a.download = fileName;
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Downloading Excel Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <!-- End Download script-->
+
+                <% include includes/global_dashboard_bottom%>

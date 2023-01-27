@@ -1,0 +1,41 @@
+<!-- The Modal -->
+<div class="modal fade job_desc_modal" id="set_approval_status_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal body -->
+            <div class="modal-body modal_interview_invite">
+                <div class="site_row mb-5">
+                    <div class="site_row">
+                        <p>
+                            Select Action
+                        </p>
+                    </div>
+
+                    <div class="site_row">
+                        <select name="approval_status" id="approval_status">
+                            <option value="">Select Approval Status</option>
+                            <option value="1">Approve</option>
+                            <option value="0">Disapprove</option>
+                        </select>
+                        <div class="form_error_msg" id="approvalStatusErr"></div>
+                    </div>
+                </div>
+
+                <div class="site_row">
+                    <div class="site_row">
+                        <label for="personal_message"> Enter Extra Personal Message (Optional)</label>
+                        <textarea name="personal_message" id="personal_message" cols="20" rows="5" placeholder="e.g. reason for disapproval, needs to send in additional documents e.t.c"></textarea>
+                    </div>
+                </div><br>
+
+                <div class="site_row text-center invite_btn" id="set_approval_status_btn">
+                    <button>
+                        Submit
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

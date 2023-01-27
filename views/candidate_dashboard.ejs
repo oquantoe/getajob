@@ -1,0 +1,395 @@
+<% include includes/dashboard_header %>
+    <% include includes/candidate_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section>
+                <div class="site_row user_dashboard_header">
+
+                    <div class="site_row user_welcome_note">
+
+                        <h3> Welcome, <span> 
+                            <%=data.first_name%> <%=data.last_name%>
+                        </span>
+                        </h3>
+
+                    </div>
+
+                    <div class="flex_row_wrap_align_center_justify_between dasboard_cards">
+                        <div id="recommended_jobs_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="applied_jobs_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="assessment_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                            <h4 class="mb-2">
+                                0
+                            </h4>
+                            <p>
+                                Assessments
+                            </p>
+                        </div>
+
+                        <div id="saved_jobs_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section>
+                <div class="site_row flex_row_justify_between account_history_n_recomendation">
+
+                    <div class="recomendation">
+
+                        <div class="flex_row_justify_between recomm_header">
+                            <div>
+                                <h4>
+                                    Job Recommendations (Top 10)
+                                </h4>
+                            </div>
+                            <div class="view_all_opening_jobs">
+                                <a href="/candidates/recommended-jobs">
+                                    View all
+                                </a>
+                            </div>
+                        </div>
+
+                        <div id="job_recommendation_content"></div>
+                    </div>
+
+                    <div class="skills_n_edu">
+                        <div class="" id="to_do_content">
+                        </div>
+
+                        <div class="">
+                            <div class="flex_row_justify_between recomm_header">
+                                <h4>
+                                    History
+                                </h4>
+                            </div>
+
+                            <div class="histories_wrapper">
+                                <div id="activity_history_content"></div>
+                            </div>
+
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="https://getajobng.com/cv-fix" target="_blank">
+                                    <img src="/images/ads/gaj/CV_Fix.gif" alt="gaj_ad">
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="https://c-ileasing.com/360fleet" target="_blank">
+                                    <img src="/images/ads/360_solutions/FMS Chief GDN Graphic_320x250@0,75x.png" alt="360_solutions_ad">
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 300 x 250 Ad size -->
+                        <div class="ads-row ads-margin-top-medium">
+                            <div class="ads three00xx250">
+                                <a href="#" target="_blank">
+                                    <img src="/images/ads/hertz/Inline Rectangle.png" alt="hertz_ad">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Candidate Job Recommendations
+                        $.ajax({
+                            url: '/jobs/get-candidate-job-recommendations-for-dashboard',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data && data.recommendedJobs.length == 0) {
+                                    content = 'No Recommended Jobs';
+                                } else {
+                                    for (var i = 0; i < data.recommendedJobs.length; i++) {
+
+                                        var company_logo = typeof data.recommendedJobs[i].company_logo_url != 'undefined' &&
+                                            data.recommendedJobs[i].company_logo_url != 'null' && data.recommendedJobs[i].company_logo_url != null &&
+                                            data.recommendedJobs[i].company_logo_url != '' ? data.recommendedJobs[i].company_logo_url : '/images/no-company-logo.png';
+
+                                        //Only show jobs that have not been applied to
+                                        if (data.recommendedJobs[i].application_status == 0) {
+                                            var application_link = '#';
+
+                                            /* if (data.recommendedJobs[i].application_channel == '' || data.recommendedJobs[i].application_channel == 'getajobng') {
+                                                 application_link = '/jobs/apply/' + data.recommendedJobs[i].job_id;
+                                             } else {
+                                                 if (data.recommendedJobs[i].external_application_link == '' || data.recommendedJobs[i].external_application_link == null) {
+                                                     application_link = '/jobs/apply/' + data.recommendedJobs[i].job_id;
+                                                 } else {
+                                                     application_link = data.recommendedJobs[i].external_application_link;
+                                                 }
+
+                                             } */
+
+                                            application_link = '/jobs/job-detail/' + data.recommendedJobs[i].job_id;
+
+                                            content += '<div class="site_row jobs_to_apply"> \
+                                        <div class="flex_row_justify_between jobs_header"> \
+                                            <div> \
+                                                <img id="company_logo_pic" \
+                                                    src="' + company_logo + '" \
+                                                    alt="Company Logo" style="width:60px;height:60px;"> \
+                                            </div> \
+                                            <div class="easy_apply_link">' +
+                                                '<a href="' + application_link + '">' +
+                                                'View more <i class="fas fa-angle-right"></i> \
+                                                </a> \
+                                                </div> \
+                                        </div> \
+                                        <div class="flex_row_justify_between jobs_sub_header"> \
+                                            <div> <p>' +
+                                                '<span>' + data.recommendedJobs[i].job_name + '</span> - ' + data.recommendedJobs[i].company_name + '' +
+                                                '</p> \
+                                            </div> \
+                                            <div>' +
+                                                '<span>Posted ' + data.recommendedJobs[i].date_time_ago + '</span>' +
+                                                '</div> \
+                                        </div> \
+                                        <div class="site_row job_desc"> \
+                                            <p> ' + truncate_long_text(data.recommendedJobs[i].job_description) + ' </p> \
+                                        </div> \
+                                    </div>';
+                                        }
+                                    }
+                                }
+
+                                $('#job_recommendation_content').html(content);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Job Recommendation Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+
+                        function truncate_long_text(long_text) {
+                            var truncated_string = '';
+
+                            if (long_text.length > 100) {
+                                truncated_string = long_text.substr(0, 200 - 1) + ' ...  ';
+                            } else {
+                                truncated_string = long_text;
+                            }
+
+                            return truncated_string;
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Candidate Activity History
+                        $.ajax({
+                            url: '/candidates/get-candidate-activity-history',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data && data.activityHistory.length == 0) {
+                                    content = 'No Activity History';
+                                } else {
+                                    for (var i = 0; i < data.activityHistory.length; i++) {
+                                        content += '<div class="site_row histories"> \
+                                        <p>' + data.activityHistory[i].description + '<br> \
+                                            <b>' + data.activityHistory[i].date_time_ago + '</b> \
+                                        </p> \
+                                    </div>';
+
+                                    }
+                                }
+
+                                $('#activity_history_content').html(content);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Activity History Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Candidate To - Do
+                        $.ajax({
+                            url: '/candidates/get-all-resume-info',
+                            type: 'get',
+
+                            success: function(data) {
+
+                                var content = '';
+
+                                if (data.resume) {
+                                    if (data.resume.resume_file_url == null || data.resume.resume_file_url == '' ||
+                                        data.resume.profile_summary == null || data.resume.profile_summary == '' ||
+                                        !data.work_experience || data.work_experience == null || data.work_experience.length == 0 ||
+                                        !data.skills || data.skills == null || data.skills.length == 0 ||
+                                        !data.education || data.education == null || data.education.length == 0 ||
+                                        data.userData.gender == null || data.userData.gender == '' ||
+                                        data.userData.dob == null || data.userData.dob == '' ||
+                                        data.userData.tagline == null || data.userData.tagline == '' ||
+                                        data.userData.industry == null || data.userData.industry == '' || data.userData.industry == 0) {
+
+                                        content += '<div class="flex_row_justify_between recomm_header"> \
+                                    <h4> \
+                                        To-Do List \
+                                    </h4> \
+                                </div> \
+                                <div class="histories_wrapper"> \
+                                    <div class="site_row histories"> \
+                                        <p><b>Complete your profile to increase your chance to get noticed</b></p> \
+                                    </div>';
+                                    }
+
+                                    if (data.resume.resume_file_url == null || data.resume.resume_file_url == '') {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/profile">Upload your CV/Resumé</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (data.resume.profile_summary == null || data.resume.profile_summary == '') {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/profile">Enter your Personal Summary</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (!data.work_experience || data.work_experience == null || data.work_experience.length == 0) {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/profile">Enter your Work Experiences</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (!data.skills || data.skills == null || data.skills.length == 0) {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/profile">Enter your Skills</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (!data.education || data.education == null || data.education.length == 0) {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/profile">Enter your Education History</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (data.userData.gender == null || data.userData.gender == '') {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/settings">Select your Gender</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (data.userData.dob == null || data.userData.dob == '') {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/settings">Enter your Date of Birth</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (data.userData.tagline == null || data.userData.tagline == '') {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/settings">Enter your Tagline</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    if (data.userData.industry == null || data.userData.industry == '' || data.userData.industry == 0) {
+                                        content += '<div class="site_row histories"> \
+                                        <p><i class="fas fa-exclamation-triangle"></i> \
+                                            &nbsp;<a href="/candidates/settings">Choose your Industry</a> \
+                                        </p> \
+                                    </div>';
+                                    }
+
+                                    content += '</div><br><br>';
+                                }
+
+                                $('#to_do_content').html(content);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'To Do List Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get Candidate Statistics
+                        $.ajax({
+                            url: '/candidates/get-candidate-statistics',
+                            type: 'get',
+
+                            success: function(data) {
+                                var applicationCountContent = '';
+                                var savedJobCountContent = '';
+                                var recommendedJobsCountContent = '';
+
+                                // Process Job Application Count
+                                if (!data || data.jobApplicationsCount == 0 || typeof data.jobApplicationsCount == 'undefined') {
+                                    applicationCountContent = '<h4 class="mb-2">0</h4><p>Job Applications</p>';
+                                } else {
+                                    applicationCountContent = '<h4 class="mb-2">' + data.jobApplicationsCount + '</h4><p>Job Applications</p>';
+                                }
+
+                                // Process Saved Jobs Count
+                                if (!data || data.savedJobsCount == 0 || typeof data.savedJobsCount == 'undefined') {
+                                    savedJobCountContent = '<h4 class="mb-2">0</h4><p>Saved Jobs</p>';
+                                } else {
+                                    savedJobCountContent = '<h4 class="mb-2">' + data.savedJobsCount + '</h4><p>Saved Jobs</p>';
+                                }
+
+                                // Process Recommended Jobs Count
+                                if (!data || data.recommendedJobsCount == 0 || typeof data.recommendedJobsCount == 'undefined') {
+                                    recommendedJobsCountContent = '<h4 class="mb-2">0</h4><p>Recommended Jobs</p>';
+                                } else {
+                                    recommendedJobsCountContent = '<h4 class="mb-2">' + data.recommendedJobsCount + '</h4><p>Recommended Jobs</p>';
+                                }
+
+                                $('#saved_jobs_count').html(savedJobCountContent);
+                                $('#applied_jobs_count').html(applicationCountContent);
+                                $('#recommended_jobs_count').html(recommendedJobsCountContent);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'Activity History Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

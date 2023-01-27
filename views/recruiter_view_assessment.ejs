@@ -1,0 +1,168 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section>
+                <div class="site_row user_dashboard_header">
+                    <div class="flex_row_justify_between the_job_name">
+                        <div>
+                            <h5>
+                                <%=assessmentData.assessment_name%> (
+                                    <%=assessmentData.job_name%>)
+                            </h5>
+                        </div>
+                        <!--<div>
+                            <form action="/assessments/edit-assessment/<%=assessmentData.assessment_id%>">
+                                <button>
+                                    View Questions
+                                </button>
+                            </form>
+                        </div> -->
+                    </div>
+
+                    <div class="flex_row_justify_between dasboard_cards">
+                        <div id="total_candidates" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="total_passed" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="total_failed" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="average_score" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section class="shortlisted_table_sect">
+                <div class="flex_row Shortlisted_top pb-4">
+                    <div>
+                        <h5>
+                            Candidates
+                        </h5>
+                    </div>
+                    <!-- <div>
+                        <a href="#">
+                                View all Candidates
+                        </a>
+                    </div> -->
+                </div>
+                <div class="site_row jod_desc_tabul bnb">
+                    <table id="candidates_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>Full Name</th>
+                                <th>Phone Number</th>
+                                <th>Date Attempted</th>
+                                <!--<th>Time Spent</th> -->
+                                <th>Score</th>
+                                <th class="">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidates_data">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script>
+                    function roundToTwo(num) {
+                        return +(Math.round(num + "e+2") + "e-2");
+                    }
+
+                    $(document).ready(function() {
+                        //Get all assessment candidates
+                        $.ajax({
+                            url: '/assessments/get-all-assessment-candidates',
+                            type: 'post',
+                            data: {
+                                assessment_id: '<%=assessmentData.assessment_id%>'
+                            },
+
+                            success: function(data) {
+                                var totalCandidatesCount = 0;
+                                var totalPassedCandidatesCount = 0;
+                                var totalFailedCandidatesCount = 0;
+                                var averageScore = 0;
+
+                                var content = '';
+
+                                if (!data || data.candidates.length == 0) {
+                                    content = '';
+                                } else {
+                                    averageScore = data.average_score;
+
+                                    for (var i = 0; i < data.candidates.length; i++) {
+                                        totalCandidatesCount += 1;
+
+                                        var candidateFullName = data.candidates[i].first_name + ' ' + data.candidates[i].last_name;
+
+                                        var firstRowContent = '<tr> \
+                                                    <td class="cand_image"> \
+                                                        <div> \
+                                                            <img src="' + data.candidates[i].photo_url + '" alt="User Image"> \
+                                                        </div> \
+                                                    </td> \
+                                                    <td>' + candidateFullName + '</td> \
+                                                    <td>' + data.candidates[i].phone_number + '</td> \
+                                                    <td>' + data.candidates[i].date_attempted + '</td> \
+                                                    <td>' + roundToTwo(data.candidates[i].score_percentage) + '%</td>';
+
+                                        var gradeContent = '';
+
+                                        if (Number(data.candidates[i].score_percentage) >= Number(data.candidates[i].pass_percentage)) {
+                                            totalPassedCandidatesCount++;
+                                            gradeContent = '<td class="assessment_passed">Passed</td></tr>';
+                                        } else {
+                                            console.log
+                                            totalFailedCandidatesCount++;
+                                            gradeContent = '<td class="assessment_failed">Failed</td></tr>';
+                                        }
+
+
+                                        content += (firstRowContent + gradeContent);
+                                    }
+                                }
+
+                                var totalCandidatesCountContent = '<h4 class="mb-2">' + totalCandidatesCount + '</h4><p>Total Candidates</p>';
+                                var totalPassedCandidatesCountContent = '<h4 class="mb-2">' + totalPassedCandidatesCount + '</h4><p>Passed</p>';
+                                var totalFailedCandidatesCountContent = '<h4 class="mb-2">' + totalFailedCandidatesCount + '</h4><p>Failed</p>';
+                                var averageScoreContent = '<h4 class="mb-2">' + averageScore + '</h4><p>Avg. Score</p>';
+
+                                $('#candidates_data').html(content);
+                                $('#total_candidates').html(totalCandidatesCountContent);
+                                $('#total_passed').html(totalPassedCandidatesCountContent);
+                                $('#total_failed').html(totalFailedCandidatesCountContent);
+                                $('#average_score').html(averageScoreContent);
+
+                                $("#candidates_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Candidates Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

@@ -1,0 +1,256 @@
+<% include includes/dashboard_header %>
+<% include includes/candidate_nav %> 
+<% include includes/dashboard_top_bar %> 
+
+            <section>
+                <div class="flex_row job_categories">
+                    <div class="saved_job_txt">
+                        <p>
+                            Recommended Jobs
+                        </p>
+                    </div>
+                    
+                </div>  
+                <div class="col-md-5 input_div">
+                    <label for="job_type">Choose Job Type</label>
+                    <select name="job_type" id="job_type">                                                    
+                    </select>
+                </div> <br>
+            </section>
+
+            <section class="create_job_table_section">
+                <div class="find_a_job_form"> 
+                    <div class="flex_row_justify_between find_a_job_filter_container">
+                        <table id="jobs_table">
+                            <thead>
+                                <tr>
+                                    <th width="100%"></th>
+                                </tr>
+                            </thead>
+                                    
+                            <tbody id="jobs_data"></tbody>
+                        </table>  
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+
+
+<% include includes/global_dashboard_scripts%>
+
+<script>
+    $(document).ready(function(){
+    //Get All Job Type
+        $.ajax({
+            url: '/jobs/get-all-job-types',
+            type: 'get',
+                                              
+            success: function(data){
+                var jobTypeContent = '';
+    
+                //Load all Job Type
+                if(!data.job_types){
+                    jobTypeContent = '<option value="">Select Job Type</option>';
+                } else{    
+                    jobTypeContent = '<option value="">Select Job Type</option>';
+    
+                    for(var i = 0; i < data.job_types.length; i++){
+                        jobTypeContent += '<option value="' +data.job_types[i].job_type_id+ '">' +
+                                            data.job_types[i].job_type_name +
+                                        '</option>';                                                                
+                    }
+                }
+    
+                $('#job_type').html(jobTypeContent);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'All Job Types Request failed: ' + xhr.responseText;
+                console.log(errorMsg)
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        clearTable();
+
+        load_recommended_jobs();
+
+        //Get Candidate Job Recommendations
+        function load_recommended_jobs(){
+            $.ajax({
+                url: '/jobs/get-candidate-job-recommendations',
+                type: 'get',
+                        
+                success: function(data){
+                    var content = '';
+            
+                    if(!data && data.recommendedJobs.length == 0){
+                        content = 'No Recommended Jobs';
+                    } else{
+                        for(var i = 0; i < data.recommendedJobs.length; i++){
+                            
+                            var company_logo =  typeof data.recommendedJobs[i].company_logo_url != 'undefined' && 
+                                data.recommendedJobs[i].company_logo_url != 'null' && data.recommendedJobs[i].company_logo_url != null
+                                && data.recommendedJobs[i].company_logo_url != '' ? data.recommendedJobs[i].company_logo_url : '/images/no-company-logo.png';
+
+                            //Only show jobs that have not been applied to
+                            if(data.recommendedJobs[i].application_status == 0){
+                                content += '<tr> \
+                                                <td> \
+                                                    <div class="site_row"> \
+                                                        <p> \
+                                                            <a href="/jobs/job-detail/' +data.recommendedJobs[i].job_id+ '">'
+                                                                + data.recommendedJobs[i].job_name +
+                                                            '</a>\
+                                                        </p>\
+                                                        <p>' + truncate_long_text(data.recommendedJobs[i].job_description) + '</p>\
+                                                        <p><b>Date Posted:</b> ' + data.recommendedJobs[i].date_time_ago + '</p>\
+                                                        <p><i>' + data.recommendedJobs[i].company_name + ', ' + data.recommendedJobs[i].state_name + '</i></p>\
+                                                    </div>\
+                                                    <div class="candidates_for_open_job">\
+                                                        <a href="/jobs/job-detail/' + data.recommendedJobs[i].job_id + '"> \
+                                                            View more \
+                                                        </a> \
+                                                    </div> \
+                                                    <hr>\
+                                                </td>\
+                                            </tr>';
+                            }
+                        }
+                    }
+
+                    $('#jobs_data').html(content);
+
+                    $("#jobs_table").DataTable({
+                        'paging' : true,
+                        'processing': true,
+                        'aaSorting' : [],
+                        'language': {
+                            'loadingRecords': '&nbsp;',
+                            'processing': 'Loading...',
+                            'sEmptyTable' : 'No job recommendations found.'
+                        } 
+                    });
+        
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var errorMsg = 'Job Recommendation Request failed: ' + xhr.responseText;
+                    console.log(errorMsg)
+                }
+            });
+        }
+    
+        $('#job_type').change(function() {      
+            var $option = $(this).find('option:selected');
+            
+            var value = $option.val();
+            var text = $option.text();
+
+            filter_recommended_jobs(value);
+        });
+
+        function filter_recommended_jobs(value){
+            //location.replace('/candidates/recommended-jobs?filter='+value);
+
+            clearTable();
+
+            $.ajax({
+                url: '/jobs/get-candidate-job-recommendations',
+                type: 'get',
+                data: {
+                    filter: value
+                },
+                        
+                success: function(data){
+                    var content = '';
+            
+                    if(!data && data.recommendedJobs.length == 0){
+                        content = 'No Recommended Jobs';
+                    } else{
+                        for(var i = 0; i < data.recommendedJobs.length; i++){
+                            
+                            var company_logo =  typeof data.recommendedJobs[i].company_logo_url != 'undefined' && 
+                                data.recommendedJobs[i].company_logo_url != 'null' && data.recommendedJobs[i].company_logo_url != null
+                                && data.recommendedJobs[i].company_logo_url != '' ? data.recommendedJobs[i].company_logo_url : '/images/no-company-logo.png';
+
+                            //Only show jobs that have not been applied to
+                            if(data.recommendedJobs[i].application_status == 0){
+                                content += '<tr> \
+                                                <td> \
+                                                    <div class="site_row"> \
+                                                        <p> \
+                                                            <a href="/jobs/job-detail/' +data.recommendedJobs[i].job_id+ '">'
+                                                                + data.recommendedJobs[i].job_name +
+                                                            '</a>\
+                                                        </p>\
+                                                        <p>' + truncate_long_text(data.recommendedJobs[i].job_description) + '</p>\
+                                                        <p><b>Date Posted:</b> ' + data.recommendedJobs[i].date_time_ago + '</p>\
+                                                        <p><i>' + data.recommendedJobs[i].company_name + ', ' + data.recommendedJobs[i].state_name + '</i></p>\
+                                                    </div>\
+                                                    <div class="candidates_for_open_job">\
+                                                        <a href="/jobs/job-detail/' + data.recommendedJobs[i].job_id + '"> \
+                                                            View more \
+                                                        </a> \
+                                                    </div> \
+                                                    <hr>\
+                                                </td>\
+                                            </tr>';
+                            }
+                        }
+                    }
+
+                    $('#jobs_data').html(content);
+
+                    $("#jobs_table").DataTable({
+                        'paging' : true,
+                        'processing': true,
+                        'aaSorting' : [],
+                        'language': {
+                            'loadingRecords': '&nbsp;',
+                            'processing': 'Loading...',
+                            'sEmptyTable' : 'No job recommendations found.'
+                        } 
+                    });
+        
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var errorMsg = 'Filter Job Recommendation Request failed: ' + xhr.responseText;
+                    console.log(errorMsg)
+                }
+            });
+        }
+
+        function clearTable(){
+            var table = $('#jobs_table').DataTable();
+            //clear datatable
+            table.clear().draw();
+
+            //destroy datatable
+            table.destroy();
+        }
+
+        function truncate_long_text(long_text) {
+            var truncated_string = '';
+
+            if(long_text.length > 100){
+                truncated_string = long_text.substr(0, 200 - 1).trim() + ' [...]  ';
+            } else{
+                truncated_string = long_text;
+            }
+
+            return truncated_string;
+        }
+    });
+</script>
+
+<% include includes/global_dashboard_bottom%>

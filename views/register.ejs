@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <% include includes/snippets/meta_tags%>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- CSS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+        <!-- Cookie Consent CDN -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/responsiveness.css">
+        <link rel="stylesheet" href="/css/animation.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+        <link rel="stylesheet" href="/css/datepicker.min.css" type="text/css">
+
+        <style>
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
+        </style>
+
+        <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+
+        <% include includes/snippets/drift_snippet %>
+            <% include includes/snippets/gtag %>
+
+                <title>Register - GetaJobNG</title>
+
+</head>
+
+<body>
+
+    <div class="left_side_4">
+        <div class="logo mr-5" style="margin-top:10px;margin-left: 10px;">
+            <a href="/"> <img src="/images/logo.png" alt="logo"></a>
+        </div>
+    </div>
+
+    <div class="right_side">
+
+        <div class="flex_row_center_all register_section_link">
+
+            <div class="active" id="candidate_form_link">
+                <p>
+                    <b>Candidates</b>
+                </p>
+            </div>
+            <div class="" id="employer_form_link">
+                <p>
+                    <b>Recruiters</b>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="shadow form_container_for_reg">
+
+            <div class="row gr_green_text">
+                <div class="col-md-12">
+                    <h3>Create an Account</h3>
+                </div>
+
+            </div>
+
+            <div class="candidate" id="candidate_form">
+                <form name="candidateRegForm" onsubmit="return validateCandidateRegForm()" action="/candidates/add" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="first_name">First Name</label>
+                                <input type="text" name="first_name" id="candidate_first_name">
+                                <div class="form_error_msg" id="firstNameErr"></div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" name="last_name" id="candidate_last_name">
+                                <div class="form_error_msg" id="lastNameErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="candidate_email">
+                                <div class="form_error_msg" id="emailErr"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" name="phone_number" id="candidate_phone_number">
+                                <div class="form_error_msg" id="phoneErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="candidate_password" autocomplete="off">
+                                <div class="form_error_msg" id="passwordErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="retype_password">Retype Password</label>
+                                <input type="password" name="retype_password" id="candidate_retype_password" autocomplete="off">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="gender">Gender</label>
+                                <select name="gender" id="candidate_gender">
+                                    <option value="">Select Gender</option> 
+                                    <option value="Female">Female</option> 
+                                    <option value="Male">Male</option>
+                                </select>
+                                <div class="form_error_msg" id="genderErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="dob">Date of Birth</label>
+                                <input type="text" name="dob" id="candidate_dob">
+                                <div class="form_error_msg" id="dobErr"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="country">Country</label>
+                                <select name="country" id="candidate_country">
+                                </select>
+                                <div class="form_error_msg" id="countryErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="state">State</label>
+                                <select name="state" id="candidate_state">
+                                </select>
+                                <div class="form_error_msg" id="stateErr"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="highest_qualification">Highest Qualification</label>
+                                <select name="highest_qualification" id="candidate_qualification">
+                                </select>
+                                <div class="form_error_msg" id="qualificationErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="industry">Current Job Function</label>
+                                <select name="industry" id="candidate_industry">
+                                </select>
+                                <div class="form_error_msg" id="industryErr"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="years_of_experience">Years of Experience</label>
+                                <select name="years_of_experience" id="candidate_yoe">
+                                    <option value="">Select Years of Experience</option> 
+                                    <option value="0 - 2 years">0 - 2 years</option> 
+                                    <option value="3 - 5 years">3 - 5 years</option> 
+                                    <option value="6 - 10 years">6 - 10 years</option>
+                                    <option value="11+ years">11+ years</option>
+                                    <option value="Others">Others</option> 
+                                </select>
+                                <div class="form_error_msg" id="yoeErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="upload_attachment" style="width: 100%;">
+                                <div class="upload_attachment_file_wrapper">
+                                    <img src="/images/Cloud_upload.png" alt="Cloud">
+                                    <p class="mt-4 attach_text_2" id="resume">
+                                        Click to upload CV/Resume
+                                    </p>
+                                </div>
+
+                                <input type="file" name="resume" id="resume" accept=".doc,.docx,.pdf" required>
+                            </div>
+                            <small>Upload your CV/Resume (Only PDF and doc/docx allowed).</small>
+                            <div class="form_error_msg" id="resumeErr"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <div id="recaptcha" class="g-recaptcha" data-sitekey="6Le47JIaAAAAALR0-QhyjK6qZKDooPuAFq1gs0Iw"></div>
+                                <div class="form_error_msg" id="captchaErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-4">
+                        <div class="col-md-12 policy_consent">
+                            <p>By registering, you agree to our
+                                <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row pt-4">
+                        <div class="col-md-12">
+                            <button class="full_btn" name="recruiter_register_button">
+                                        Register
+                                </button>
+                        </div>
+                    </div>
+
+                    <div class="row py-4">
+                        <div class="col-sm-12 text-center green_link">
+                            <p>
+                                Already have an account? <a href="/login"> Log In </a>
+                            </P>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="employers" id="employer_form">
+                <form name="recruiterRegForm" enctype="multipart/form-data" onsubmit="return validateRecruiterRegForm()" action="/recruiters/add" method="post">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input_div">
+                                <label for="recruiter_class"> Recruiter Class </label>
+                                <select name="recruiter_class" id="recruiter_class" required>
+                                    <option value="">Select a Recruiter Class</option>
+                                    <option value="individual">Individual</option>
+                                    <option value="corporate">Corporate</option>
+                                </select>
+                                <div class="form_error_msg" id="recruiterClassErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="corporate_form_box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input_div">
+                                    <label for="company_name">Company/Business Name</label>
+                                    <input type="text" name="company_name" id="recruiter_company_name">
+                                    <div class="form_error_msg" id="recCompanyNameErr"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input_div">
+                                    <label for="rc_number">RC Number</label>
+                                    <input type="text" name="rc_number" id="recruiter_rc_number">
+                                    <div class="form_error_msg" id="recRcNumberErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input_div">
+                                    <label for="industry">Company Industry</label>
+                                    <select name="industry" id="industry">
+                                                    </select>
+                                    <div class="form_error_msg" id="recIndustryErr"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="upload_attachment">
+                                    <div class="upload_attachment_file_wrapper">
+                                        <img src="/images/Cloud_upload.png" alt="Cloud">
+                                        <p class="mt-4 attach_text_2" id="cert_of_incorporation_file_name">
+                                            Upload Certificate of Incorporation
+                                        </p>
+                                    </div>
+
+                                    <input type="file" name="cert_of_incorporation" id="cert_of_incorporation" accept=".doc,.docx,.pdf">
+                                </div>
+                                <small>Upload the company's Certificate of Incorporation (Only PDF and doc/docx allowed).</small>
+                                <div class="form_error_msg" id="recCertOfIncorpErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="first_name">First Name</label>
+                                <input type="text" name="first_name" id="recruiter_first_name" required>
+                                <div class="form_error_msg" id="recFirstNameErr"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" name="last_name" id="recruiter_last_name" required>
+                                <div class="form_error_msg" id="recLastNameErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="recruiter_email" required>
+                                <div class="form_error_msg" id="recEmailErr"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" name="phone_number" id="recruiter_phone_number" required>
+                                <div class="form_error_msg" id="recPhoneErr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="upload_attachment">
+                                <div class="upload_attachment_file_wrapper">
+                                    <img src="/images/Cloud_upload.png" alt="Cloud">
+                                    <p class="mt-4 attach_text_2" id="means_of_identification_file_name">
+                                        Upload means of Identification
+                                    </p>
+                                </div>
+
+                                <input type="file" name="means_of_identification" id="means_of_identification" accept=".jpg,.jpeg,.png,.doc,.docx,.pdf" required>
+                            </div>
+                            <small>Upload either National ID, Driver's license or Voter's card (Only PDF and doc/docx allowed).</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="recruiter_password" autocomplete="off" required>
+                                <div class="form_error_msg" id="recPasswordErr"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <label for="retype_password">Retype Password</label>
+                                <input type="password" name="retype_password" id="recruiter_retype_password" autocomplete="off" required>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input_div">
+                                <div id="recaptcha" class="g-recaptcha" data-sitekey="6Le47JIaAAAAALR0-QhyjK6qZKDooPuAFq1gs0Iw"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-4">
+                        <div class="col-md-12 policy_consent">
+                            <p>By registering, you agree to our
+                                <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row pt-4">
+                        <div class="col-md-12">
+                            <button class="full_btn" name="recruiter_register_button">
+                                Register
+                                </button>
+                        </div>
+                    </div>
+
+                    <div class="row py-4">
+                        <div class="col-sm-12 text-center green_link">
+                            <p>
+                                Already have an account? <a href="/login"> Log In </a>
+                            </P>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <% include includes/global_dashboard_scripts%>
+
+        <script type="text/javascript">
+            // Defining a function to display error message
+            function printError(elemId, hintMsg) {
+                document.getElementById(elemId).innerHTML = hintMsg;
+            }
+
+            $('#corporate_form_box').hide();
+
+            $('#recruiter_class').change(function() {
+                if ($(this).val() == 'individual') {
+                    $('#corporate_form_box').hide();
+                } else if ($(this).val() == 'corporate') {
+                    $('#corporate_form_box').show();
+                }
+            });
+
+            $('#cert_of_incorporation').change(function() {
+                var file = $('#cert_of_incorporation')[0].files[0].name;
+                $('#cert_of_incorporation_file_name').text(file);
+            });
+
+            $('#means_of_identification').change(function() {
+                var file = $('#means_of_identification')[0].files[0].name;
+                $('#means_of_identification_file_name').text(file);
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: '/resume/get-all-qualification',
+                    type: 'get',
+
+                    success: function(data) {
+                        var qualificationContent = '';
+
+                        if (!data) {
+                            qualificationContent = '<option value="4">Bachelor Degree</option>';
+                        } else {
+                            qualificationContent = '<option value="0">Select Qualification</option>';
+
+                            for (var i = 0; i < data.qualifications.length; i++) {
+                                qualificationContent += '<option value="' + data.qualifications[i].qualification_id + '">' +
+                                    data.qualifications[i].qualification_name +
+                                    '</option>';
+                            }
+                        }
+
+                        $('#candidate_qualification').html(qualificationContent);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        var errorMsg = 'All Qualification Request failed: ' + xhr.responseText;
+                        console.log(errorMsg)
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('#candidate_dob').datepicker({
+                    language: 'en',
+                    dateFormat: 'yyyy-mm-dd'
+                });
+
+                $.ajax({
+                    //url: '/jobs/get-all-industries',
+                    url: '/jobs/get-all-job-post-params',
+                    type: 'get',
+
+                    success: function(data) {
+                        var industryContent = '';
+                        var stateContent = '<option value="0">Select country first</option>';
+                        var countryContent = '';
+
+                        //Load all Industries
+                        if (!data.industries) {
+                            industryContent = '<option value="0">Select job function</option>';
+                        } else {
+                            industryContent = '<option value="0">Select job function</option>';
+
+                            for (var i = 0; i < data.industries.length; i++) {
+                                industryContent += '<option value="' + data.industries[i].industry_id + '">' +
+                                    data.industries[i].industry_name +
+                                    '</option>';
+                            }
+                        }
+
+                        //Load all States
+                        /* if (!data.states) {
+                             stateContent = '<option value="0">Select State</option>';
+                         } else {
+                             stateContent = '<option value="0">Select State</option>';
+
+                             for (var i = 0; i < data.states.length; i++) {
+                                 stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                     data.states[i].state_name +
+                                     '</option>';
+                             }
+                         } */
+
+                        //Load all Countries
+                        if (!data.countries) {
+                            countryContent = '<option value="0">Select Country</option>';
+                        } else {
+                            countryContent = '<option value="0">Select Country</option>';
+
+                            for (var i = 0; i < data.countries.length; i++) {
+                                countryContent += '<option value="' + data.countries[i].country_id + '">' +
+                                    data.countries[i].country_name +
+                                    '</option>';
+                            }
+                        }
+
+                        $('#candidate_state').html(stateContent);
+                        $('#candidate_country').html(countryContent);
+                        $('#candidate_industry').html(industryContent);
+                        $('#industry').html(industryContent);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                        console.log(errorMsg)
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $('input[type=file]').change(function() {
+                var fileName = $(this).val().split('\\').pop();
+                var idName = $(this).attr('id');
+
+                $('#resume').html(fileName);
+
+            })
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('#candidate_country').on('change', function() {
+                    var country_id = $(this).val();
+
+                    if (country_id) {
+                        $.ajax({
+                            url: '/jobs/get-all-states-by-country',
+                            type: 'post',
+                            data: {
+                                country_id: country_id
+                            },
+
+                            success: function(data) {
+                                var stateContent = '';
+
+                                if (!data) {
+                                    stateContent = '<option value="4">No States found</option>';
+                                } else {
+                                    stateContent = '<option value="0">Select State</option>';
+
+                                    for (var i = 0; i < data.states.length; i++) {
+                                        stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                            data.states[i].state_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                $('#candidate_state').html(stateContent);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All States by country Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+
+                        });
+                    } else {
+                        $('#candidate_state').html('<option value="">Select country first</option>');
+                    }
+                });
+
+
+            });
+        </script>
+
+        <% include includes/global_dashboard_bottom%>

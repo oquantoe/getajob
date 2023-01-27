@@ -1,0 +1,287 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <!-- 728 x 90 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads seven28xx90">
+                    <a href="#" target="_blank">
+                        <img src="/images/ads/hertz/Leaderboard.png" alt="hertz_ad">
+                    </a>
+                </div>
+            </div>
+
+            <section class="job_edit_n_desc">
+
+                <div class="flex_row_align_center_justify_start top">
+                    <div class="flex_row">
+                        <% var backUrl = '/admin/all-candidates'; %>
+
+                            <div class="mr-3">
+                                <a href="<%=backUrl%>">
+                                    <i class="fas fa-long-arrow-alt-left"></i> Back
+                                </a>
+                            </div>
+                            <div>
+                                <h5>
+                                    Candidate Info
+                                </h5>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="site_row job_desc_details job_desc_content">
+                    <div class="flex_row_justify_between_align_center job_role_n_time">
+                        <div class="flex_row_align_center_justify_start">
+                            <div class="mr-3 candidate_imag">
+                                <img id="header_user_profile_pic" src="<%= (typeof userInfo.photo_url != 'undefined') && (userInfo.photo_url != 'null') 
+                                    && (userInfo.photo_url != '') ? userInfo.photo_url : '/images/no-user.png'%>" alt="User Image">
+                            </div>
+                            <div>
+                                <% var fullName = userInfo.first_name + ' ' + userInfo.last_name%>
+                                    <p>
+                                        <%=fullName%> - <span>(<%=userInfo.tagline%>)</span>
+                                    </p>
+                                    <p>
+                                        <span>(<%=userInfo.phone_number%> | 
+                                        <a href="mailto:<%=userInfo.email%>"><%=userInfo.email%></a>)
+                                    </span>
+                                    </p>
+                            </div>
+
+                        </div>
+
+                        <% var candidate_resume_url = typeof resumeInfo.resume_file_url != 'undefined' && resumeInfo.resume_file_url && resumeInfo.resume_file_url != '' && resumeInfo.resume_file_url != null ? resumeInfo.resume_file_url : 'false'; %>
+
+
+                            <%if(candidate_resume_url != 'false'){ %>
+                                <div class="invite_btn" id="download_cv_btn">
+                                    <button>
+                                    <i class="fas fa-cloud-download-alt mr-1"></i> Download CV 
+                                </button>
+                                </div>
+                                <%} else{%>
+                                    <div class="flex_row_align_center">
+                                        <button class="normal_btn_light">
+                                    <i class="fas fa-times-circle mr-1"></i> No CV Uploaded
+                                </button>
+                                    </div>
+                                    <%}%>
+                    </div>
+
+                    <div class="site_row main_job_desc">
+                        <h5>
+                            Professional Summary
+                        </h5>
+                        <p>
+                            <%=resumeInfo.profile_summary%>
+                        </p>
+                    </div>
+
+
+                    <div class="flex_row exp_n_skill">
+                        <div class="experi">
+                            <div class="site_row job_responsibilities">
+                                <h6>
+                                    Work Experience
+                                </h6>
+
+                                <%if(workExperienceData && workExperienceData.length > 0){%>
+                                    <%for(var i = 0; i < workExperienceData.length; i++){%>
+                                        <ul style="list-style-type:circle;">
+                                            <li>
+                                                <p><span><%=workExperienceData[i].job_title%></span> -
+                                                    <%=workExperienceData[i].employer_name%>,
+                                                        <%=workExperienceData[i].employer_address%>
+                                                </p>
+                                                <p>&emsp;-
+                                                    <%=workExperienceData[i].job_responsibility%>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <%} %>
+                                            <%} else{%>
+                                                <p>No Work Experience</p>
+                                                <%}%>
+
+                            </div>
+                        </div>
+
+
+                        <div class="edu_n_skill flex_col">
+                            <div class="site_row job_responsibilities">
+                                <h6>
+                                    Education
+                                </h6>
+
+                                <%if(educationData && educationData.length > 0){%>
+                                    <%for(var i = 0; i < educationData.length; i++){%>
+                                        <ul style="list-style-type:square;">
+                                            <li>
+                                                <p><span><%=educationData[i].name_of_institution%></span></p>
+                                                <p>&emsp;
+                                                    <%=educationData[i].qualification_name%>
+                                                        -
+                                                        <%=educationData[i].course_of_study%>
+                                                </p>
+                                                <p>&emsp;
+                                                    <%=educationData[i].start_date%> -
+                                                        <%=educationData[i].end_date%>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <%} %>
+                                            <%} else{%>
+                                                <p>No Education</p>
+                                                <%}%>
+                            </div>
+
+                            <div class="site_row job_responsibilities">
+                                <h6>
+                                    Skills
+                                </h6>
+
+                                <%if(skillData && skillData.length > 0){ %>
+                                    <% for(var i = 0; i < skillData.length; i++){%>
+                                        <ul style="list-style-type:square;">
+                                            <li>
+                                                <%=skillData[i].skill_name%>
+                                            </li>
+                                        </ul>
+                                        <%} %>
+                                            <%} else{%>
+                                                <p>No Skills</p>
+                                                <%}%>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex_row exp_n_skill">
+                        <div class="experi">
+                            <div class="site_row job_responsibilities">
+                                <h6>
+                                    Jobs Applied To
+                                </h6>
+
+                                <%if(applicationData && applicationData.length > 0){%>
+                                    <%for(var i = 0; i < applicationData.length; i++){%>
+                                        <ul style="list-style-type:square;">
+                                            <li>
+                                                <p><span><%=applicationData[i].job_name%></span></p>
+                                                <p>Application Date:
+                                                    <%=applicationData[i].date_time_ago%>
+                                                </p>
+                                                <p>Status:
+                                                    <%=applicationData[i].application_status%>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                        <%} %>
+                                            <%} else{%>
+                                                <p>Candidate hasn't applied to any job</p>
+                                                <%}%>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <!-- 728 x 90 Ad size -->
+                <div class="ads-row ads-margin-bottom-medium">
+                    <div class="ads seven28xx90">
+                        <a href="https://getajobng.com/cv-fix" target="_blank">
+                            <img src="/images/ads/gaj/Leaderboard_Banner.png" alt="gaj_ad">
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <!-- Get All Application status script-->
+                <script>
+                    var ifSavedCandidatePage = "<%=applicationData%>";
+
+                    if (ifSavedCandidatePage) {
+                        $(document).ready(function() {
+                            $.ajax({
+                                url: '/jobs/get-all-application-status',
+                                type: 'get',
+
+                                success: function(data) {
+                                    var applicationStatusContent = '';
+
+                                    if (!data) {
+                                        applicationStatusContent = '<option value="0">-- Select Status --</option>';
+                                    } else {
+                                        for (var i = 0; i < data.applicationStatus.length; i++) {
+                                            applicationStatusContent += '<option value="' + data.applicationStatus[i].application_status_id + '">' +
+                                                data.applicationStatus[i].status_name +
+                                                '</option>';
+                                        }
+                                    }
+
+                                    $('#application_status').html(applicationStatusContent);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'All Application Status Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    }
+                </script>
+                <!-- End All Application status Script-->
+
+                <!-- Download CV script-->
+                <script>
+                    $(document).ready(function() {
+                        $("#download_cv_btn").click(function() {
+                            var candidate_id = '<%=userInfo.user_id%>';
+
+                            $.ajax({
+                                url: '/recruiters/download-resume',
+                                type: 'post',
+                                data: {
+                                    candidate_id: candidate_id
+                                },
+                                xhrFields: {
+                                    responseType: 'blob'
+                                },
+
+                                success: function(response, status, xhr) {
+                                    var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                    fileName = fileName.substring(1, fileName.length - 1);
+                                    var a = document.createElement('a');
+                                    var url = window.URL.createObjectURL(response);
+                                    a.href = url;
+                                    a.download = fileName;
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Downloading CV/Resume Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+
+                                    swal({
+                                        title: 'No CV/Resume',
+                                        text: 'This candidate does not have their CV/Resume uploaded.',
+                                        type: 'warning',
+                                        confirmButtonText: 'Close',
+                                    });
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <!-- End Download CV script-->
+
+                <% include includes/global_dashboard_bottom%>

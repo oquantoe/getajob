@@ -1,0 +1,446 @@
+<% include includes/dashboard_header %>
+    <% include includes/candidate_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section class="settings_section">
+
+                <div class="flex_row_justify_between settings_container">
+
+                    <div class="settings_toggle">
+
+                        <div class="site_row xxxx">
+
+                            <div class="flex_row settings_toggle_each active" id="personal_profile_settings">
+                                <div class="settings_icon">
+                                    <i class="far fa-user"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Personal
+                                    </p>
+                                    <p>
+                                        Customize your profile
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex_row settings_toggle_each" id="password_profile_settings">
+                                <div class="settings_icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Password
+                                    </p>
+                                    <p>
+                                        Secure your account fast
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="settings_form">
+                        <div class="site_row update_profile">
+                            <div class="site_row">
+                                <div class="add_image">
+                                    <img style="width:90px;height:90px;border-radius:50%;" id="user_profile_pic" src="<%= (typeof data.photo_url != 'undefined') && (data.photo_url != 'null') 
+                                        && (data.photo_url != '') ? data.photo_url : '/images/no-user.png'%>" alt="User Image">
+                                    <button id="upload_picture_btn" data-toggle="modal" data-target="#upload_profile_pic_modal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <form name="updateProfileForm" onsubmit="return validateUpdateProfileForm()" method="post" action="/candidates/update">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="first_name">First Name <sup class="form_asterisk">*</sup></label>
+                                            <input type="text" name="first_name" id="first_name" value="<%=data.first_name%>" required readonly>
+                                            <div class="form_error_msg" id="firstNameErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="last_name">Last Name <sup class="form_asterisk">*</sup></label>
+                                            <input type="text" name="last_name" id="last_name" value="<%=data.last_name%>" required readonly>
+                                            <div class="form_error_msg" id="lastNameErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="email">Email Address <sup class="form_asterisk">*</sup></label>
+                                            <input type="email" name="email" id="email" value="<%=data.email%>" required readonly>
+                                            <div class="form_error_msg" id="emailErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="phone_number">Phone Number</label>
+                                            <input type="text" name="phone_number" id="phone_number" value="<%=data.phone_number%>">
+                                            <div class="form_error_msg" id="phoneErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="gender">Gender <sup class="form_asterisk">*</sup></label>
+                                            <select name="gender" id="gender" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="Female">Female</option> 
+                                                <option value="Male">Male</option>
+                                            </select>
+                                            <div class="form_error_msg" id="genderErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="dob">Date of Birth</label>
+                                            <input type="text" name="dob" id="dob" value="<%=data.dob%>">
+                                            <div class="form_error_msg" id="dobErr"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="industry">Industry <sup class="form_asterisk">*</sup></label>
+                                            <select name="industry" id="industry" required>
+                                            </select>
+                                            <div class="form_error_msg" id="industryErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="tagline">Tagline</label>
+                                            <input type="text" name="tagline" id="tagline" value="<%=data.tagline%>" placeholder="e.g Business Developer at GbaCard Limited">
+                                            <div class="form_error_msg" id="taglineErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="country">Country</label>
+                                            <select name="country" id="country">
+                                            </select>
+                                            <div class="form_error_msg" id="countryErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="state">State</label>
+                                            <select name="state" id="state">
+                                            </select>
+                                            <div class="form_error_msg" id="stateErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="address"> Address </label>
+                                            <textarea name="address" id="address" cols="30" rows="10"><%=data.address%></textarea>
+                                            <div class="form_error_msg" id="addressErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4">
+                                    <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                        <button class="normal_btn">Update Profile</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                        <div class="site_row change_password">
+
+                            <form name="changePasswordForm" onsubmit="return validateChangePasswordForm()" method="post" action="/candidates/update">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for=""> Current Password </label>
+                                            <input type="password" name="current_password" id="current_password" autocomplete="off">
+                                            <div class="form_error_msg" id="currentPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for=""> New Password </label>
+                                            <input type="password" name="new_password" id="new_password" autocomplete="off">
+                                            <div class="form_error_msg" id="newPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for=""> Confirm Password </label>
+                                            <input type="password" name="confirm_password" id="confirm_password" autocomplete="off">
+                                            <div class="form_error_msg" id="confirmPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4">
+                                    <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                        <button class="normal_btn"> Change Password </button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            </div>
+            </section>
+
+            <% var currentView = 'candidate'; %>
+
+                <% include includes/modals/upload_profile_picture_modal %>
+
+                    <% include includes/global_dashboard_scripts%>
+
+
+                        <script type="text/javascript">
+                            // Defining a function to display error message
+                            function printError(elemId, hintMsg) {
+                                document.getElementById(elemId).innerHTML = hintMsg;
+                            }
+                        </script>
+
+                        <script>
+                            $('#profile_picture').on('change', function() {
+                                var files = $(this).get(0).files;
+                                if (files.length > 0) {
+                                    var formData = new FormData();
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        var file = files[i];
+                                        formData.append('profile_picture', file, file.name);
+                                    }
+
+                                    $.ajax({
+                                        url: '/candidates/upload-profile-picture',
+                                        type: 'POST',
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+
+                                        success: function(data) {
+                                            if (data) {
+                                                $('#upload_profile_pic_modal').hide();
+                                                $('body').removeClass('modal-open');
+                                                $('.modal-backdrop').remove();
+
+                                                if (data.status == 'success') {
+
+                                                    var new_profile_pic = data.photo_url;
+
+                                                    $('#user_profile_pic').attr("src", new_profile_pic);
+                                                    $('#header_user_profile_pic').attr("src", new_profile_pic);
+
+                                                    swal({
+                                                        title: 'Profile Picture Uploaded successfully!',
+                                                        type: 'success'
+                                                    });
+                                                } else {
+                                                    swal({
+                                                        title: 'Profile Picture Upload failed. Please try again',
+                                                        type: 'error'
+                                                    });
+                                                }
+
+                                            }
+                                        },
+
+                                        xhr: function() {
+                                            // create an XMLHttpRequest
+                                            var xhr = new XMLHttpRequest();
+                                            // listen to the 'progress' event
+                                            xhr.upload.addEventListener('progress', function(evt) {
+                                                if (evt.lengthComputable) {
+                                                    // calculate the percentage of upload completed
+                                                    var percentComplete = evt.loaded / evt.total;
+                                                    percentComplete = parseInt(percentComplete * 100);
+                                                    // update the Bootstrap progress bar with the new percentage
+                                                    $('.progress-bar').text(percentComplete + '%');
+                                                    $('.progress-bar').width(percentComplete + '%');
+                                                    // once the upload reaches 100%, set the progress bar text to done
+                                                    if (percentComplete === 100) {
+                                                        $('.progress-bar').html('Done');
+                                                    }
+                                                }
+                                            }, false);
+                                            return xhr;
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#dob').datepicker({
+                                    language: 'en',
+                                    dateFormat: 'yyyy-mm-dd'
+                                });
+
+                                //Get All Job Post Params
+                                $.ajax({
+                                    url: '/jobs/get-all-job-post-params',
+                                    type: 'get',
+
+                                    success: function(data) {
+
+                                        var stateContent = '<option value="0">Select country first</option>';
+                                        var countryContent = '';
+                                        var industryContent = '';
+
+                                        //Load all States
+                                        /* if (!data.states) {
+                                            stateContent = '<option value="0">Select State</option>';
+                                        } else {
+                                            stateContent = '<option value="0">Select State</option>';
+
+                                            for (var i = 0; i < data.states.length; i++) {
+                                                stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                                    data.states[i].state_name +
+                                                    '</option>';
+                                            }
+                                        } */
+
+                                        //Load all Countries
+                                        if (!data.countries) {
+                                            countryContent = '<option value="0">Select Country</option>';
+                                        } else {
+                                            countryContent = '<option value="0">Select Country</option>';
+
+                                            for (var i = 0; i < data.countries.length; i++) {
+                                                countryContent += '<option value="' + data.countries[i].country_id + '">' +
+                                                    data.countries[i].country_name +
+                                                    '</option>';
+                                            }
+                                        }
+
+                                        //Load all Industry
+                                        if (!data.industries) {
+                                            industryContent = '<option value="0">Select Industry</option>';
+                                        } else {
+                                            industryContent = '<option value="0">Select Industry</option>';
+
+                                            for (var i = 0; i < data.industries.length; i++) {
+                                                industryContent += '<option value="' + data.industries[i].industry_id + '">' +
+                                                    data.industries[i].industry_name +
+                                                    '</option>';
+                                            }
+                                        }
+
+                                        $('#state').html(stateContent);
+                                        $('#country').html(countryContent);
+                                        $('#industry').html(industryContent);
+
+                                        setOtherData();
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Params Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#country').on('change', function() {
+                                    var country_id = $(this).val();
+
+                                    if (country_id) {
+                                        $.ajax({
+                                            url: '/jobs/get-all-states-by-country',
+                                            type: 'post',
+                                            data: {
+                                                country_id: country_id
+                                            },
+
+                                            success: function(data) {
+                                                var stateContent = '';
+
+                                                if (!data) {
+                                                    stateContent = '<option value="4">No States found</option>';
+                                                } else {
+                                                    stateContent = '<option value="0">Select State</option>';
+
+                                                    for (var i = 0; i < data.states.length; i++) {
+                                                        stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                                            data.states[i].state_name +
+                                                            '</option>';
+                                                    }
+                                                }
+
+                                                $('#state').html(stateContent);
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError) {
+                                                var errorMsg = 'All States by country Request failed: ' + xhr.responseText;
+                                                console.log(errorMsg)
+                                            }
+
+                                        });
+                                    } else {
+                                        $('#state').html('<option value="">Select country first</option>');
+                                    }
+                                });
+
+
+                            });
+                        </script>
+
+                        <!-- Set other data -->
+                        <script>
+                            function setOtherData() {
+                                var state = "<%=(typeof data.state != 'undefined') && (data.state != 'null') && (data.state != null) && (data.state != '') ? data.state : 0 %>";
+                                var country = "<%=(typeof data.country != 'undefined') && (data.country != 'null') && (data.country != null) && (data.country != '') ? data.country : 0 %>";
+                                var gender = "<%=(typeof data.gender != 'undefined') && (data.gender != 'null') && (data.gender != null) && (data.gender != '') ? data.gender : 0 %>";
+                                var industry = "<%=(typeof data.industry != 'undefined') && (data.industry != 'null') && (data.industry != null) && (data.industry != '') ? data.industry : 0 %>";
+
+                                $('#state').val(state.toString());
+                                $('#country').val(country.toString());
+                                $('#gender').val(gender.toString());
+                                $('#industry').val(industry.toString());
+                            }
+                        </script>
+                        <!-- End Set other data -->
+
+                        <% include includes/global_dashboard_bottom%>

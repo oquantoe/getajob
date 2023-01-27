@@ -1,0 +1,58 @@
+<div class="mobile_nav">
+    <!-- menu toggler -->
+    <div class="flex_row_center_spaceBetween menu_button_wrapper">
+        <a href="/"> <img src="/images/logo.png" alt="logo"></a>
+        <div class="menu_button menu_button_2">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+    <!-- menu toggler -->
+    <!-- Links -->
+    <div class="flex_col_align_end mobile_nav_link_container">
+        <div>
+            <a href="/recruiter-info">Recruiters</a>
+        </div>
+        <div>
+            <a href="/assessment">Assessments</a>
+        </div>
+        <div>
+            <a href="/find-a-job">Job Search</a>
+        </div>
+        <div>
+            <a href="/post-a-job">Post a Job</a>
+        </div>
+        <div>
+            <a href="/career-advice">Career Advice</a>
+        </div>
+        <div>
+            <a href="/cv-fix">CV Fix</a>
+        </div>
+    </div>
+    <div class="flex_row_align_center_justify_end mobile_nav_btns">
+        <% if(userAuthenticated == 'true'){ %>
+            <% if(userData.role_id == 1){%>
+                <a href="/candidates/dashboard"><button class="login">
+                    Dashboard
+                </button></a>
+                <%} else if(userData.role_id == 2){%>
+                    <a href="/recruiters/dashboard"><button class="login">
+                    Dashboard
+                </button></a>
+                    <%} else if(userData.role_id == 4){%>
+                        <a href="/admin/dashboard"><button class="login">
+                        Dashboard
+                    </button></a>
+                        <%}%>
+                            <%} else {%>
+                                <a href="/register"><button class="signup">
+                Register
+            </button></a>
+                                <a href="/login"><button class="login">
+                Log In
+            </button></a>
+                                <%}%>
+    </div>
+    <!-- End Links -->
+</div>

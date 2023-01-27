@@ -1,0 +1,9 @@
+{
+    "git.ignoreLimitWarning": true,
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/7d2310ba-b71e-4749-8ae0-03de57850e4f/AppServices/subscriptions/7d2310ba-b71e-4749-8ae0-03de57850e4f/resourceGroups/GetajobNG-RG/providers/Microsoft.Web/sites/getajobng",
+    "appService.deploySubpath": "."
+}

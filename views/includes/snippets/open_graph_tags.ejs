@@ -1,0 +1,30 @@
+<meta property="og:title" 
+content="<%= (typeof jobData.job_name != 'undefined') && (jobData.job_name != 'null') && (jobData.job_name != null) 
+&& (jobData.job_name != '') ? jobData.job_name : ''%>">
+
+<meta property="og:description" 
+content="<%= (typeof jobData.job_name != 'undefined') && (jobData.job_name != 'null') && (jobData.job_name != null) 
+&& (jobData.job_name != '') ? jobData.job_name : ''%> job opening. Apply now">
+
+<meta property="og:image" content="/images/open_graph_logo_small.png">
+<meta property="og:locale" content="en-ng">
+<meta property="og:site_name" content="GetaJobNG">
+<meta property="og:type" content="Website">
+<meta property="og:updated_time" 
+content="<%= (typeof jobData.date_created != 'undefined') && (jobData.date_created != 'null') && (jobData.date_created != null) 
+&& (jobData.date_created != '') ? jobData.date_created : ''%>">
+
+<meta property="og:url" 
+content="https://www.getajobng.com/job-detail/<%= (typeof jobData.job_id != 'undefined') && (jobData.job_id != 'null') && (jobData.job_id != null) 
+&& (jobData.job_id != '') ? jobData.job_id : ''%>">
+
+<meta name="twitter:title" 
+content="<%= (typeof jobData.job_name != 'undefined') && (jobData.job_name != 'null') && (jobData.job_name != null) 
+&& (jobData.job_name != '') ? jobData.job_name : ''%>">
+
+<meta name="twitter:description"  
+content="<%= (typeof jobData.job_name != 'undefined') && (jobData.job_name != 'null') && (jobData.job_name != null) 
+&& (jobData.job_name != '') ? jobData.job_name : ''%> job opening. Apply now">
+
+<meta name="twitter:image" content="/images/open_graph_logo_small.png">
+<meta name="twitter:card" content="summary">

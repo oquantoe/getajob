@@ -1,0 +1,129 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div id="candidates_title">
+                    </div>
+                    <div class="">
+                        <form action="/recruiters/post-a-job">
+                            <button>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="site_row create_job_table">
+
+                    <table id="recruiters_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Date Registered
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="recruiters_data"></tbody>
+
+                    </table>
+
+                </div>
+            </section>
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/admin/get-all-recruiters',
+                            type: 'post',
+
+                            success: function(data) {
+                                var content = '';
+                                var recruitersTitleContent = '';
+
+                                if (!data || data.recruiters.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.recruiters.length; i++) {
+                                        var recruiterFullName = typeof data.recruiters[i].company_name != 'undefined' &&
+                                            data.recruiters[i].company_name != '' && data.recruiters[i].company_name != 'null' ? data.recruiters[i].company_name :
+                                            (data.recruiters[i].first_name + ' ' + data.recruiters[i].last_name);
+
+                                        var companyLogo = typeof data.recruiters[i].company_logo_url != 'undefined' &&
+                                            data.recruiters[i].company_logo_url != 'null' && data.recruiters[i].company_logo_url != null &&
+                                            (data.recruiters[i].company_logo_url != '') ? data.recruiters[i].company_logo_url : '/images/no-user.png';
+
+                                        var status = data.recruiters[i].is_approved == '1' ? 'Active' : 'In-active';
+
+                                        content += '<tr> \
+                                                        <td class="cand_image"> \
+                                                            <div> \
+                                                                <img src="' + companyLogo + '" alt="Company Logo"> \
+                                                            </div>' +
+                                            '</td> \
+                                                        <td>' + recruiterFullName + '</td> \
+                                                        <td>' + data.recruiters[i].email + '</td> \
+                                                        <td>' + data.recruiters[i].phone_number + '</td> \
+                                                        <td>' + data.recruiters[i].date_time_ago + '</td> \
+                                                        <td>' + status + '</td> \
+                                                        <td class="view_candd_link"> \
+                                                            <a href="/admin/recruiter-info/' + data.recruiters[i].user_id + '"> \
+                                                                View Profile \
+                                                            </a> \
+                                                        </td> \
+                                                    </tr>';
+
+                                    }
+
+                                    recruitersTitleContent = '<h5>All Recruiters (' + data.recruiters.length + ')</h5>';
+                                }
+
+                                $('#recruiters_data').html(content);
+                                $('#recruiters_title').html(recruitersTitleContent);
+
+                                $("#recruiters_table").DataTable({
+                                    "paging": true,
+                                    "aaSorting": [],
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Recruiters Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

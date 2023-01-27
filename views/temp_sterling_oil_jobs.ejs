@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <% include includes/snippets/meta_tags%>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- CSS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+        <!-- Cookie Consent CDN -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/responsiveness.css">
+        <link rel="stylesheet" href="/css/animation.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
+        <% include includes/snippets/drift_snippet %>
+            <% include includes/snippets/gtag %>
+
+                <title>Sterling Oil Jobs - GetaJobNG</title>
+
+</head>
+
+<body>
+
+    <% include includes/landing_page/mobile_nav %>
+
+        <nav>
+
+            <div class="site_header_two">
+
+                <div class="site_container">
+
+                    <% include includes/landing_page/landing_page_nav %>
+
+                        <div class="row d-flex flex-row align-items-center justify-content-center py-2">
+                            <div class="col-md-12 header_left_part">
+
+                                <div class="row">
+                                    <div class="col-md-12 text-center pt-5 header_text">
+                                        <h3>
+                                            Available <span>jobs</span> by <span>Sterling Oil</span>
+                                        </h3>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+        <section class="jobbbs">
+
+            <div class="site_row">
+                <div class="site_container">
+
+                    <div class="flex_row_justify_between find_a_job_filter_container">
+                        <div class="search_job_page_sidebar">
+
+                            <!--
+                            <div class="flex_col sidebar_dropdown">
+                                <div class="dropdowns_wrapper">
+                                    <div class="flex_row_justify_between dropdown_btn">
+                                        <div class="dropdown_name">
+                                            Industry
+                                        </div>
+                                        <div class="dropdown_carret">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="dropdown_menu_options" id="industry_filter">
+                                        <div class="site_row industry_filter">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="dropdowns_wrapper">
+                                    <div class="flex_row_justify_between dropdown_btn">
+                                        <div class="dropdown_name">
+                                            Skills
+                                        </div>
+                                        <div class="dropdown_carret">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown_menu_options" id="skill_filter">
+                                        <div class="site_row skill_filter">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="dropdowns_wrapper">
+                                    <div class="flex_row_justify_between dropdown_btn">
+                                        <div class="dropdown_name">
+                                            Location
+                                        </div>
+                                        <div class="dropdown_carret">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown_menu_options" id="location_filter">
+                                        <div class="site_row location_filter">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="dropdowns_wrapper">
+                                    <div class="flex_row_justify_between dropdown_btn">
+                                        <div class="dropdown_name">
+                                            Job Type
+                                        </div>
+                                        <div class="dropdown_carret">
+                                            <i class="fas fa-angle-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown_menu_options" id="job_type_filter">
+                                        <div class="site_row mt-4 job_type_filter">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div> -->
+
+                            <div class="ads-row ads-margin-top-medium">
+                                <div class="ads three00xx250">
+                                    <a href="https://getajobng.com/cv-fix" target="_blank">
+                                        <img src="/images/ads/gaj/CV_Fix.gif" alt="gaj_ad">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 300 x 250 Ad size -->
+                            <div class="ads-row ads-margin-top-medium">
+                                <div class="ads three00xx250">
+                                    <a href="#" target="_blank">
+                                        <img src="/images/ads/hertz/Inline Rectangle.png" alt="hertz_ad">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 300 x 250 Ad size -->
+                            <div class="ads-row ads-margin-top-medium">
+                                <div class="ads three00xx250">
+                                    <a href="https://c-ileasing.com/360fleet" target="_blank">
+                                        <img src="/images/ads/360_solutions/FMS Chief GDN Graphic_320x250@0,75x.png" alt="360_solutions_ad">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="find_a_job_form search_job_page_jobs">
+                            <!-- 728 x 90 Ad size -->
+                            <div class="ads-row ads-margin-bottom-medium">
+                                <div class="ads seven28xx90">
+                                    <a href="https://getajobng.com/cv-fix" target="_blank">
+                                        <img src="/images/ads/gaj/Leaderboard_Banner.png" alt="gaj_ad">
+                                    </a>
+                                </div>
+                            </div>
+                            <table id="jobs_table">
+                                <thead>
+                                    <tr>
+                                        <th width="100%"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="jobs_data"></tbody>
+                            </table>
+                            <p id="no_jobs_text"></p>
+
+                            <!-- 728 x 90 Ad size -->
+                            <!-- <div class="ads-row ads-margin-top-medium">
+                            <div class="ads seven28xx90">
+                            <h4>728 x 90</h4>
+                            </div>
+                        </div> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <% include includes/landing_page/footer %>
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+            <script src="/js/jQuery.min.js"></script>
+            <script src="/js/main.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+            <script type="text/javascript" src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    //Get All Job Filters
+                    $.ajax({
+                        url: '/jobs/get-all-job-filters',
+                        type: 'get',
+
+                        success: function(data) {
+                            var industryContent = stateContent = jobTypeContent = skillContent = '';
+
+                            if (!data) {
+                                industryContent = '';
+                                stateContent = '';
+                                jobTypeContent = '';
+                                skillContent = '';
+                            } else {
+                                //Load industry filters
+                                for (var i = 0; i < data.industries.length; i++) {
+                                    industryContent += '<label for="" class="containerr" id="industry_label">' +
+                                        data.industries[i].industry_name +
+                                        '<input type="checkbox" ' +
+                                        'value="' + data.industries[i].industry_id + '" ' +
+                                        'name="' + data.industries[i].industry_name + '" ' +
+                                        'id="' + data.industries[i].industry_name + '"> \
+                                                    <span class="checkmark"></span> \
+                                                </label>';
+
+                                }
+
+                                //Load state filters
+                                for (var i = 0; i < data.states.length; i++) {
+                                    stateContent += '<label for="" class="containerr">' +
+                                        data.states[i].state_name +
+                                        '<input type="checkbox" ' +
+                                        'value="' + data.states[i].state_id + '" ' +
+                                        'name="' + data.states[i].state_name + '" ' +
+                                        'id="' + data.states[i].state_name + '"> \
+                                                    <span class="checkmark"></span> \
+                                                </label>';
+
+                                }
+
+                                //Load Job type filters
+                                for (var i = 0; i < data.jobTypes.length; i++) {
+                                    jobTypeContent += '<label for="" class="containerr">' +
+                                        data.jobTypes[i].job_type_name +
+                                        '<input type="checkbox" ' +
+                                        'value="' + data.jobTypes[i].job_type_id + '" ' +
+                                        'name="' + data.jobTypes[i].job_type_name + '" ' +
+                                        'id="' + data.jobTypes[i].job_type_name + '"> \
+                                                    <span class="checkmark"></span> \
+                                                </label>';
+
+                                }
+
+                                //Load Skill filters
+                                for (var i = 0; i < data.skills.length; i++) {
+                                    skillContent += '<label for="" class="containerr">' +
+                                        data.skills[i].skill_name +
+                                        '<input type="checkbox" ' +
+                                        'value="' + data.skills[i].skill_id + '" ' +
+                                        'name="' + data.skills[i].skill_name + '" ' +
+                                        'id="' + data.skills[i].skill_name + '"> \
+                                                    <span class="checkmark"></span> \
+                                                </label>';
+
+                                }
+                            }
+
+                            $('.industry_filter').html(industryContent);
+                            $('.location_filter').html(stateContent);
+                            $('.job_type_filter').html(jobTypeContent);
+                            $('.skill_filter').html(skillContent);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            var errorMsg = 'All Jobs Request failed: ' + xhr.responseText;
+                            console.log(errorMsg)
+                        }
+                    });
+                });
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    if (!getParameterByName('search')) {
+                        load_jobs_data();
+                    }
+
+                    function load_jobs_data() {
+                        //$('.filter_data').html('<div id="loading" style="" ></div>');
+
+                        // var f_industry = get_filter('industry_filter');
+                        // var f_state = get_filter('location_filter');
+                        // var f_job_type = get_filter('job_type_filter');
+                        // var f_job_category = get_filter('job_category_filter');
+                        // var f_skill = get_filter('skill_filter');
+
+                        clearTable();
+
+                        $.ajax({
+                            url: '/jobs/get-sterling-oil-jobs',
+                            type: 'get',
+
+                            success: function(data) {
+
+                                var content = '';
+
+                                if (!data && data.jobs.length == 0) {
+                                    content = 'No jobs found. Try another search.';
+                                } else {
+                                    for (var i = 0; i < data.jobs.length; i++) {
+                                        content += '<tr> \
+                                                <td> \
+                                                    <div class="site_row"> \
+                                                        <p> \
+                                                            <a href="/job-detail/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].job_name +
+                                            '</a>\
+                                                        </p>\
+                                                        <p>' + truncate_long_text(data.jobs[i].job_description) + '</p>\
+                                                        <p><b>Date Posted:</b> ' + data.jobs[i].date_time_ago + '</p>\
+                                                        <p><i>' + data.jobs[i].company_name + ', ' + data.jobs[i].state_name + '</i></p>\
+                                                    </div>\
+                                                    <div class="candidates_for_open_job">\
+                                                        <a href="/job-detail/' + data.jobs[i].job_id + '"> \
+                                                            View more \
+                                                        </a> \
+                                                    </div> \
+                                                    <hr>\
+                                                </td>\
+                                            </tr>';
+
+                                    }
+                                }
+
+                                $('#jobs_data').html(content);
+
+                                $("#jobs_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...',
+                                        'sEmptyTable': 'No jobs found. Try another search.'
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    function get_filter(id_name) {
+                        var filter = [];
+                        $('#' + id_name + ' input:checked').each(function() {
+                            filter.push($(this).attr('value'));
+                        });
+
+                        return filter;
+                    }
+
+                    function filter_jobs_data() {
+                        var f_industry = get_filter('industry_filter');
+                        var f_state = get_filter('location_filter');
+                        var f_job_type = get_filter('job_type_filter');
+                        var f_job_category = get_filter('job_category_filter');
+                        var f_skill = get_filter('skill_filter');
+
+                        clearTable();
+
+                        $.ajax({
+                            url: '/jobs/filter-jobs',
+                            type: 'get',
+                            data: {
+                                f_industry: f_industry,
+                                f_state: f_state,
+                                f_job_type: f_job_type,
+                                f_job_category: f_job_category,
+                                f_skill: f_skill
+                            },
+                            success: function(data) {
+
+                                var content = '';
+
+                                if (!data && data.jobs.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.jobs.length; i++) {
+                                        content += '<tr> \
+                                                <td> \
+                                                    <div class="site_row"> \
+                                                        <p> \
+                                                            <a href="/job-detail/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].job_name +
+                                            '</a>\
+                                                        </p>\
+                                                        <p>' + truncate_long_text(data.jobs[i].job_description) + '</p>\
+                                                        <p><b>Date Posted:</b> ' + data.jobs[i].date_time_ago + '</p>\
+                                                        <p><i>' + data.jobs[i].company_name + ', ' + data.jobs[i].state_name + '</i></p>\
+                                                    </div>\
+                                                    <div class="candidates_for_open_job">\
+                                                        <a href="/job-detail/' + data.jobs[i].job_id + '"> \
+                                                            View more \
+                                                        </a> \
+                                                    </div> \
+                                                    <hr>\
+                                                </td>\
+                                            </tr>';
+
+                                    }
+                                }
+
+
+                                $('#jobs_data').html(content);
+
+                                $("#jobs_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...',
+                                        'sEmptyTable': 'No jobs matching these filters. Try another search.'
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+
+                    function clearTable() {
+                        var table = $('#jobs_table').DataTable();
+                        //clear datatable
+                        table.clear().draw();
+
+                        //destroy datatable
+                        table.destroy();
+                    }
+
+                    function getParameterByName(name, url) {
+                        if (!url) {
+                            url = window.location.href;
+                        }
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                            results = regex.exec(url);
+                        if (!results) {
+                            return null
+                        };
+                        if (!results[2]) {
+                            return ''
+                        };
+
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                    }
+
+                    function truncate_long_text(long_text) {
+                        var truncated_string = '';
+
+                        if (long_text.length > 100) {
+                            truncated_string = long_text.substr(0, 200 - 1).trim() + ' [...]  ';
+                        } else {
+                            truncated_string = long_text;
+                        }
+
+                        return truncated_string;
+                    }
+
+                    $(document).on("click", ".containerr", function() {
+                        filter_jobs_data();
+                    });
+                });
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    if (getParameterByName('search')) {
+                        var keyword = getParameterByName('search');
+                        $("#keyword").val(keyword);
+                        searchKeyword(keyword);
+                    }
+
+                    $("#search_btn").click(function() {
+                        var keyword = $("#keyword").val();
+                        searchKeyword(keyword);
+                    });
+
+                    $('#keyword').keypress(function(e) {
+                        if (e.which == 13) {
+                            var keyword = $("#keyword").val();
+                            searchKeyword(keyword);
+
+                            return false;
+                        }
+                    });
+
+                    //Search Keyword od Skill
+                    function searchKeyword(keyword) {
+                        clearTable();
+
+                        $.ajax({
+                            url: '/jobs/keyword-search',
+                            type: 'get',
+                            data: {
+                                keyword: keyword
+                            },
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.jobs.length == 0) {
+                                    var no_jobs_content = 'No jobs with <b>' + keyword + '</b> found. Try another search.';
+                                    $('#result_text_box').html('<p style="color:green;">Search complete but 0 results. Please try another search.</p>');
+                                    //$('#no_jobs_text').html(no_jobs_content);
+                                } else {
+                                    for (var i = 0; i < data.jobs.length; i++) {
+                                        content += '<tr> \
+                                                <td> \
+                                                    <div class="site_row"> \
+                                                        <p> \
+                                                            <a href="/job-detail/' + data.jobs[i].job_id + '">' +
+                                            data.jobs[i].job_name +
+                                            '</a>\
+                                                        </p>\
+                                                        <p>' + truncate_long_text(data.jobs[i].job_description) + '</p>\
+                                                        <p><b>Date Posted:</b> ' + data.jobs[i].date_time_ago + '</p>\
+                                                        <p><i>' + data.jobs[i].company_name + ', ' + data.jobs[i].state_name + '</i></p>\
+                                                    </div>\
+                                                    <div class="candidates_for_open_job">\
+                                                        <a href="/job-detail/' + data.jobs[i].job_id + '"> \
+                                                            View more \
+                                                        </a> \
+                                                    </div> \
+                                                    <hr>\
+                                                </td>\
+                                            </tr>';
+
+                                    }
+                                }
+
+                                $('#result_text_box').html('<p style="color:green;">Search Complete. View results below.</p>');
+                                $('#jobs_data').html(content);
+
+                                $("#jobs_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...',
+                                        'sEmptyTable': 'No jobs matching <b>' + keyword + '</b>. Try another search.'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Jobs Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    }
+
+                    function clearTable() {
+                        var table = $('#jobs_table').DataTable();
+                        //clear datatable
+                        table.clear().draw();
+
+                        //destroy datatable
+                        table.destroy();
+                    }
+
+                    function truncate_long_text(long_text) {
+                        var truncated_string = '';
+
+                        if (long_text.length > 100) {
+                            truncated_string = long_text.substr(0, 200 - 1).trim() + ' [...]  ';
+                        } else {
+                            truncated_string = long_text;
+                        }
+
+                        return truncated_string;
+                    }
+
+                    function getParameterByName(name, url) {
+                        if (!url) {
+                            url = window.location.href;
+                        }
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                            results = regex.exec(url);
+                        if (!results) {
+                            return null
+                        };
+                        if (!results[2]) {
+                            return ''
+                        };
+
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                    }
+                });
+            </script>
+
+</body>
+
+</html>

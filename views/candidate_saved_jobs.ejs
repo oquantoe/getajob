@@ -1,0 +1,163 @@
+<% include includes/dashboard_header %>
+<% include includes/candidate_nav %>
+<% include includes/dashboard_top_bar %>       
+
+            
+            <section>
+
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div>
+                        <h5>
+                            Saved Jobs
+                        </h5>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="create_job_table_section">
+                <div class="site_row create_job_table">
+
+                    <table id="jobs_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Job Title
+                                </th>
+                                <th>
+                                    Company Name
+                                </th>
+                                <th>
+                                    Job Type
+                                </th>
+                                <th>
+                                    Job Category
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="jobs_data"></tbody>
+                    </table>
+
+                </div>
+            </section>
+            
+        </div>
+    </section>
+
+
+<% include includes/global_dashboard_scripts %>
+
+<script>
+    $(document).ready(function(){
+        //Get all saved jobs
+        $.ajax({
+            url: '/candidates/get-all-saved-jobs',
+            type: 'get',
+                      
+            success: function(data){
+                var content = '';
+    
+                if(!data || data.jobs.length == 0){
+                    content = '';
+                } else{
+                    for(var i = 0; i < data.jobs.length; i++){
+                        var location = data.jobs[i].state + ', ' + data.jobs[i].country;
+
+                        content += '<tr> \
+                                        <td class="assess_title"> \
+                                            <a href="/jobs/job-detail/' + data.jobs[i].job_id + '"> \
+                                                <p>' +data.jobs[i].job_name+ '</p> \
+                                            </a> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].company_name+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].job_type+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +data.jobs[i].job_category+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' +location+ '</p> \
+                                        </td> \
+                                        <td> \
+                                            <a href="/jobs/job-detail/' + data.jobs[i].job_id + '"> \
+                                                <i style="color:#0000ff" class="far fa-eye"></i> \
+                                            </a> &nbsp;&nbsp;\
+                                            <a id="remove_job_link" title="Remove Job" href="#" onclick="removeJob('+ data.jobs[i].saved_job_id +');return false;"> \
+                                                <i style="color:#ff0000" class="far fa-trash-alt"></i> \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+                    }
+                }
+              
+                $('#jobs_data').html(content);
+    
+                $("#jobs_table").DataTable({
+                    'paging' : true,
+                    'processing': true,
+                    'aaSorting': [],
+                    'language': {
+                        'loadingRecords': '&nbsp;',
+                        'processing': 'Loading...'
+                    }   
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var errorMsg = 'All saved candidates Request failed: ' + xhr.responseText;
+                console.log(errorMsg)
+            }
+        });
+    });
+</script>
+
+<script>
+    function removeJob(saved_job_id){
+        $(document).ready(function(){
+            var ifConfirm = confirm("Are you sure you want to delete?");
+                
+            if(ifConfirm){                    
+                //Remove Job
+                $.ajax({
+                    url: '/candidates/remove-saved-job',
+                    type: 'post',
+                    data: {
+                        saved_job_id : saved_job_id
+                    },                       
+                    success: function(data){    
+                        if(data.affectedRows > 0){
+                            swal({
+                                title: 'Job Removed Successfully',
+                                type: 'success'
+                            });
+        
+                            window.location.replace('/candidates/saved-jobs');
+                        } else{
+                            swal({
+                                title: 'An error occurred',
+                                text: 'Something happened with this operation. Please try again',
+                                type: 'error'
+                            });
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        var errorMsg = 'Removing Job Request failed: ' + xhr.responseText;
+                        console.log(errorMsg)
+                    }
+                });
+            }
+        });            
+    }
+</script>
+
+<% include includes/global_dashboard_bottom %>

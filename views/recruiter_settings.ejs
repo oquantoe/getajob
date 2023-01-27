@@ -1,0 +1,912 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section class="settings_section">
+
+                <div class="flex_row_justify_between settings_container">
+
+                    <div class="settings_toggle">
+                        <div class="site_row vvvv">
+
+                            <div class="flex_row settings_toggle_each active" id="personal_profile_settings_rec">
+                                <div class="settings_icon">
+                                    <i class="far fa-user"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Personal
+                                    </p>
+                                    <p>
+                                        Customize your profile
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex_row settings_toggle_each" id="password_profile_settings_rec">
+                                <div class="settings_icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Password
+                                    </p>
+                                    <p>
+                                        Secure your account fast
+                                    </p>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="flex_row settings_toggle_each" id="company_profile_settings_rec">
+                                <div class="settings_icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Company Profile
+                                    </p>
+                                    <p>
+                                        Edit company profile
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex_row settings_toggle_each" id="team_profile_settings_rec">
+                                <div class="settings_icon">
+                                    <i class="far fa-user"></i>
+                                </div>
+                                <div class="settings_title">
+                                    <p>
+                                        Invite Team
+                                    </p>
+                                    <p>
+                                        Invite your team mates
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="settings_form">
+                        <div class="site_row update_profile" id="profile_account_setting_rec">
+                            <div class="site_row">
+                                <div class="add_image">
+                                    <img style="width:90px;height:90px;border-radius:50%;" id="user_profile_pic" src="<%= (typeof data.photo_url != 'undefined') && (data.photo_url != 'null') 
+                                     && (data.photo_url != '') ? data.photo_url : '/images/no-user.png'%>" alt="User Image">
+                                    <button id="upload_picture_btn" data-toggle="modal" data-target="#upload_profile_pic_modal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <form name="updateRecruiterProfileForm" onsubmit="return validateUpdateRecruiterProfileForm()" method="post" action="/recruiters/update">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" name="last_name" id="last_name" value="<%=userInfo.last_name%>">
+                                            <div class="form_error_msg" id="lastNameErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="first_name">First Name</label>
+                                            <input type="text" name="first_name" id="first_name" value="<%=userInfo.first_name%>">
+                                            <div class="form_error_msg" id="firstNameErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="email">Email Address</label>
+                                            <input type="email" name="email" id="email" value="<%=userInfo.email%>">
+                                            <div class="form_error_msg" id="emailErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="phone_number">Phone Number</label>
+                                            <input type="text" name="phone_number" id="phone_number" value="<%=userInfo.phone_number%>">
+                                            <div class="form_error_msg" id="phoneErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for=""> Address </label>
+                                            <textarea name="" id="" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="row pt-4">
+                                    <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                        <button class="normal_btn">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="site_row change_password" id="password_account_setting_rec">
+                            <form name="changePasswordForm" onsubmit="return validateChangePasswordForm()" method="post" action="/recruiters/update">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="current_password"> Current Password </label>
+                                            <input type="password" name="current_password" id="current_password" autocomplete="off">
+                                            <div class="form_error_msg" id="currentPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="new_password"> New Password </label>
+                                            <input type="password" name="new_password" id="new_password" autocomplete="off">
+                                            <div class="form_error_msg" id="newPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="confirm_password"> Confirm Password </label>
+                                            <input type="password" name="confirm_password" id="confirm_password" autocomplete="off">
+                                            <div class="form_error_msg" id="confirmPasswordErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4">
+                                    <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                        <button class="normal_btn"> Change Password </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="site_row company_profile" id="company_account_setting_rec">
+                            <div class="site_row">
+                                <div class="add_image">
+                                    <img style="width:90px;height:90px;border-radius:50%;" id="user_profile_pic" src="<%= (typeof data.photo_url != 'undefined') && (data.photo_url != 'null') 
+                                        && (data.photo_url != '') ? data.photo_url : '/images/no-user.png'%>" alt="Company Logo">
+                                    <button id="upload_picture_btn" data-toggle="modal" data-target="#upload_profile_pic_modal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <form name="updateCompanyProfileForm" onsubmit="return validateUpdateCompanyProfileForm()" method="post" action="/recruiters/update">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="company_name">Company Name</label>
+                                            <input type="text" name="company_name" id="company_name" readonly>
+                                            <div class="form_error_msg" id="companyNameErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="rc_number">RC Number</label>
+                                            <input type="text" name="rc_number" id="rc_number">
+                                            <div class="form_error_msg" id="rcNumberErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="industry">Industry</label>
+                                            <select name="industry" id="industry">
+                                            </select>
+                                            <div class="form_error_msg" id="industryErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="year_established">Year Established</label>
+                                            <input type="text" name="year_established" id="year_established">
+                                            <div class="form_error_msg" id="yearEstablishedErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="company_phone_number">Company Phone Number</label>
+                                            <input type="text" name="company_phone_number" id="company_phone_number">
+                                            <div class="form_error_msg" id="companyPhoneNumberErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="company_email">Company Email</label>
+                                            <input type="text" name="company_email" id="company_email">
+                                            <div class="form_error_msg" id="companyEmailErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="company_website">Company Website</label>
+                                            <input type="text" name="company_website" id="company_website">
+                                            <div class="form_error_msg" id="companyWebsiteErr"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="no_of_employees">Company Size</label>
+                                            <select name="no_of_employees" id="no_of_employees">
+                                                <option value="">Select Company Size</option>
+                                                <option value="1">1 Employee</option>
+                                                <option value="2 - 10">2 - 10 Employees</option>
+                                                <option value="11 - 50">11 - 50 Employees</option>
+                                                <option value="51 - 200">51 - 200 Employees</option>
+                                                <option value="201 - 500">201 - 500 Employees</option>
+                                                <option value="501 - 1,000">501 - 1,000 Employees</option>
+                                                <option value="1,001 - 5,000">1,001 - 5,000 Employees</option>
+                                                <option value="5,001 - 10,000">5,001 - 10,000 Employees</option>
+                                                <option value="10,001+">10,001+ Employees</option>
+                                            </select>
+                                            <div class="form_error_msg" id="noOfEmployeesErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="address">Address</label>
+                                            <input type="text" name="address" id="address">
+                                            <div class="form_error_msg" id="addressErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input_div">
+                                            <label for="city">City</label>
+                                            <input type="text" name="city" id="city">
+                                            <div class="form_error_msg" id="cityErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input_div">
+                                            <label for="country">Country</label>
+                                            <select name="country" id="country">
+                                            </select>
+                                            <div class="form_error_msg" id="countryErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input_div">
+                                            <label for="state">State</label>
+                                            <select name="state" id="state">
+                                            </select>
+                                            <div class="form_error_msg" id="stateErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="twitter_link">Twitter</label>
+                                            <input type="text" name="twitter_link" id="twitter_link">
+                                            <div class="form_error_msg" id="twitterLinkErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="instagram_link">Instagram</label>
+                                            <input type="text" name="instagram_link" id="instagram_link">
+                                            <div class="form_error_msg" id="instagramLinkErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="facebook_link">Facebook</label>
+                                            <input type="text" name="facebook_link" id="facebook_link">
+                                            <div class="form_error_msg" id="facebookLinkErr"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="input_div">
+                                            <label for="linkedin_link">Linkedin</label>
+                                            <input type="text" name="linkedin_link" id="linkedin_link">
+                                            <div class="form_error_msg" id="linkedInLinkErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input_div">
+                                            <label for="company_description">Describe your Company</label>
+                                            <textarea name="company_description" id="company_description" cols="30" rows="10"></textarea>
+                                            <div class="form_error_msg" id="companyDescriptionErr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4" id="update_company_profile_btn">
+                                    <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                        <button class="normal_btn">Update Company Profile</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="site_row invite_team" id="intTeam_account_setting_rec">
+                            <div class="site_row invite_mem_head">
+                                <p>
+                                    Team Members
+                                </p>
+                            </div>
+
+                            <div id="company_team_members_box">
+                            </div>
+
+                            <div id="add_new_team_member_box">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="input_div">
+                                            <label for="new_recruiter_email_1"> Team Member’s Email Address</label>
+                                            <input type="email" name="new_recruiter_email[]" id="new_recruiter_email_1">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input_div">
+                                            <label for="access_level">Access Level</label>
+                                            <select name="access_level" form="access_level">
+                                                <option value="6">Recruiter</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="add_new_team_member_btn" class="site_row text-center add_member_link_div">
+                                <a href="#">
+                                    Add New Team Member
+                                </a>
+                            </div>
+
+                            <div class="row pt-4" id="invite_team_members_btn">
+                                <div class="col-md-6 col-offset-6 mx-auto text-center">
+                                    <button class="normal_btn">Invite</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+            </section>
+
+            <% var currentView = 'recruiter'; %>
+
+                <% include includes/modals/upload_profile_picture_modal %>
+
+                    <% include includes/global_dashboard_scripts %>
+
+                        <script type="text/javascript">
+                            // Defining a function to display error message
+                            function printError(elemId, hintMsg) {
+                                document.getElementById(elemId).innerHTML = hintMsg;
+                            }
+
+                            $('#year_established').datepicker({
+                                maxDate: new Date(), // Now can select only dates, which goes after today
+                                language: 'en',
+                                dateFormat: 'dd-mm-yyyy'
+
+                            });
+                        </script>
+
+                        <!--Add new Team Member Box-->
+                        <script>
+                            $(document).ready(function() {
+                                var count = 1;
+
+                                $("#add_new_team_member_btn").click(function() {
+
+                                    count += 1;
+
+                                    var add_new_team_member = '<div class="row"> \
+                                            <div class="col-md-8"> \
+                                                <div class="input_div"> \
+                                                    <label for="new_recruiter_email_' + count + '"> Team Member’s Email Address</label> \
+                                                    <input type="email" name="new_recruiter_email[]" id="new_recruiter_email_' + count + '"> \
+                                                </div> \
+                                            </div> \
+                                            <div class="col-md-4"> \
+                                                <div class="input_div"> \
+                                                    <label for="access_level">Access Level</label> \
+                                                    <select name="access_level" form="access_level"> \
+                                                        <option value="admin">Admin</option> \
+                                                    </select> \
+                                                </div> \
+                                            </div> \
+                                        </div>';
+
+                                    $("#add_new_team_member_box").append(add_new_team_member);
+                                });
+                            });
+                        </script>
+
+                        <!--Add New Team mates process-->
+                        <script>
+                            $(document).ready(function() {
+                                $("#invite_team_members_btn").click(function() {
+                                    var ifConfirmed = confirm("Are you sure you want to add these teammate(s)?");
+
+                                    if (ifConfirmed) {
+                                        var emails = [];
+                                        $("input[name='new_recruiter_email[]']").each(function() {
+                                            emails.push($(this).val());
+                                        });
+
+                                        createTeamMate(emails);
+                                    }
+                                });
+                            });
+
+
+                            function createTeamMate(emails) {
+                                //Invite team members
+                                $.ajax({
+                                    url: '/recruiters/add-teammates',
+                                    type: 'post',
+                                    data: {
+                                        emails: JSON.stringify(emails)
+                                    },
+
+                                    success: function(data) {
+                                        var content = '';
+
+                                        if (!data || data.result == false) {
+                                            location.replace('/recruiters/settings?f=a_t&r=u_e');
+                                        } else {
+                                            location.replace('/recruiters/settings?f=a_t&r=s');
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Add team member Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        </script>
+
+                        <script>
+                            $(document).ready(function() {
+                                //Get All Company members
+                                $.ajax({
+                                    url: '/recruiters/get-all-company-teammates',
+                                    type: 'get',
+
+                                    success: function(data) {
+                                        var teamMemberContent = '';
+
+                                        if (!data) {
+                                            teamMemberContent = '<option value="4">Bachelor Degree</option>';
+                                        } else {
+                                            for (var i = 0; i < data.teammates.length; i++) {
+                                                teamMemberContent += '<div class="flex_row_align_end_n_justify_between invited_members"> \
+                                                    <div> \
+                                                        <div class="site_row role_mail_head"> \
+                                                            <p>Email Address</p> \
+                                                        </div> \
+                                                        <div class="site_row row_mail_txt"> \
+                                                            <p>' + data.teammates[i].email + '</p> \
+                                                        </div> \
+                                                    </div> \
+                                                    <div> \
+                                                        <div class="site_row role_level"> \
+                                                            <p>Access Level</p> \
+                                                        </div> \
+                                                        <div class="site_row role_name"> \
+                                                            <p>' + data.teammates[i].role_name + '</p> \
+                                                        </div> \
+                                                    </div> \
+                                                    <div class="flex_row desc_actions"> \
+                                                        <div class="mr-3"> \
+                                                            <i class="fas fa-pencil-alt"></i> \
+                                                        </div> \
+                                                        <div> \
+                                                            <i class="far fa-trash-alt"></i> \
+                                                        </div> \
+                                                    </div> \
+                                                </div>';
+                                            }
+                                        }
+
+                                        $('#company_team_members_box').html(teamMemberContent);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Load Team Members Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <script>
+                            $('#profile_picture').on('change', function() {
+                                var files = $(this).get(0).files;
+                                if (files.length > 0) {
+
+                                    var formData = new FormData();
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        var file = files[i];
+                                        formData.append('profile_picture', file, file.name);
+                                    }
+
+                                    $.ajax({
+                                        url: '/recruiters/upload-profile-picture',
+                                        type: 'POST',
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+
+                                        success: function(data) {
+                                            console.log(data);
+
+                                            if (data) {
+                                                $('#upload_profile_pic_modal').hide();
+                                                $('body').removeClass('modal-open');
+                                                $('.modal-backdrop').remove();
+
+                                                if (data.status == 'success') {
+
+                                                    var new_profile_pic = data.photo_url;
+
+                                                    $('#user_profile_pic').attr("src", new_profile_pic);
+                                                    $('#header_user_profile_pic').attr("src", new_profile_pic);
+
+                                                    swal({
+                                                        title: 'Profile Picture Uploaded successfully!',
+                                                        type: 'success'
+                                                    });
+                                                } else {
+                                                    swal({
+                                                        title: 'Profile Picture Upload failed. Please try again',
+                                                        type: 'error'
+                                                    });
+                                                }
+
+                                            }
+                                        },
+
+                                        xhr: function() {
+                                            // create an XMLHttpRequest
+                                            var xhr = new XMLHttpRequest();
+                                            // listen to the 'progress' event
+                                            xhr.upload.addEventListener('progress', function(evt) {
+                                                if (evt.lengthComputable) {
+                                                    // calculate the percentage of upload completed
+                                                    var percentComplete = evt.loaded / evt.total;
+                                                    percentComplete = parseInt(percentComplete * 100);
+                                                    // update the Bootstrap progress bar with the new percentage
+                                                    $('.progress-bar').text(percentComplete + '%');
+                                                    $('.progress-bar').width(percentComplete + '%');
+                                                    // once the upload reaches 100%, set the progress bar text to done
+                                                    if (percentComplete === 100) {
+                                                        $('.progress-bar').html('Done');
+                                                    }
+                                                }
+                                            }, false);
+                                            return xhr;
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
+
+                        <script>
+                            $(document).ready(function() {
+                                //Get All Job Post Params
+                                $.ajax({
+                                    url: '/jobs/get-all-job-post-params',
+                                    type: 'get',
+
+                                    success: function(data) {
+
+                                        var stateContent = '<option value="0">Select country first</option>';
+                                        var countryContent = '';
+                                        var industryContent = '';
+
+                                        //Load all State
+                                        /* if (!data.states) {
+                                             stateContent = '<option value="">Select Location</option>';
+                                         } else {
+                                             stateContent = '<option value="">Select Location</option>';
+
+                                             for (var i = 0; i < data.states.length; i++) {
+                                                 stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                                     data.states[i].state_name +
+                                                     '</option>';
+                                             }
+                                         } */
+
+                                        //Load all Countries
+                                        if (!data.countries) {
+                                            countryContent = '<option value="0">Select Country</option>';
+                                        } else {
+                                            countryContent = '<option value="0">Select Country</option>';
+
+                                            for (var i = 0; i < data.countries.length; i++) {
+                                                countryContent += '<option value="' + data.countries[i].country_id + '">' +
+                                                    data.countries[i].country_name +
+                                                    '</option>';
+                                            }
+                                        }
+
+                                        //Load all Industry
+                                        if (!data.industries) {
+                                            industryContent = '<option value="">Select Industry</option>';
+                                        } else {
+                                            industryContent = '<option value="">Select Industry</option>';
+
+                                            for (var i = 0; i < data.industries.length; i++) {
+                                                industryContent += '<option value="' + data.industries[i].industry_id + '">' +
+                                                    data.industries[i].industry_name +
+                                                    '</option>';
+                                            }
+                                        }
+
+                                        $('#state').html(stateContent);
+                                        $('#country').html(countryContent);
+                                        $('#industry').html(industryContent);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Params Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#country').on('change', function() {
+                                    var country_id = $(this).val();
+
+                                    if (country_id) {
+                                        $.ajax({
+                                            url: '/jobs/get-all-states-by-country',
+                                            type: 'post',
+                                            data: {
+                                                country_id: country_id
+                                            },
+
+                                            success: function(data) {
+                                                var stateContent = '';
+
+                                                if (!data) {
+                                                    stateContent = '<option value="4">No States found</option>';
+                                                } else {
+                                                    stateContent = '<option value="0">Select State</option>';
+
+                                                    for (var i = 0; i < data.states.length; i++) {
+                                                        stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                                            data.states[i].state_name +
+                                                            '</option>';
+                                                    }
+                                                }
+
+                                                $('#state').html(stateContent);
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError) {
+                                                var errorMsg = 'All States by country Request failed: ' + xhr.responseText;
+                                                console.log(errorMsg)
+                                            }
+
+                                        });
+                                    } else {
+                                        $('#state').html('<option value="">Select country first</option>');
+                                    }
+                                });
+
+
+                            });
+                        </script>
+
+                        <script>
+                            function checkIfUndefined(value) {
+                                return typeof value != 'undefined' || value != null || value !== 'null' || value !== 'NULL' ? value : '';
+                            }
+
+                            $(document).ready(function() {
+                                //Get Company info
+                                $.ajax({
+                                    url: '/recruiters/get-company-info',
+                                    type: 'post',
+                                    data: {
+                                        company_id: "<%=data.company_id %>"
+                                    },
+
+                                    success: function(data) {
+                                        if (data) {
+                                            console.log(data)
+
+                                            var company_name = checkIfUndefined(data.companyInfo.company_name);
+                                            var rc_number = checkIfUndefined(data.companyInfo.rc_number);
+                                            var company_phone_number = checkIfUndefined(data.companyInfo.company_phone_number);
+                                            var company_email = checkIfUndefined(data.companyInfo.company_email);
+                                            var industry = checkIfUndefined(data.companyInfo.industry);
+                                            var year_established = checkIfUndefined(data.companyInfo.year_established);
+                                            var website = checkIfUndefined(data.companyInfo.website);
+                                            var no_of_employees = checkIfUndefined(data.companyInfo.no_of_employees);
+                                            var address = checkIfUndefined(data.companyInfo.address);
+                                            var city = checkIfUndefined(data.companyInfo.city);
+                                            var state = checkIfUndefined(data.companyInfo.state);
+                                            var country = checkIfUndefined(data.companyInfo.country);
+                                            var twitter_link = checkIfUndefined(data.companyInfo.twitter_link);
+                                            var instagram_link = checkIfUndefined(data.companyInfo.instagram_link);
+                                            var facebook_link = checkIfUndefined(data.companyInfo.facebook_link);
+                                            var linkedin_link = checkIfUndefined(data.companyInfo.linkedin_link);
+                                            var company_description = checkIfUndefined(data.companyInfo.company_description);
+
+                                            console.log('industry: ' + industry)
+                                            console.log('state: ' + state)
+
+                                            $('#company_name').val(company_name);
+                                            $('#rc_number').val(rc_number);
+                                            $('#company_phone_number').val(company_phone_number);
+                                            $('#company_email').val(company_email);
+                                            $('#industry').val(industry);
+                                            $('#year_established').val(year_established);
+                                            $('#company_website').val(website);
+                                            $('#no_of_employees').val(no_of_employees);
+                                            $('#address').val(address);
+                                            $('#city').val(city);
+                                            $('#state').val(state);
+                                            $('#country').val(country);
+                                            $('#twitter_link').val(twitter_link);
+                                            $('#instagram_link').val(instagram_link);
+                                            $('#facebook_link').val(facebook_link);
+                                            $('#linkedin_link').val(linkedin_link);
+                                            $('#company_description').val(company_description);
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Load Team Members Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <script>
+                            var dataFromTheEditor;
+                            ClassicEditor
+                                .create(document.querySelector('#company_description'), {
+                                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                                    heading: {
+                                        options: [{
+                                            model: 'paragraph',
+                                            title: 'Paragraph',
+                                            class: 'ck-heading_paragraph'
+                                        }, {
+                                            model: 'heading1',
+                                            view: 'h1',
+                                            title: 'Heading 1',
+                                            class: 'ck-heading_heading1'
+                                        }, {
+                                            model: 'heading2',
+                                            view: 'h2',
+                                            title: 'Heading 2',
+                                            class: 'ck-heading_heading2'
+                                        }]
+                                    }
+                                })
+                                .then(editor => {
+                                    dataFromTheEditor = editor; // Save for later use.
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                });
+
+                            function getDataFromTheEditor() {
+                                return dataFromTheEditor.getData();
+                            }
+
+                            $("#update_company_profile_btn").click(function() {
+                                var company_name = $.trim($('#company_name').val());
+                                var rc_number = $.trim($('#rc_number').val());
+                                var company_phone_number = $.trim($('#company_phone_number').val());
+                                var company_email = $.trim($('#company_email').val());
+                                var industry = $.trim($('#industry').val());
+                                var year_established = $.trim($('#year_established').val());
+                                var company_description = $.trim(getDataFromTheEditor());
+                                var company_website = $.trim($('#company_website').val());
+                                var no_of_employees = $.trim($('#no_of_employees').val());
+                                var address = $.trim($('#address').val());
+                                var city = $.trim($('#city').val());
+                                var state = $.trim($('#state').val());
+                                var country = $.trim($('#country').val());
+                                var twitter_link = $.trim($('#twitter_link').val());
+                                var instagram_link = $.trim($('#instagram_link').val());
+                                var facebook_link = $.trim($('#facebook_link').val());
+                                var linkedin_link = $.trim($('#linkedin_link').val());
+
+                                var ifValidated = validateUpdateCompanyProfileForm(company_name, rc_number, company_phone_number,
+                                    company_email, industry, year_established, company_description, company_website, no_of_employees,
+                                    address, city, state, country, twitter_link, instagram_link, facebook_link, linkedin_link);
+
+                                if (ifValidated) {
+                                    updateCompanyProfileForm(company_name, rc_number, company_phone_number, company_email, industry,
+                                        year_established, company_description, company_website, no_of_employees, address, city,
+                                        state, country, twitter_link, instagram_link, facebook_link, linkedin_link);
+                                }
+                            });
+
+                            function updateCompanyProfileForm(company_name, rc_number, company_phone_number, company_email, industry,
+                                year_established, company_description, website, no_of_employees, address, city, state, country,
+                                twitter_link, instagram_link, facebook_link, linkedin_link) {
+
+                                $.ajax({
+                                    url: '/recruiters/update',
+                                    type: 'post',
+                                    data: {
+                                        company_name: company_name,
+                                        rc_number: rc_number,
+                                        company_phone_number: company_phone_number,
+                                        company_email: company_email,
+                                        industry: industry,
+                                        year_established: year_established,
+                                        company_description: company_description,
+                                        company_website: company_website,
+                                        no_of_employees: no_of_employees,
+                                        address: address,
+                                        city: city,
+                                        state: state,
+                                        country: country,
+                                        twitter_link: twitter_link,
+                                        instagram_link: instagram_link,
+                                        facebook_link: facebook_link,
+                                        linkedin_link: linkedin_link
+                                    },
+
+                                    success: function(data) {
+                                        console.log('DONE')
+                                        console.log(data)
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Post Job Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        </script>
+
+                        <% include includes/global_dashboard_bottom%>

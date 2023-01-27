@@ -1,0 +1,60 @@
+<section>
+    <div class="dashboard_body">
+        <header>
+            <div class="flex_row_justify_between dasboard_nav">
+                <div class="flex_row dash_nav_input_group">
+                    <!--  <input type="text" name="" id="" placeholder="Search">
+                    <button>
+                        <i class="fas fa-search"></i>
+                    </button>-->
+                    <!-- dashboard toggle button -->
+                    <div class="dashboard_menu_toggler">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <!-- /dashboard toggle button -->
+                </div>
+                <div class="flex_row_align_center">
+                    <!-- <div class="notification_bell">
+                        <i class="far fa-bell"></i>
+                        <div class="bell_red"></div>
+                        <div id="alert_box"></div>
+                    </div> -->
+                    <div class="flex_row_align_center user_info">
+
+                        <% if(data.role_id == 1) {%>
+                            <div class="user_image">
+                                <% } else{ %>
+                                    <% if(data.plan_type == 5) {%>
+                                        <div class="user_image_basic">
+                                            <% } else{ %>
+                                                <div class="user_image_classic">
+                                                    <% } %>
+                                                        <% } %>
+                                                            <img id="header_user_profile_pic" src="<%= (typeof data.photo_url != 'undefined') && (data.photo_url != 'null') && (data.photo_url != null) 
+                                && (data.photo_url != '') ? data.photo_url : '/images/no-user.png'%>" alt="User Image">
+                                                </div>
+                                                <div class="user_name">
+                                                    <span>
+                                <%=data.first_name%> <%=data.last_name%>
+                            </span>
+                                                </div>
+                                                <!--<div class="user_dropdown">
+                            <i class="fas fa-angle-down"></i>
+                            <div class="assess_dropdown">
+                                <a href="#">
+                                        <i class="far fa-eye"></i> Hide
+                                </a>
+                                <a href="#">
+                                        <i class="far fa-edit"></i> Edit
+                                </a>
+                                <a href="#">
+                                        <i class="far fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </div> -->
+                                        </div>
+                            </div>
+                    </div>
+        </header>

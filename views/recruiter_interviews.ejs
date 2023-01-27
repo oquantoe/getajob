@@ -1,0 +1,144 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div>
+                        <h5>
+                            Interviews
+                        </h5>
+                    </div>
+                    <div class="">
+                        <form action="/recruiters/create-interview">
+                            <button title="Create an Interview">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <div class="site_row jod_desc_tabul bnb">
+                <table id="interviews_table">
+                    <thead>
+                        <tr>
+                            <th>Interview</th>
+                            <th>Interview Date</th>
+                            <th>Interview Time</th>
+                            <th>No of Candidates</th>
+                            <th>Date Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="interviews_data">
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all interviews
+                        $.ajax({
+                            url: '/recruiters/get-all-recruiters-interviews',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.interviews.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.interviews.length; i++) {
+
+                                        content += '<tr> \
+                                        <td>' + data.interviews[i].interview_name + '</td> \
+                                        <td>' + data.interviews[i].interview_date + '</td> \
+                                        <td>' + data.interviews[i].interview_time + '</td> \
+                                        <td class="assessment_passed">' + data.interviews[i].no_of_candidates + '</td> \
+                                        <td>' + data.interviews[i].formatted_date + '</td> \
+                                        <td class="view_assess_eye"> \
+                                            <a href="/recruiters/interviews/interview-detail/' + data.interviews[i].interview_id + '">\
+                                                <i class="fas fa-eye mr-3"></i> \
+                                            </a> \
+                                            <a href="/recruiters/edit-interview/' + data.interviews[i].interview_id + '"> \
+                                                <i style="color:#0000ff" class="fas fa-pencil-alt mr-3"></i> \
+                                            </a> \
+                                            <a id="remove_interview_link" title="Delete Interview" href="#" onclick="deleteInterview(' + data.interviews[i].interview_id + ');return false;"> \
+                                                <i style="color:#ff0000" class="far fa-trash-alt"></i> \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+
+                                    }
+                                }
+
+                                $('#interviews_data').html(content);
+
+                                $("#interviews_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Interviews Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    function deleteInterview(interview_id) {
+                        $(document).ready(function() {
+                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                            if (ifConfirm) {
+                                //Delete interview
+                                $.ajax({
+                                    url: '/recruiters/delete-interview',
+                                    type: 'post',
+                                    data: {
+                                        interview_id: interview_id
+                                    },
+                                    success: function(data) {
+                                        if (data.affectedRows > 0) {
+                                            swal({
+                                                    title: 'Interview Deleted Successfully',
+                                                    type: 'success'
+                                                },
+                                                function(isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.replace('/recruiters/interviews');
+                                                    }
+                                                });
+                                        } else {
+                                            swal({
+                                                title: 'An error occurred',
+                                                text: 'Something happened with this request. Please try again',
+                                                type: 'error'
+                                            });
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Removing Interview Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    }
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

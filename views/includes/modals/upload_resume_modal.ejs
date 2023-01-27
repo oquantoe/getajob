@@ -1,0 +1,36 @@
+<div class="modal fade job_desc_modal" id="upload_resume_modal" >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          
+            <!-- Modal body -->
+            <div class="modal-body modal_interview_invite">
+                <div class="site_row mb-5">
+                    <div class="site_row">
+                        <p>Upload Resume</p>
+                    </div>                   
+                </div>
+
+                <div class="site_row">
+                    <form action="/candidates/upload-resume" method="post" enctype="multipart/form-data">
+                        <div class="col-md-12">
+                            <div class="input_div">
+                                <label for="resume">Select Resume</label>
+                                <input type="file" name="resume" id="resume" accept=".doc,.docx,.pdf">
+                            </div>
+
+                            <input type="hidden" id="resume_id" name="resume_id" value="<%=data.resume_id%>">
+                        </div>
+    
+                        <div class="row pt-4">
+                            <div class="site_row text-center invite_btn" id="upload_resume_btn">
+                                <button class="normal_btn">Upload Resume</button>
+                            </div>
+                        </div>
+                    </form>   
+         
+                </div>
+            </div>       
+            
+        </div>
+    </div>
+</div>

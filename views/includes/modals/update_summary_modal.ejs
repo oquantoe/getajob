@@ -1,0 +1,38 @@
+<!-- The Modal -->
+<div id="update_summary_modal" class="modal fade job_desc_modal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              
+                <!-- Modal body -->
+                <div class="modal-body modal_interview_invite">
+                    <div class="site_row mb-5">
+                        <div class="site_row">
+                            <p>Update Summary</p>
+                        </div>                   
+                    </div>
+    
+                    <div class="site_row">
+                        <form action="/resume/add-summary" method="post" onsubmit="return confirm('Do you want update your summary?');">
+                            
+                            <div class="col-md-12">
+                                <div class="input_div">
+                                    <label for="summary"> Describe yourself here... (Max 100 words) </label>
+                                    <textarea name="summary" id="summary" cols="20" rows="5"
+                                        placeholder="Add any additional information you would like on your resume"></textarea>
+                                    <div class="form_error_msg" id="summaryErr"></div>
+                                </div>
+                            
+                            </div>
+              
+                            <div class="row pt-4">
+                                <div class="site_row text-center invite_btn" id="set_application_status_btn">
+                                    <button class="normal_btn">Update Summary</button>
+                                </div>
+                            </div>
+                        </form>                  
+                    </div>
+                </div>       
+                
+            </div>
+        </div>
+    </div>

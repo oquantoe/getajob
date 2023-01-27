@@ -1,0 +1,281 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <!-- 728 x 90 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads seven28xx90">
+                    <h4>728 x 90</h4>
+                </div>
+            </div>
+
+            <section class="job_edit_n_desc">
+
+                <div class="flex_row_align_center_justify_start top">
+                    <div class="flex_row">
+                        <div class="mr-3">
+                            <a href="/admin/all-recruiters">
+                                <i class="fas fa-long-arrow-alt-left"></i> Back
+                            </a>
+                        </div>
+                        <div>
+                            <h5>
+                                Recruiter Info
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="site_row job_desc_details job_desc_content">
+                    <div class="flex_row_justify_between_align_center job_role_n_time">
+                        <div class="flex_row_align_center_justify_start">
+                            <div class="mr-3 candidate_imag">
+                                <img id="header_user_profile_pic" src="<%= (typeof recruiterData.photo_url != 'undefined') && (recruiterData.photo_url != 'null') 
+                                    && (recruiterData.photo_url != '') ? recruiterData.photo_url : '/images/no-user.png'%>" alt="User Image">
+                            </div>
+                            <div>
+                                <p>
+                                    <b>Company Name: </b>
+                                    <%=recruiterData.company_name%>
+                                </p>
+
+                                <% var fullName = recruiterData.first_name + ' ' + recruiterData.last_name%>
+                                    <p>
+                                        <%=fullName%>
+                                    </p>
+                                    <p>
+                                        <span>(<%=recruiterData.phone_number%> | 
+                                        <a href="mailto:<%=recruiterData.email%>"><%=recruiterData.email%></a>)
+                                    </span>
+                                    </p>
+                            </div>
+
+                        </div>
+
+                        <% var means_of_id_url = typeof recruiterData.means_of_id_url != 'undefined' && recruiterData.means_of_id_url && recruiterData.means_of_id_url != '' && recruiterData.means_of_id_url != null ? recruiterData.means_of_id_url : 'false'; %>
+
+                            <%if(means_of_id_url != 'false'){ %>
+                                <div class="invite_btn" id="download_id_btn">
+                                    <button>
+                                    <i class="fas fa-cloud-download-alt mr-1"></i> Download Recruiter ID 
+                                </button>
+                                </div>
+                                <%} else{%>
+                                    <div class="flex_row_align_center">
+                                        <button class="normal_btn_light">
+                                    <i class="fas fa-times-circle mr-1"></i> No ID Uploaded
+                                </button>
+                                    </div>
+                                    <%}%>
+
+                                        <% var certificate_of_incorp_url = typeof recruiterData.certificate_of_incorp_url != 'undefined' && recruiterData.certificate_of_incorp_url && recruiterData.certificate_of_incorp_url != '' && recruiterData.certificate_of_incorp_url != null ? recruiterData.certificate_of_incorp_url : 'false'; %>
+
+
+                                            <%if(certificate_of_incorp_url != 'false'){ %>
+                                                <div class="invite_btn" id="download_certificate_btn">
+                                                    <button>
+                                    <i class="fas fa-cloud-download-alt mr-1"></i> Download Certificate of Incorporation 
+                                </button>
+                                                </div>
+                                                <%} else{%>
+                                                    <div class="flex_row_align_center">
+                                                        <button class="normal_btn_light">
+                                    <i class="fas fa-times-circle mr-1"></i> No Document Uploaded
+                                </button>
+                                                    </div>
+                                                    <%}%>
+
+                                                        <div class="invite_btn">
+                                                            <button data-toggle="modal" data-target="#set_approval_status_modal">
+                        Choose Action
+                    </button>
+                                                        </div>
+                    </div>
+
+                    <div class="flex_row_justify_between_align_center job_role_n_time">
+                        <div class="flex_row_align_center_justify_start">
+                            <div>
+                                <% var account_status = recruiterData.is_approved == '1' ? 'Active' : 'In-active'; %>
+                                    <p>
+                                        <b>Account Status: </b>
+                                        <%=account_status%>
+                                    </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 728 x 90 Ad size -->
+                <div class="ads-row ads-margin-top-medium">
+                    <div class="ads seven28xx90">
+                        <h4>728 x 90</h4>
+                    </div>
+                </div>
+
+            </section>
+
+            </div>
+            </section>
+
+
+
+            <% include includes/modals/set_approval_status_modal%>
+
+
+                <% include includes/global_dashboard_scripts%>
+
+                    <script type="text/javascript">
+                        // Defining a function to display error message
+                        function printError(elemId, hintMsg) {
+                            document.getElementById(elemId).innerHTML = hintMsg;
+                        }
+                    </script>
+
+                    <!-- Download ID script-->
+                    <script>
+                        $(document).ready(function() {
+                            $("#download_id_btn").click(function() {
+                                var recruiter_id = '<%=recruiterData.user_id%>';
+
+                                $.ajax({
+                                    url: '/admin/download-means-of-id',
+                                    type: 'post',
+                                    data: {
+                                        recruiter_id: recruiter_id
+                                    },
+                                    xhrFields: {
+                                        responseType: 'blob'
+                                    },
+
+                                    success: function(response, status, xhr) {
+                                        var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                        fileName = fileName.substring(1, fileName.length - 1);
+                                        var a = document.createElement('a');
+                                        var url = window.URL.createObjectURL(response);
+                                        a.href = url;
+                                        a.download = fileName;
+                                        a.click();
+                                        window.URL.revokeObjectURL(url);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Downloading  Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+
+                                        swal({
+                                            title: 'No ID found',
+                                            text: 'This recruiter does not have their means of ID uploaded.',
+                                            type: 'warning',
+                                            confirmButtonText: 'Close',
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    <!-- End Download ID script-->
+
+                    <!-- Download Certificate of Incorp script-->
+                    <script>
+                        $(document).ready(function() {
+                            $("#download_certificate_btn").click(function() {
+                                var recruiter_id = '<%=recruiterData.user_id%>';
+
+                                $.ajax({
+                                    url: '/admin/download-certificate',
+                                    type: 'post',
+                                    data: {
+                                        recruiter_id: recruiter_id
+                                    },
+                                    xhrFields: {
+                                        responseType: 'blob'
+                                    },
+
+                                    success: function(response, status, xhr) {
+                                        var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                        fileName = fileName.substring(1, fileName.length - 1);
+                                        var a = document.createElement('a');
+                                        var url = window.URL.createObjectURL(response);
+                                        a.href = url;
+                                        a.download = fileName;
+                                        a.click();
+                                        window.URL.revokeObjectURL(url);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Downloading Certificate Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+
+                                        swal({
+                                            title: 'No Document found',
+                                            text: 'This recruiter does not have their Certificate uploaded.',
+                                            type: 'warning',
+                                            confirmButtonText: 'Close',
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    <!-- End Download CV script-->
+
+                    <!-- Save approval status -->
+                    <script>
+                        $(document).ready(function() {
+                            $("#set_approval_status_btn").click(function() {
+
+                                var approval_status = $('#approval_status').val();
+
+                                if (approval_status === '') {
+                                    printError("approvalStatusErr", "Please select an approval status from the list");
+                                } else {
+
+                                    var ifConfirm = confirm("Are you sure you want to set this action?");
+
+                                    if (ifConfirm) {
+                                        var approval_status = $('#approval_status').val();
+                                        var personal_message = $('#personal_message').val();
+                                        var recruiter_id = '<%=recruiterData.user_id%>';
+
+                                        $.ajax({
+                                            url: '/admin/save-recruiter-approval-status',
+                                            type: 'post',
+                                            data: {
+                                                approval_status: approval_status,
+                                                personal_message: personal_message,
+                                                recruiter_id: recruiter_id
+                                            },
+
+                                            success: function(data) {
+                                                if (!data) {
+                                                    swal({
+                                                        title: "Recruiter Approval Failed",
+                                                        type: "error"
+                                                    });
+                                                } else {
+                                                    swal({
+                                                            title: 'Recruiter Account Status Changed Successfully.',
+                                                            type: 'success',
+                                                            confirmButtonText: 'Ok',
+                                                        },
+                                                        function(isConfirm) {
+                                                            if (isConfirm) {
+                                                                window.location.replace('/admin/recruiter-info/' + recruiter_id);
+                                                            }
+                                                        });
+                                                }
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError) {
+                                                var errorMsg = 'Saving Recruiter Approval Request failed: ' + xhr.responseText;
+                                                console.log(errorMsg)
+                                            }
+                                        });
+                                    }
+                                }
+
+                            });
+                        });
+                    </script>
+                    <!-- End save approval status-->
+
+                    <% include includes/global_dashboard_bottom%>

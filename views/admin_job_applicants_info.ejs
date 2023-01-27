@@ -1,0 +1,306 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <!-- 728 x 90 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads seven28xx90">
+                    <a href="#" target="_blank">
+                        <img src="/images/ads/hertz/Leaderboard.png" alt="hertz_ad">
+                    </a>
+                </div>
+            </div>
+
+            <section>
+                <div class="site_row user_dashboard_header">
+
+                    <div class="flex_row_justify_between the_job_name">
+
+                        <div>
+                            <h5>
+                                <%=jobData.job_name%>
+                            </h5>
+                        </div>
+                        <!-- <div>
+                            <button>
+                                View Description
+                            </button>
+                        </div> -->
+
+                    </div>
+
+                    <div class="flex_row_justify_between dasboard_cards">
+                        <div id="total_applicants_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="shortlist_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+                        <div id="failed_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="shortlisted_table_sect">
+                <div class="flex_row_justify_between job_categories">
+                    <div id="shortlisted_candidates_title">
+                    </div>
+                    <div class="jobs_all">
+                        <% var allCandidatesUrl = '/admin/all-job-candidates/' + jobData.job_id; %>
+                            <a href="<%=allCandidatesUrl%>" class="active"> All Applicants</a>
+                    </div>
+                    <div class="jobs_all">
+                        <% var allShortlistedCandidatesUrl = '/admin/application-info/' + jobData.job_id; %>
+                            <a href="<%=allShortlistedCandidatesUrl%>" class="active"> Shortlisted </a>
+                    </div>
+                    <div class="jobs_all">
+                        <% var allRejectedCandidatesUrl = '/admin/all-rejected-candidates/' + jobData.job_id; %>
+                            <a href="<%=allRejectedCandidatesUrl%>" class="active"> Rejected </a>
+                    </div>
+                    <div class="invite_btn" id="download_shortlist_candidates_btn">
+                        <button>
+                            <i class="fas fa-cloud-download-alt mr-1"></i> Download List
+                        </button>
+                    </div>
+                    <!--  <div>
+                        <a href="/recruiters/all-job-candidates/<%=jobData.job_id%>">
+                            <p id="view_all_text"></p>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/recruiters/all-rejected-candidates/<%=jobData.job_id%>">
+                            <p id="view_all_rejected_text"></p>
+                        </a>
+                    </div> -->
+                </div>
+                <div class="site_row jod_desc_tabul">
+                    <table id="applicants_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>State/Location</th>
+                                <th>Date Applied</th>
+                                <th>View Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicants_data"></tbody>
+                    </table>
+                </div>
+
+
+                <!-- 728 x 90 Ad size -->
+                <div class="ads-row ads-margin-bottom-medium">
+                    <div class="ads seven28xx90">
+                        <a href="https://getajobng.com/cv-fix" target="_blank">
+                            <img src="/images/ads/gaj/Leaderboard_Banner.png" alt="gaj_ad">
+                        </a>
+                    </div>
+                </div>
+            </section>
+            </div>
+
+
+
+            </section>
+
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all shortlisted job applicants
+                        $.ajax({
+                            url: '/jobs/get-all-shortlisted-job-applicants',
+                            type: 'post',
+                            data: {
+                                job_id: '<%=jobData.job_id%>'
+                            },
+
+                            success: function(data) {
+                                var content = '';
+                                var shorlistCount = '';
+                                var shortlistTitleCount = '';
+
+                                if (!data || data.applicants.length == 0) {
+                                    content = '';
+                                    shorlistCount = '<h4 class="mb-2">0</h4><p>Shortlisted</p>';
+                                    shortlistTitleCount = '<h5>Shortlisted Candidates (0)</h5>';
+
+                                } else {
+                                    for (var i = 0; i < data.applicants.length; i++) {
+
+                                        var applicantFullName = data.applicants[i].first_name + ' ' + data.applicants[i].last_name;
+
+                                        var applicantPicture = typeof data.applicants[i].photo_url != 'undefined' &&
+                                            data.applicants[i].photo_url != 'null' && data.applicants[i].photo_url != null &&
+                                            (data.applicants[i].photo_url != '') ? data.applicants[i].photo_url : '/images/no-user.png';
+
+                                        var applicantState = typeof data.applicants[i].state_name != 'undefined' &&
+                                            data.applicants[i].state_name != 'null' && data.applicants[i].state_name != null &&
+                                            (data.applicants[i].state_name != '') ? data.applicants[i].state_name : 'N/A';
+
+                                        var job_id = '<%=jobData.job_id%>';
+
+                                        content += '<tr> \
+                                        <td class="cand_image"> \
+                                            <div> \
+                                                <img \
+                                                    src="' + applicantPicture + '" \
+                                                    alt="User Image"> \
+                                            </div>' +
+                                            '</td> \
+                                        <td>' + applicantFullName + '</td> \
+                                        <td>' + data.applicants[i].email + '</td> \
+                                        <td>' + data.applicants[i].phone_number + '</td> \
+                                        <td>' + applicantState + '</td> \
+                                        <td>' + data.applicants[i].date_applied + '</td> \
+                                        <td class="view_candd_link"> \
+                                            <a href="/admin/candidate-info/' + data.applicants[i].user_id + '/?l=' + job_id + '"> \
+                                                View \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+
+                                        shorlistCount = '<h4 class="mb-2">' + data.applicants.length + '</h4><p>Shortlisted</p>';
+                                        shortlistTitleCount = '<h5>Shortlisted Candidates (' + data.applicants.length + ')</h5>';
+
+                                    }
+                                }
+
+                                $('#shortlist_count').html(shorlistCount);
+                                $('#applicants_data').html(content);
+                                $('#shortlisted_candidates_title').html(shortlistTitleCount);
+
+                                $("#applicants_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Applicants Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all job applicants
+                        $.ajax({
+                            url: '/jobs/get-all-job-applicants',
+                            type: 'post',
+                            data: {
+                                job_id: '<%=jobData.job_id%>'
+                            },
+
+                            success: function(data) {
+                                var totalApplicantsCount = '';
+                                var viewAllApplicantsText = '';
+
+                                if (!data || data.applicants.length == 0) {
+                                    totalApplicantsCount = '<h4 class="mb-2">0</h4><p>Total Applicants</p>';
+                                    viewAllApplicantsText = 'View all 0 Applicants'
+                                } else {
+                                    for (var i = 0; i < data.applicants.length; i++) {
+                                        totalApplicantsCount = '<h4 class="mb-2">' + data.applicants.length + '</h4><p>Total Applicants</p>';
+                                        viewAllApplicantsText = 'View all ' + data.applicants.length + ' Applicants';
+                                    }
+                                }
+
+                                $('#total_applicants_count').html(totalApplicantsCount);
+                                $('#view_all_text').html(viewAllApplicantsText);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Applicants Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all rejected job applicants
+                        $.ajax({
+                            url: '/jobs/get-all-rejected-job-applicants',
+                            type: 'post',
+                            data: {
+                                job_id: '<%=jobData.job_id%>'
+                            },
+
+                            success: function(data) {
+                                var totalRejectedApplicantsCount = '';
+                                var viewAllRejectedApplicantsText = '';
+
+                                if (!data || data.applicants.length == 0) {
+                                    totalRejectedApplicantsCount = '<h4 class="mb-2">0</h4><p>Rejected</p>';
+                                    viewAllRejectedApplicantsText = 'View all 0 Rejected Applicants'
+                                } else {
+                                    for (var i = 0; i < data.applicants.length; i++) {
+                                        totalRejectedApplicantsCount = '<h4 class="mb-2">' + data.applicants.length + '</h4><p>Rejected</p>';
+                                        viewAllRejectedApplicantsText = 'View all ' + data.applicants.length + ' Rejected Applicants';
+                                    }
+                                }
+
+                                $('#failed_count').html(totalRejectedApplicantsCount);
+                                $('#view_all_rejected_text').html(viewAllRejectedApplicantsText);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Rejected Applicants Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+
+                <!-- Download script-->
+                <script>
+                    $(document).ready(function() {
+                        $("#download_shortlist_candidates_btn").click(function() {
+                            var job_id = '<%=jobData.job_id%>';
+                            var job_name = '<%=jobData.job_name%>';
+
+                            $.ajax({
+                                url: '/admin/download-excel-file',
+                                type: 'post',
+                                data: {
+                                    job_id: job_id,
+                                    job_name: job_name,
+                                    excel_file_to_download: 'shortlist'
+                                },
+                                xhrFields: {
+                                    responseType: 'blob'
+                                },
+
+                                success: function(response, status, xhr) {
+                                    var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                    fileName = fileName.substring(1, fileName.length - 1);
+                                    var a = document.createElement('a');
+                                    var url = window.URL.createObjectURL(response);
+                                    a.href = url;
+                                    a.download = fileName;
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Downloading Excel Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <!-- End Download script-->
+
+                <% include includes/global_dashboard_bottom%>

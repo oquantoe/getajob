@@ -1,0 +1,643 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+                <div class="dashboard_center">
+                    <div class="" id="error_box">
+                        <div class="form_error_msg" id="jobTitleErr"></div>
+                        <div class="form_error_msg" id="jobTypeErr"></div>
+                        <div class="form_error_msg" id="jobCategoryErr"></div>
+                        <div class="form_error_msg" id="locationErr"></div>
+                        <div class="form_error_msg" id="industryErr"></div>
+                        <div class="form_error_msg" id="jobDescriptionErr"></div>
+                        <div class="form_error_msg" id="minQualificationErr"></div>
+                        <div class="form_error_msg" id="experienceLevelErr"></div>
+                        <div class="form_error_msg" id="applicationDeadlineErr"></div>
+                        <div class="form_error_msg" id="minYearOfExperienceErr"></div>
+                        <div class="form_error_msg" id="maxYearOfExperienceErr"></div>
+                        <div class="form_error_msg" id="expectedSalaryErr"></div>
+                        <div class="form_error_msg" id="genderTypeErr"></div>
+                        <div class="form_error_msg" id="minimumAgeErr"></div>
+                        <div class="form_error_msg" id="maximumAgeErr"></div>
+
+                    </div>
+                    </br>
+
+                    <!-- Steps header text -->
+
+                    <div class="site_row center_text profile_form_header step_one_header" id="step_one">
+                        <h3>
+                            Job Details<span> (Step 1)</span>
+                        </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_two_header" id="step_two">
+                        <h3>
+                            Job Description<span> (Step 2)</span>
+                        </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_three_header" id="step_three">
+                        <h3>
+                            Additional Job Requirements<span> (Step 3)</span>
+                        </h3>
+                    </div>
+
+                    <div class="site_row center_text profile_form_header step_four_header" id="step_four">
+                        <h3>
+                            Set Parameters for Shortlist<span> (Step 4)</span>
+                        </h3>
+                    </div>
+                    <!--
+                    <div class="site_row center_text profile_form_header step_five_header" id="step_five">
+                            <h3>
+                                Attachment<span> ( 95% completed )</span>
+                            </h3>
+                    </div> -->
+
+                    <!-- End of Steps header text -->
+
+                    <!-- Step Progress Bar -->
+
+                    <div class="flex_row_justify_between_align_center profile_reg_progress">
+                        <div class="step_one_link active"></div>
+                        <!-- Progress Line -->
+                        <div class="progress_line"></div>
+                        <!-- End Progress Line -->
+                        <div class="step_two_link"></div>
+                        <!-- Progress Line -->
+                        <div class="progress_line"></div>
+                        <!-- End Progress Line -->
+                        <div class="step_three_link"></div>
+                        <!-- Progress Line -->
+                        <div class="progress_line"></div>
+                        <!-- End Progress Line -->
+                        <div class="step_four_link"></div>
+                    </div>
+
+                    <!-- End of Step Progress Bar -->
+
+                    <!-- Steps header text -->
+
+                    <div class="profile_form_div" id="form_step_one">
+                        <div class="row">
+                            <div class="col-md-12 input_div">
+                                <label for="job_title">Job Title <sup class="form_asterisk">*</sup></label>
+                                <input type="text" name="job_title" id="p_job_title" placeholder="Give your job posting a name" required>
+                                <div class="form_error_msg" id="jobTitleErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="job_type">Job Type <sup class="form_asterisk">*</sup></label>
+                                <select name="job_type" id="p_job_type" required>
+                                </select>
+                                <div class="form_error_msg" id="jobTypeErr"></div>
+                            </div>
+                            <div class="col-md-6 input_div">
+                                <label for="job_category">Job Category <sup class="form_asterisk">*</sup></label>
+                                <select name="job_category" id="p_job_category" required>
+                                </select>
+                                <div class="form_error_msg" id="jobCategoryErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="location">Location <sup class="form_asterisk">*</sup></label>
+                                <select name="location" id="p_location" required>
+                                </select>
+                                <div class="form_error_msg" id="locationErr"></div>
+                            </div>
+                            <div class="col-md-6 input_div">
+                                <label for="industry">Industry <sup class="form_asterisk">*</sup></label>
+                                <select name="industry" id="p_industry" required>
+                                </select>
+                                <div class="form_error_msg" id="industryErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div class="cancel_link">
+                                <!-- <a href="/recruiters/post-a-job"> Cancel </a> -->
+                            </div>
+
+                            <div class="continue_btn">
+                                <button id="goto_next_two">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>All fields with <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup> is Required</p>
+                        </div>
+
+
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_two">
+                        <div class="row">
+                            <div class="col-md-12 input_div">
+                                <label for="job_description">Job Description <sup class="form_asterisk">*</sup></label>
+                                <textarea name="job_description" id="p_job_description" cols="20" rows="20" placeholder="Briefly describe what the job is all about and what the ideal candidate is supposed to do" required></textarea>
+                                <div class="form_error_msg" id="jobDescriptionErr"></div>
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="row">
+                            <div class="col-md-12 input_div">
+                                <label for="job_responsibilities">Job Responsibilities</label>
+                                <textarea name="job_responsibilities" id="p_job_responsibilities" cols="20" rows="10"
+                                    placeholder="Specify duties, roles. Typically what the ideal employee is supposed to do." required></textarea>
+                                <div class="form_error_msg" id="jobResponsibilitiesErr"></div>
+                            </div>
+                        </div>  
+                        
+                    -->
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div class="continue_btn">
+                                <button id="gobackto_step_one">
+                                    Back
+                                </button>
+                            </div>
+
+                            <div class="continue_btn">
+                                <button id="goto_next_three">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>All fields with <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup> is Required</p>
+                        </div>
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_three">
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="min_qualification">Minimum Qualification <sup class="form_asterisk">*</sup></label>
+                                <select name="min_qualification" id="p_min_qualification" required>
+                                </select>
+                                <div class="form_error_msg" id="minQualificationErr"></div>
+                            </div>
+
+                            <div class="col-md-6 input_div">
+                                <label for="experience_level">Experience Level <sup class="form_asterisk">*</sup></label>
+                                <select name="experience_level" id="p_experience_level" required>
+                                </select>
+                                <div class="form_error_msg" id="experienceLevelErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="application_deadline">Application Expiry Date <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup></label>
+                                <input type="text" id="p_application_deadline" name="application_deadline" placeholder="Deadline Date" />
+                                <div class="form_error_msg" id="applicationDeadlineErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="min_year_of_experience">Min Year of Experience <sup class="form_asterisk">*</sup></label>
+                                <input type="text" name="min_year_of_experience" id="p_min_year_of_experience" placeholder="Minimum Year of Experience" required>
+                                <div class="form_error_msg" id="minYearOfExperienceErr"></div>
+                            </div>
+
+                            <div class="col-md-6 input_div">
+                                <label for="max_year_of_experience">Max Year of Experience</label>
+                                <input type="text" name="max_year_of_experience" id="p_max_year_of_experience" placeholder="Maximum Year of Experience">
+                                <div class="form_error_msg" id="maxYearOfExperienceErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="expected_salary">Expected Salary (per Annum)</label>
+                                <input type="text" name="expected_salary" id="p_expected_salary" placeholder="Expected Salary">
+                                <div class="form_error_msg" id="expectedSalaryErr"></div>
+                            </div>
+
+                            <div class="col-md-6 input_div">
+                                <label for="gender_type">Gender Type <sup class="form_asterisk">*</sup></label>
+                                <select name="gender_type" id="p_gender_type" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="All">All</option>
+                                    <option value="Female">Female</option> 
+                                    <option value="Male">Male</option>
+                                </select>
+                                <div class="form_error_msg" id="genderTypeErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div class="continue_btn">
+                                <button id="gobackto_step_two">
+                                    Back
+                                </button>
+                            </div>
+
+                            <div class="continue_btn">
+                                <button id="goto_next_four">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>All fields with <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup> is Required</p>
+                        </div>
+                    </div>
+
+                    <div class="profile_form_div" id="form_step_four">
+                        <div class="row">
+                            <div class="col-md-6 input_div">
+                                <label for="minimum_age">Minimum Age</label>
+                                <input type="text" name="minimum_age" id="p_minimum_age" placeholder="Minimum Age">
+                                <div class="form_error_msg" id="minimumAgeErr"></div>
+                            </div>
+
+                            <div class="col-md-6 input_div">
+                                <label for="maximum_age">Maximum Age</label>
+                                <input type="text" name="maximum_age" id="p_maximum_age" placeholder="Maximum Age">
+                                <div class="form_error_msg" id="maximumAgeErr"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="required_skills">Required Skills</label>
+                                <span id="required_skills_autocomplete_select" class="rs-autocomplete-select"></span>
+                                <input type="hidden" id="p_required_skills" name="required_skills">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="shortlist_params">Shortlist Parameters</label>
+                                <span id="shortlist_params_autocomplete_select" class="sp-autocomplete-select"></span>
+                                <input type="hidden" id="p_shortlist_params" name="shortlist_params">
+                            </div>
+                        </div>
+
+                        <div class="flex_row_justify_between_align_center prof_link_btns">
+                            <div class="continue_btn">
+                                <button id="gobackto_step_three">
+                                    Back
+                                </button>
+                            </div>
+
+                            <div class="" id="post_job_btn">
+                                <button class="normal_btn">
+                                    Post Job
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>All fields with <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup> is Required</p>
+                        </div>
+                    </div>
+
+                    <!-- End of Steps form  -->
+
+                    <br><br>
+
+                    <!-- 728 x 90 Ad size -->
+                    <div class="ads-row ads-margin-bottom-medium">
+                        <div class="ads seven28xx90">
+                            <a href="https://getajobng.com/cv-fix" target="_blank">
+                                <img src="/images/ads/gaj/Leaderboard_Banner.png" alt="gaj_ad">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script type="text/javascript">
+                    // Defining a function to display error message
+                    function printError(elemId, hintMsg) {
+                        document.getElementById(elemId).innerHTML = hintMsg;
+                    }
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        var disabledDays = [0, 6];
+                        $('#p_application_deadline').datepicker({
+                            minDate: new Date(), // Now can select only dates, which goes after today
+                            language: 'en',
+                            dateFormat: 'yyyy-mm-dd',
+                            onRenderCell: function(date, cellType) {
+                                if (cellType == 'day') {
+                                    var day = date.getDay(),
+                                        isDisabled = disabledDays.indexOf(day) != -1;
+
+                                    return {
+                                        disabled: isDisabled
+                                    }
+                                }
+                            }
+                        });
+
+                        $('#p_expected_salary').keyup(function(event) {
+                            // skip for arrow keys
+                            if (event.which >= 37 && event.which <= 40) return;
+
+                            // format number
+                            $(this).val(function(index, value) {
+                                return value
+                                    .replace(/\D/g, "")
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            });
+                        });
+                    });
+                </script>
+
+                <!-- Get All Job Post Params Script-->
+                <script>
+                    $(document).ready(function() {
+                        //Get All Job Post Params
+                        $.ajax({
+                            url: '/jobs/get-all-job-post-params',
+                            type: 'get',
+
+                            success: function(data) {
+
+                                var stateContent = '';
+                                var industryContent = '';
+                                var jobTypeContent = '';
+                                var jobCategoryContent = '';
+                                var qualificationContent = '';
+                                var experienceLevelContent = '';
+
+                                //Load all State
+                                if (!data.ngStates) {
+                                    stateContent = '<option value="">Select Location</option>';
+                                } else {
+                                    stateContent = '<option value="">Select Location</option>';
+
+                                    for (var i = 0; i < data.ngStates.length; i++) {
+                                        stateContent += '<option value="' + data.ngStates[i].state_id + '">' +
+                                            data.ngStates[i].state_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Job Type
+                                if (!data.jobTypes) {
+                                    jobTypeContent = '<option value="">Select Job Type</option>';
+                                } else {
+                                    jobTypeContent = '<option value="">Select Job Type</option>';
+
+                                    for (var i = 0; i < data.jobTypes.length; i++) {
+                                        jobTypeContent += '<option value="' + data.jobTypes[i].job_type_id + '">' +
+                                            data.jobTypes[i].job_type_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Job Category
+                                if (!data.jobCategories) {
+                                    jobCategoryContent = '<option value="">Select Job Category</option>';
+                                } else {
+                                    jobCategoryContent = '<option value="">Select Job Category</option>';
+
+                                    for (var i = 0; i < data.jobCategories.length; i++) {
+                                        jobCategoryContent += '<option value="' + data.jobCategories[i].job_category_id + '">' +
+                                            data.jobCategories[i].job_category_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Industry
+                                if (!data.industries) {
+                                    industryContent = '<option value="">Select Industry</option>';
+                                } else {
+                                    industryContent = '<option value="">Select Industry</option>';
+
+                                    for (var i = 0; i < data.industries.length; i++) {
+                                        industryContent += '<option value="' + data.industries[i].industry_id + '">' +
+                                            data.industries[i].industry_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Qualification
+                                if (!data.qualifications) {
+                                    qualificationContent = '<option value="">Select Qualification</option>';
+                                } else {
+                                    qualificationContent = '<option value="">Select Qualification</option>';
+
+                                    for (var i = 0; i < data.qualifications.length; i++) {
+                                        qualificationContent += '<option value="' + data.qualifications[i].qualification_id + '">' +
+                                            data.qualifications[i].qualification_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Experience Level
+                                if (!data.experienceLevel) {
+                                    experienceLevelContent = '<option value="">Select Experience Level</option>';
+                                } else {
+                                    experienceLevelContent = '<option value="">Select Experience Level</option>';
+
+                                    for (var i = 0; i < data.experienceLevel.length; i++) {
+                                        experienceLevelContent += '<option value="' + data.experienceLevel[i].experience_level_id + '">' +
+                                            data.experienceLevel[i].experience_level_name +
+                                            ' (' + data.experienceLevel[i].experience_level_description + ')' +
+                                            '</option>';
+                                    }
+                                }
+
+                                //Load all Required Skills
+                                var requiredSkillAutoCompleteSelect = new SelectPure(".rs-autocomplete-select", {
+                                    options: data.skills,
+                                    value: [],
+                                    multiple: true,
+                                    autocomplete: true,
+                                    icon: "fa fa-times",
+                                    onChange: value => {
+                                        $('#p_required_skills').val(value);
+                                    },
+                                });
+
+                                //Load all Shortlist Params
+                                var shortlistParamsAutoCompleteSelect = new SelectPure(".sp-autocomplete-select", {
+                                    options: data.shortlistParams,
+                                    value: [],
+                                    multiple: true,
+                                    autocomplete: true,
+                                    icon: "fa fa-times",
+                                    onChange: value => {
+                                        $('#p_shortlist_params').val(value);
+                                    },
+                                });
+
+                                $('#p_location').html(stateContent);
+                                $('#p_industry').html(industryContent);
+                                $('#p_job_type').html(jobTypeContent);
+                                $('#p_job_category').html(jobCategoryContent);
+                                $('#p_min_qualification').html(qualificationContent);
+                                $('#p_experience_level').html(experienceLevelContent);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+                <!-- End All Job Post Params Script-->
+
+                <script>
+                    $(document).ready(function() {
+
+                        var dataFromTheEditor;
+                        ClassicEditor
+                            .create(document.querySelector('#p_job_description'), {
+                                link: {
+                                    addTargetToExternalLinks: true,
+                                    defaultProtocol: 'https://'
+                                },
+                                //removePlugins: [ 'Heading', 'Link' ],
+                                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                                heading: {
+                                    options: [{
+                                        model: 'paragraph',
+                                        title: 'Paragraph',
+                                        class: 'ck-heading_paragraph'
+                                    }, {
+                                        model: 'heading1',
+                                        view: 'h1',
+                                        title: 'Heading 1',
+                                        class: 'ck-heading_heading1'
+                                    }, {
+                                        model: 'heading2',
+                                        view: 'h2',
+                                        title: 'Heading 2',
+                                        class: 'ck-heading_heading2'
+                                    }]
+                                }
+                            })
+                            .then(editor => {
+                                dataFromTheEditor = editor; // Save for later use.
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+
+                        function getDataFromTheEditor() {
+                            return dataFromTheEditor.getData();
+                        }
+
+                        $("#post_job_btn").click(function() {
+                            var job_title = $.trim($('#p_job_title').val());
+                            var job_type = $.trim($('#p_job_type').val());
+                            var job_category = $.trim($('#p_job_category').val());
+                            var location = $.trim($('#p_location').val());
+                            var industry = $.trim($('#p_industry').val());
+                            var job_description = $.trim(getDataFromTheEditor());
+                            var job_responsibilities = $.trim($('#p_job_responsibilities').val());
+                            var min_qualification = $.trim($('#p_min_qualification').val());
+                            var experience_level = $.trim($('#p_experience_level').val());
+                            var min_year_of_experience = $.trim($('#p_min_year_of_experience').val());
+                            var max_year_of_experience = $.trim($('#p_max_year_of_experience').val());
+                            var expected_salary = $.trim($('#p_expected_salary').val());
+                            var gender_type = $.trim($('#p_gender_type').val());
+                            var application_deadline = $.trim($('#p_application_deadline').val());
+                            var minimum_age = $.trim($('#p_minimum_age').val());
+                            var maximum_age = $.trim($('#p_maximum_age').val());
+                            var required_skills = $.trim($('#p_required_skills').val());
+                            var shortlist_params = $.trim($('#p_shortlist_params').val());
+                            var application_channel = 'getajobng';
+                            var external_application_link = '';
+
+                            var ifValidated = validatePostJobForm(job_title, job_type, job_category, location, industry, job_description,
+                                job_responsibilities, min_qualification, experience_level, min_year_of_experience, max_year_of_experience,
+                                expected_salary, gender_type, application_deadline, minimum_age, maximum_age, required_skills, shortlist_params,
+                                application_channel, external_application_link);
+
+                            if (ifValidated) {
+                                postJob(job_title, job_type, job_category, location, industry, job_description, job_responsibilities,
+                                    min_qualification, experience_level, min_year_of_experience, max_year_of_experience,
+                                    expected_salary, gender_type, application_deadline, minimum_age, maximum_age,
+                                    required_skills, shortlist_params, application_channel, external_application_link);
+                            }
+                        });
+
+                        function postJob(job_title, job_type, job_category, location, industry, job_description,
+                            job_responsibilities, min_qualification, experience_level, min_year_of_experience,
+                            max_year_of_experience, expected_salary, gender_type, application_deadline, minimum_age,
+                            maximum_age, required_skills, shortlist_params, application_channel, external_application_link) {
+
+                            $.ajax({
+                                url: '/jobs/create-job',
+                                type: 'post',
+                                data: {
+                                    job_title: job_title,
+                                    job_type: job_type,
+                                    job_category: job_category,
+                                    location: location,
+                                    industry: industry,
+                                    job_description: job_description,
+                                    job_responsibilities: job_responsibilities,
+                                    min_qualification: min_qualification,
+                                    experience_level: experience_level,
+                                    min_year_of_experience: min_year_of_experience,
+                                    max_year_of_experience: max_year_of_experience,
+                                    expected_salary: expected_salary,
+                                    gender_type: gender_type,
+                                    application_deadline: application_deadline,
+                                    minimum_age: minimum_age,
+                                    maximum_age: maximum_age,
+                                    required_skills: required_skills,
+                                    shortlist_params: shortlist_params,
+                                    application_channel: application_channel,
+                                    external_application_link: external_application_link
+                                },
+
+                                success: function(data) {
+                                    if (!data) {
+                                        swal({
+                                            title: 'An error occured. Please try again',
+                                            type: 'error'
+                                        });
+                                    } else {
+                                        swal({
+                                                title: 'Job Posted Successfully.',
+                                                text: 'Please allow 24hrs for your job post to be approved',
+                                                type: 'success',
+                                                confirmButtonText: 'Ok',
+                                            },
+                                            function(isConfirm) {
+                                                if (isConfirm) {
+                                                    window.location.replace('/recruiters/created-jobs');
+                                                }
+                                            });
+                                    }
+
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Post Job Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        }
+                    });
+                </script>
+
+
+                <% include includes/global_dashboard_bottom%>

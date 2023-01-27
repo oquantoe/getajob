@@ -1,0 +1,82 @@
+<div class="flex_row_align_center nav_bar">
+
+    <div class="logo mr_5">
+        <a href="/"> <img src="/images/logo.png" alt="logo"></a>
+    </div>
+    <div class="flex_row_align_center ml_5 nav_links">
+        <div>
+            <a href="/recruiter-info">Recruiters</a>
+        </div>
+        <div>
+            <a href="/assessment">Assessments</a>
+        </div>
+        <div>
+            <a href="/find-a-job">Job Search</a>
+        </div>
+        <div>
+            <a href="/post-a-job">Post a Job</a>
+        </div>
+        <div>
+            <a href="/career-advice">Career Advice</a>
+        </div>
+        <div>
+            <a href="/cv-fix">CV Fix</a>
+        </div>
+    </div>
+
+    <% if(userAuthenticated == 'true'){
+        if(userData.role_id == 1){%>
+        <div class="ml_auto sign_up">
+        </div>
+        <div class="log_in">
+            <a href="/candidates/dashboard">
+                <button class="log_in">
+                        Go To Dashboard
+                    </button>
+            </a>
+        </div>
+        <%} else if(userData.role_id == 2){%>
+            <div class="ml_auto sign_up">
+            </div>
+            <div class="log_in">
+                <a href="/recruiters/dashboard">
+                    <button class="log_in">
+                        Go To Dashboard
+                    </button>
+                </a>
+            </div>
+            <%} else if(userData.role_id == 4){%>
+                <div class="ml_auto sign_up">
+                </div>
+                <div class="log_in">
+                    <a href="/admin/dashboard">
+                        <button class="log_in">
+                        Go To Dashboard
+                    </button>
+                    </a>
+                </div>
+                <%}%>
+                    <%} else {%>
+                        <div class="ml_auto sign_up">
+                            <a href="/register">
+                                <button class="sign_up">
+                        Register
+                    </button>
+                            </a>
+                        </div>
+                        <div class="log_in">
+                            <a href="/login">
+                                <button class="log_in">
+                        Log In
+                    </button>
+                            </a>
+                        </div>
+                        <%}%>
+
+                            <div class="menu_button">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+
+</div>

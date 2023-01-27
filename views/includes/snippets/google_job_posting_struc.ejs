@@ -1,0 +1,47 @@
+<script type="application/ld+json">
+    {
+        "@context" : "https://schema.org/",
+        "@type" : "JobPosting",
+        "title" : "<%= (typeof jobData.job_name != 'undefined') && (jobData.job_name != 'null') && (jobData.job_name != null) 
+                    && (jobData.job_name != '') ? jobData.job_name : ''%>",
+        
+        "description" : "<%= (typeof jobData.job_description != 'undefined') && (jobData.job_description != 'null') && (jobData.job_description != null) 
+                    && (jobData.job_description != '') ? jobData.job_description : ''%>",
+                    
+        
+        "datePosted" : "<%= (typeof jobData.date_created != 'undefined') && (jobData.date_created != 'null') && (jobData.date_created != null) 
+                    && (jobData.date_created != '') ? jobData.date_created : ''%>",
+        
+        "validThrough" : "<%= (typeof jobData.application_deadline != 'undefined') && (jobData.application_deadline != 'null') && (jobData.application_deadline != null) 
+                    && (jobData.application_deadline != '') ? jobData.application_deadline : ''%>",
+        
+        "employmentType" : "<%= (jobData.job_type_name == 'Full Time') ? 'FULL_TIME' : (jobData.job_type_name == 'Part Time') ? 'PART_TIME' :
+                    (jobData.job_type_name == 'Internship') ? 'INTERN' : (jobData.job_type_name == 'Contract') ? 'CONTRACTOR' : 
+                    (jobData.job_type_name == 'Temporary') ? 'TEMPORARY' : 'OTHER' %>",
+
+        "hiringOrganization" : {
+            "@type" : "Organization",
+            "name" : "<%= (typeof jobData.company_name != 'undefined') && (jobData.company_name != 'null') && (jobData.company_name != null) 
+                    && (jobData.company_name != '') ? jobData.company_name : ''%>",
+
+            "sameAs" : "<%= (typeof jobData.website != 'undefined') && (jobData.website != 'null') && (jobData.website != null) 
+                    && (jobData.website != '') ? jobData.website : ''%>",
+
+            "logo" : "<%= (typeof jobData.company_logo_url != 'undefined') && (jobData.company_logo_url != 'null') && (jobData.company_logo_url != null) 
+                    && (jobData.company_logo_url != '') ? jobData.company_logo_url : ''%>"
+        },
+
+        "jobLocation": {
+        "@type": "Place",
+            "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "<%= (typeof jobData.address != 'undefined') && (jobData.address != 'null') && (jobData.address != null) 
+                    && (jobData.address != '') ? jobData.address : ''%>",
+
+            "addressCountry": "<%= (typeof jobData.country_code != 'undefined') && (jobData.country_code != 'null') && (jobData.country_code != null) 
+                    && (jobData.country_code != '') ? jobData.country_code : ''%>"
+            }
+        }
+    }
+</script>
+  

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "getajobng-website",
+  "private_key_id": "8d5701036854e2a61429845d3a59baede583db6d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC46AwaDG+yQQPW\nT8idisWfRG/QZnRkNQDKN6ITiZHZX6RY9ffewiaDAbEV4sQD49kscWc3yXeAZNNx\nxi+nNLbwswB/zWXeZosAYZtFY5U4YSk1z2Rzn0eKCdgG8kOm/AYmw5UVUfvMaeks\nylebpxQ2f+WeTsWnAmbicjhuHiAARSlb5wTSc9BNVEHlqz0UeZOAon0Fwd8w7MhK\nIqvoPaH76s1tQYhRRrcmyXbrnDi62TXT4yclcodpWHl2lrxb2mdxQYFk1mnNbb3i\nh169FdExzeIrET9Lo1n/JJx9czjK0kuNzJSod8pyTyQZMX6IwQIj2rINhgOqi5Ga\n6Ij04jktAgMBAAECggEABLAB8d1xAx/BppAhDxi1RVdxY+MGXi2iI+jl+jZRhPqh\nz+KJF96BUO689p0oKHbBKu6uC0dCI7Zf+OFUFG+nl/Gwbcz/ITSldKCaKde/hkLK\nThOq9tZpyclRmW17WGieXvhe12qbu5/PZOQKoAbL4kzQPU4/FaqKgVZGxsiLOaPR\ndve7daoLZt8nLx3fcDkcGADSkhHGR7X0qs2HfQe3njz+Kyhhuxkjh0NFdz1CnHZt\nRn2YAxTX9mdcq2uOxBARE1MvjpvekFBH68XC7v9laKflXiQagg0FT41BXuKB6JSv\nx1jQmg0m0Y/pIMeKuKKhYzPIMvgvIkgrgDmcWmJC0QKBgQDvN3U1hXUmtmYLQY0j\n0bdlOY5ym2CbNUaKpfb69ZHjNuM6Wr/XnnsBWYvAAQO95YyubL1ar4IjWOGkTMgl\n8eqI4GE1ALqRTTFHB4mi+0gtTT3VLAwgtfcFhEZE/yL0N5faHpkFaKK3D4OvQsQW\nTG4EHs1UmYCwB5ZCNA9d9GscXQKBgQDF4SFZkd7LjXizsO+5LHxbYa8KCL1HF7iE\nyfSctw88XnFoMAtyZk/8XMBHjK8t2JfTwImOQqAKmvZuAtOupp795oUs0oWzkbxo\nq91A/PW0N8XwQOikXwUQ47ajYnFgcCjB/XwdsjozkdUfIwhxT+3BMdOPSWiUjN1H\n15H7OS1DEQKBgQDoT4Y/NN0hfE87LSzBFWAyKKQivqwh7qoT6bsh2qwT6XDgcdMO\ntbSlCe5Cx3l3yF5H4gg98mXCqAVxhrN0zivDQ4yDabLFex6Y6UQMCFX+0J100PLy\nLWS4cc3AIbozS23oAIEAlK44cxOid4dwVEcfLz6eovgreyK8JkyqJLyEbQKBgAeG\nM/pv7YTX8EsE41irNF9VK466HlhhsoZ6F28OFuo4vR81FHpZIZl6/WS7GL4pijxn\nCdP6/JLqqYwtV1dAxrLo3Q+DQco+NGfWgSdDdyRPKpukHDSD2HF39y3nRGBiY2pc\n9Sc767KiTPROJLgKTgQWnPDJ3cwoPxHIRKjE18/BAoGBAOct/UmpkrOOGggbRo9f\nQh9kYwv7zne3Enp0LXJfdq/r1aMVUtAOBs7U/LPlPHbAfoulpHW7Rl3g4b2ld8wk\n6hA/9YByeg/RcJ3GU93jaYVTO9JLcyfJDIx2nvLvN3enDi3QNjjF4XXoIyvCnSNW\nZd+97GJVzSncpJ6yQircSenH\n-----END PRIVATE KEY-----\n",
+  "client_email": "getajobng@getajobng-website.iam.gserviceaccount.com",
+  "client_id": "107585171322073002265",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/getajobng%40getajobng-website.iam.gserviceaccount.com"
+}

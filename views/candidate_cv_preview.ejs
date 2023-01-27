@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <% include includes/snippets/meta_tags%>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- CSS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        <!-- Cookie Consent CDN -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/css/pureselect_style.css" />
+        <link rel="stylesheet" href="/css/jquery.timepicker.min.css" />
+        <link rel="stylesheet" href="/css/likely.css">
+        <link rel="stylesheet" href="/css/datepicker.min.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/animation.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <link rel="stylesheet" href="/css/responsiveness.css">
+        <link rel="stylesheet" href="/css/resume.css">
+
+        <style>
+            .btn-container {
+                width: 350px;
+            }
+            /* Then make the buttons either, 100% of the width, or display:block. */
+            
+            .btn {
+                width: 100%;
+                height: 45px;
+                display: block;
+                background: var(--main_green);
+                border-radius: 50px;
+                color: #fff;
+                font-size: 16px;
+                border: none;
+                -webkit-transition: .4s;
+                transition: .4s;
+                margin: 30px;
+            }
+            
+            .cn {
+                position: relative;
+                width: 500px;
+                height: 500px;
+            }
+            
+            .inner {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 2rem;
+            }
+        </style>
+
+        <script src="https://js.paystack.co/v1/inline.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js" integrity="sha512-ICHkAOXzVDEkL5xkXjAWRV/hx6Bq4ID/uhRcnj9zS7QCdCbhVtfgjwt/vTfUBtW1wzBkErImU0huK3LDVeEr8g==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA==" crossorigin="anonymous"></script>
+
+        <% include includes/snippets/drift_snippet %>
+            <% include includes/snippets/gtag %>
+
+                <% var full_name = data.first_name + " " + data.last_name + " Resume"; %>
+                    <title>
+                        <%=full_name%> - GetaJobNG</title>
+
+</head>
+
+<% include includes/candidate_nav %>
+    <% include includes/dashboard_top_bar %>
+
+        <div style="width: 80%; float:left">
+            <div class="resume_main">
+                <div class="resume">
+                    <div class="resume_row" id="main-block">
+
+                        <div class="resume-left-section column column-40">
+                            <div class="name">
+                                <img src="<%= (typeof data.user_photo_for_cv != 'undefined') && (data.user_photo_for_cv != 'null') && (data.user_photo_for_cv != null) 
+                            && (data.user_photo_for_cv != '') ? data.user_photo_for_cv : '/images/no-user.png'%>" alt="User Image" class="avatar" loading="lazy" />
+                                <h4>
+                                    <%=full_name%>
+                                </h4>
+                            </div>
+
+                            <% include includes/resume_layouts/contact_layout %>
+
+                                <% include includes/resume_layouts/social_layout %>
+                                    <% include includes/resume_layouts/footer_layout %>
+                        </div>
+
+                        <div class="resume-right-section column column-60">
+
+                            <% include includes/resume_layouts/experience_layout %>
+                                <% include includes/resume_layouts/education_layout %>
+                                    <div class="extra row">
+
+                                        <div class="column column-50">
+                                            <% include includes/resume_layouts/skill_layout %>
+                                        </div>
+                                    </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 20%; float:right" class="page-hero d-flex align-items-center justify-content-center cn">
+            <div class="btn-container inner">
+                <button id="proceed_to_payment_btn" class="btn" onclick="processSelfService(4)">Proceed to Payment</button>
+
+                <button id="edit_profile_btn" class="btn" onclick="location.href = '/candidates/profile';">Edit CV/Resumé</button>
+
+                <button id="download_cv_btn" class="btn" onclick="downloadCV()">Download CV/Resumé</button>
+            </div>
+        </div>
+        <% include includes/global_dashboard_scripts%>
+
+            <!-- Load All Resume Info Script-->
+            <script>
+                $(document).ready(function() {
+                    function getSkillsData() {
+                        var allSkills = [];
+
+                        $.ajax({
+                            url: '/jobs/get-all-job-post-params',
+                            type: 'get',
+                            async: false,
+
+                            success: function(data) {
+                                allSkills = data.skills;
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+
+                        return allSkills;
+                    }
+
+                    $.ajax({
+                        url: '/candidates/get-all-resume-info',
+                        type: 'get',
+
+                        success: function(data) {
+
+                            var phoneNumberBoxContent = '';
+                            var emailBoxContent = '';
+                            var addressBoxContent = '';
+                            var summaryBoxContent = '';
+                            var workExperienceBoxContent = '';
+                            var skillBoxContent = '';
+                            var educationBoxContent = '';
+                            var taglineBoxContent = '';
+                            var countryBoxContent = '';
+
+                            var state = (data.state != null || data.state != '') ? data.state : '';
+                            var country = (data.country != null || data.country != '') ? data.country : '';
+
+                            var state_and_country = state + ', ' + country;
+
+                            if (data.userData.tagline == null || data.userData.tagline == '') {
+                                taglineBoxContent = '';
+                            } else {
+                                taglineBoxContent = '<div class="column column-33 title"> Tagline </div> \
+                                                  <div class="column column-67">' +
+                                    data.userData.tagline +
+                                    '</div>';
+                            }
+
+                            if (data.userData.phone_number == null || data.userData.phone_number == '') {
+                                phoneNumberBoxContent = '';
+                            } else {
+                                phoneNumberBoxContent = '<div class="column column-33 title"> Phone Number </div> \
+                                                  <div class="column column-67">' +
+                                    data.userData.phone_number +
+                                    '</div>';
+                            }
+
+                            if (data.userData.email == null || data.userData.email == '') {
+                                emailBoxContent = '';
+                            } else {
+                                emailBoxContent = '<div class="column column-33 title"> Email </div> \
+                                            <div class="column column-67">' +
+                                    data.userData.email +
+                                    '</div>';
+                            }
+
+                            if (data.userData.address == null || data.userData.address == '') {
+                                addressBoxContent = '';
+                            } else {
+                                addressBoxContent = '<div class="column column-33 title"> Address </div> \
+                                              <div class="column column-67">' +
+                                    data.userData.address +
+                                    '</div>';
+                            }
+
+                            countryBoxContent = '<div class="column column-33 title"> Location </div> \
+                                              <div class="column column-67">' +
+                                state_and_country +
+                                '</div>';
+
+                            if (data.resume.profile_summary == null || data.resume.profile_summary == '') {
+                                summaryBoxContent = '';
+                            } else {
+                                summaryBoxContent = '<div class="column column-33 title"> Summary </div> \
+                                              <div class="column column-67">' +
+                                    data.resume.profile_summary +
+                                    '</div>';
+                            }
+
+                            if (!data.work_experience || data.work_experience == null || data.work_experience.length == 0) {
+                                workExperienceBoxContent = 'No Work Experience History';
+                            } else {
+                                for (var i = 0; i < data.work_experience.length; i++) {
+
+                                    var companyName = data.work_experience[i].employer_name;
+                                    var jobTitle = data.work_experience[i].job_title;
+                                    var employerAddress = data.work_experience[i].employer_address;
+                                    var startDate = data.work_experience[i].start_date;
+                                    var endDate = data.work_experience[i].end_date;
+                                    var jobDescription = data.work_experience[i].job_responsibility;
+                                    var experienceId = data.work_experience[i].experience_id;
+
+
+                                    workExperienceBoxContent += '<div class="entry"> \
+                                                        <div class="row"> \
+                                                            <div class="column column-40"> \
+                                                                <div class="primary">' +
+                                        companyName +
+                                        '</div> \
+                                                                <div class="secondary">' +
+                                        startDate + ' - ' +
+                                        '</div> \
+                                        <div class="secondary">' +
+                                        endDate +
+                                        '</div> \
+                                                            </div> \
+                                                            <div style="width:5%"></div> \
+                                                            <div class="column column-60"> \
+                                                                <div class="primary">' +
+                                        jobTitle +
+                                        '</div> \
+                                                                <div class="secondary">' +
+                                        jobDescription +
+                                        '</div> \
+                                                            </div> \
+                                                        </div> \
+                                                    </div>';
+
+                                }
+                            }
+
+                            if (!data.skills || data.skills == null || data.skills.length == 0) {
+                                skillBoxContent = 'No Skills';
+
+                            } else {
+                                var skills_list = '';
+
+                                for (var i = 0; i < data.skills.length; i++) {
+                                    var skill_name = data.skills[i].label;
+
+                                    if (i < data.skills.length - 1) {
+                                        skill_name += ', ';
+                                    }
+
+                                    skills_list += skill_name;
+                                }
+
+                                skillBoxContent += '<div class="entry"> \
+                                                <div class="secondary">' +
+                                    skills_list +
+                                    '</div> \
+                                            </div>';
+
+
+                            }
+
+                            if (!data.education || data.education == null || data.education.length == 0) {
+                                educationBoxContent = 'No Education History';
+
+                            } else {
+                                for (var i = 0; i < data.education.length; i++) {
+                                    var nameOfInstitution = data.education[i].name_of_institution;
+                                    var courseOfStudy = data.education[i].course_of_study;
+                                    var qualification = data.education[i].qualification;
+                                    var startDate = data.education[i].start_date;
+                                    var endDate = data.education[i].end_date;
+                                    var educationId = data.education[i].education_id;
+
+                                    educationBoxContent += '<div class="entry"> \
+                                                    <div class="primary">' +
+                                        nameOfInstitution +
+                                        '</div> \
+                                        <div class="secondary">' +
+                                        courseOfStudy +
+                                        '</div> \
+                                                    <div class="secondary">' +
+                                        startDate + ' - ' + endDate +
+                                        '</div> \
+                                                </div>';
+
+                                }
+                            }
+
+                            $('#tagline_box').html(taglineBoxContent);
+                            $('#phone_number_box').html(phoneNumberBoxContent);
+                            $('#email_box').html(emailBoxContent);
+                            $('#address_box').html(addressBoxContent);
+                            $('#country_box').html(countryBoxContent);
+                            $('#summary_box').html(summaryBoxContent);
+                            $('#work_experience_box').html(workExperienceBoxContent);
+                            $('#skills_box').html(skillBoxContent);
+                            $('#education_box').html(educationBoxContent);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            var errorMsg = 'All Resume Info Request failed: ' + xhr.responseText;
+                            console.log(errorMsg)
+                        }
+                    });
+                });
+            </script>
+            <!-- End All Resume Info Script-->
+
+            <script>
+                $(document).ready(function() {
+                    var transaction_reference =
+                        "<%= (typeof transaction_reference != 'undefined') && transaction_reference ? transaction_reference : ''%>";
+
+                    if (typeof transaction_reference == 'undefined' || transaction_reference == null || transaction_reference == "") {
+                        $('#download_cv_btn').hide();
+                    } else {
+                        $('#proceed_to_payment_btn').hide();
+                        $('#edit_profile_btn').hide();
+                    }
+                });
+
+                function downloadCV() {
+                    $('#download_cv_btn').click(function() {
+
+                        var fileName = "<%=full_name%>";
+
+                        var cv_div = document.getElementById("main-block");
+                        console.log(cv_div)
+
+                        var opt = {
+                            margin: 0,
+                            filename: fileName,
+                            image: {
+                                type: 'png',
+                                quality: 0.95
+                            },
+                            html2canvas: {
+                                scale: 1,
+                                useCORS: true
+                            },
+                            jsPDF: {
+                                unit: 'in',
+                                format: 'letter',
+                                orientation: 'portrait'
+                            }
+                        }
+
+                        html2pdf().from(cv_div).set(opt).save();
+                    });
+                }
+            </script>
+
+            <script>
+                function processSelfService(payment_plan_id) {
+                    $.ajax({
+                        url: '/candidates/get-all-resume-info',
+                        type: 'get',
+                        success: function(data) {
+                            if (data.resume) {
+                                if (data.resume.resume_file_url == null || data.resume.resume_file_url == '' ||
+                                    data.resume.profile_summary == null || data.resume.profile_summary == '' ||
+                                    !data.work_experience || data.work_experience == null || data.work_experience.length == 0 ||
+                                    !data.skills || data.skills == null || data.skills.length == 0 ||
+                                    !data.education || data.education == null || data.education.length == 0 ||
+                                    data.userData.gender == null || data.userData.gender == '' ||
+                                    data.userData.dob == null || data.userData.dob == '' ||
+                                    data.userData.tagline == null || data.userData.tagline == '' ||
+                                    data.userData.industry == null || data.userData.industry == '' || data.userData.industry == 0) {
+
+                                    swal({
+                                            title: 'CV/Resume information Incomplete',
+                                            text: 'Please complete the information in the CV/Resume section to improve the quality of your CV.',
+                                            type: 'warning',
+                                            confirmButtonText: 'Continue',
+                                        },
+                                        function(isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.replace('/candidates/profile');
+                                            }
+                                        });
+
+                                } else {
+                                    console.log("process self service");
+                                    processPayment(payment_plan_id);
+                                }
+                            }
+
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            var errorMsg = 'Check if Resume Request failed: ' + xhr.responseText;
+                            console.log(errorMsg)
+                        }
+                    });
+                }
+
+                function processPayment(payment_plan_id) {
+                    swal({
+                            title: 'Processing...',
+                            text: 'Re-directing you to a secured payment gateway. Please wait',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            timer: 3500,
+                            showConfirmButton: false,
+                            showCancelButton: false,
+                            onOpen: () => {
+                                swal.showLoading();
+                            }
+                        },
+                        function() {
+                            $.ajax({
+                                url: '/payments/make-payment',
+                                type: 'post',
+                                data: {
+                                    payment_plan_id: payment_plan_id
+                                },
+                                success: function(data) {
+                                    if (data.result.status == true) {
+                                        window.location.replace(data.result.data.authorization_url);
+                                    } else {
+                                        swal({
+                                            title: 'An error occured',
+                                            text: 'An error occurred processing payment. You were not debited. Please try again.',
+                                            type: 'warning',
+                                            confirmButtonText: 'Close',
+                                        });
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Process Payment failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        }
+
+                    )
+                }
+            </script>
+
+
+
+
+            <% include includes/global_dashboard_bottom%>

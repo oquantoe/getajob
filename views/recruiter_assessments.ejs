@@ -1,0 +1,226 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div>
+                        <h5>
+                            Assessments
+                        </h5>
+                    </div>
+                    <div class="">
+                        <form action="/recruiters/create-assessment">
+                            <button>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="create_job_table_section">
+                <div class="site_row create_job_table">
+
+                    <table id="assessments_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Assessment Name
+                                </th>
+                                <th>
+                                    Assessment Type
+                                </th>
+                                <th>
+                                    Job Assigned To
+                                </th>
+                                <th>
+                                    Number Of Questions
+                                </th>
+                                <th>
+                                    Date Created
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="assessments_data"></tbody>
+                    </table>
+
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all job applicants
+                        $.ajax({
+                            url: '/assessments/get-all-recruiters-assessments',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.assessments.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.assessments.length; i++) {
+
+                                        content += '<tr> \
+                                        <td class="assess_title"> \
+                                            <p>' + data.assessments[i].assessment_name + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.assessments[i].assessment_type_name + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.assessments[i].name_of_job + '</p> \
+                                        </td> \
+                                        <td class="assess_ques_no"> \
+                                            <p>' + data.assessments[i].questions_count + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.assessments[i].date_time_ago + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <a title="View Assessment Results" href="/assessments/assessment-detail/' + data.assessments[i].assessment_id + '"> \
+                                                <i style="color:#00ff00" class="far fa-eye" aria-hidden="true"></i> \
+                                            </a> \
+                                            <a title="Edit Assessment" href="/assessments/edit-assessment/' + data.assessments[i].assessment_id + '"> \
+                                                <i style="color:#0000ff" class="far fa-edit" aria-hidden="true"></i> \
+                                            </a> \
+                                            <a id="share_assessment_link" title="Share Assessment" href="#" onclick="shareAssessment(' + data.assessments[i].assessment_id + ');return false;"> \
+                                                <i style="color:#ff0000" class="fa fa-share-square-o" aria-hidden="true"></i> \
+                                            </a> \
+                                            <a id="delete_assessment_link" title="Delete Assessment" href="#" onclick="deleteAssessment(' + data.assessments[i].assessment_id + ');return false;"> \
+                                                <i style="color:#ff0000" class="far fa-trash-alt" aria-hidden="true"></i> \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+                                    }
+                                }
+
+                                $('#assessments_data').html(content);
+
+                                $("#assessments_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Assessments Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    function deleteAssessment(assessment_id) {
+                        $(document).ready(function() {
+                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                            if (ifConfirm) {
+                                //Delete Assessment
+                                $.ajax({
+                                    url: '/assessments/delete-assessment',
+                                    type: 'post',
+                                    data: {
+                                        assessment_id: assessment_id
+                                    },
+                                    success: function(data) {
+                                        if (data.affectedRows > 0) {
+                                            swal({
+                                                title: 'Assessment Deleted Successfully',
+                                                type: 'success'
+                                            });
+
+                                            window.location.replace('/recruiters/assessments');
+                                        } else {
+                                            swal({
+                                                title: 'An error occurred',
+                                                text: 'Something happened when deleting this assessment. Please try again',
+                                                type: 'error'
+                                            });
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Deleting Assessment Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    function shareAssessment(assessment_id) {
+
+                        $(document).ready(function() {
+                            swal({
+                                    title: 'Share Assessment Link',
+                                    text: 'Do you want to share the assessment link to all applicants that applied to the job?',
+                                    type: 'warning',
+                                    confirmButtonText: 'Share',
+                                    cancelButtonText: 'Cancel',
+                                    showCancelButton: true,
+                                    closeOnCancel: true
+
+                                },
+                                function(isConfirm) {
+                                    if (isConfirm) {
+                                        //Share Assessment
+                                        $.ajax({
+                                            url: '/assessments/share-assessment',
+                                            type: 'post',
+                                            data: {
+                                                assessment_id: assessment_id
+                                            },
+                                            success: function(data) {
+                                                console.log(data)
+                                                if (data.data) {
+                                                    swal({
+                                                            title: 'Mails sent to all applicants',
+                                                            type: 'success',
+                                                            confirmButtonText: 'Ok',
+                                                        },
+                                                        function(isConfirm) {
+                                                            if (isConfirm) {
+                                                                window.location.replace('/recruiters/assessments');
+                                                            }
+                                                        });
+
+                                                } else {
+                                                    swal({
+                                                        title: 'An error occurred',
+                                                        text: 'Something happened when sharing this assessment. Please try again',
+                                                        type: 'error'
+                                                    });
+                                                }
+                                            },
+                                            error: function(xhr, ajaxOptions, thrownError) {
+                                                var errorMsg = 'Sharing Assessment Request failed: ' + xhr.responseText;
+                                                console.log(errorMsg)
+                                            }
+                                        });
+                                    }
+                                });
+                        });
+                    }
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

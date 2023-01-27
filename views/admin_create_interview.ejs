@@ -1,0 +1,165 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section>
+                <div class="dashboard_center">
+                    <div class="profile_form_div">
+                        <div class="row pb-4">
+                            <div class="col-md-12 text-center search_cv_head create_cv_hed">
+                                <h5>
+                                    Create Interview
+                                </h5>
+                            </div>
+                        </div>
+
+                        <form name="createInterviewForm" onsubmit="return validateCreateInterviewForm()" action="/admin/add-interview" method="post">
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for="interview_name"> Interview Name <sup class="form_asterisk">*</sup> </label>
+                                    <input type="text" id="interview_name" name="interview_name" placeholder="Give your interview a name">
+                                    <div class="form_error_msg" id="interviewNameErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 input_div">
+                                    <label for="interview_date"> Interview Date <sup class="form_asterisk">*</sup> </label>
+                                    <input type="text" id="interview_date" name="interview_date" placeholder="Choose Date">
+                                    <div class="form_error_msg" id="interviewDateErr"></div>
+                                </div>
+                                <div class="col-md-6 input_div">
+                                    <label for="interview_time"> Interview Time <sup class="form_asterisk">*</sup> </label>
+                                    <input class="timepicker" type="text" id="interview_time" name="interview_time" placeholder="Select Time">
+                                    <div class="form_error_msg" id="interviewTimeErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 input_div">
+                                    <label for="venue"> Interview Venue <sup class="form_asterisk">*</sup> </label>
+                                    <select name="venue" id="venue" required>
+                                        <option value="Physical">Physical</option>
+                                        <option value="Virtual">Virtual</option>
+                                    </select>
+                                    <div class="form_error_msg" id="venueErr"></div>
+                                </div>
+
+                                <div class="col-md-6 input_div">
+                                    <label for="dress_code"> Dress Code </label>
+                                    <input type="text" id="dress_code" name="dress_code" placeholder="Dress Code">
+                                    <div class="form_error_msg" id="dressCodeErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="virtual_link_box">
+                                <div class="col-md-12 input_div">
+                                    <label for="link_to_virtual_meeting">Link to Virtual Meeting<sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup></label>
+                                    <input type="text" id="link_to_virtual_meeting" name="link_to_virtual_meeting" placeholder="Enter a valid link to the virtual meeting e.g. zoom, konn3ct">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="job_assigned_to">Assign to a Job <sup style="color: #DD1616;font-size: 13px;font-weight: bold">*</sup></label>
+                                    <span id="jobs_autocomplete_select" class="jobs-autocomplete-select"></span>
+                                    <input type="hidden" id="job_assigned_to" name="job_assigned_to">
+                                    <div class="form_error_msg" id="jobAssignedToErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="interview_description"> Interview Description </label>
+                                    <textarea name="interview_description" id="interview_description" placeholder="Some information or instructions about the interview" cols="30" rows="10"></textarea>
+                                    <div class="form_error_msg" id="interviewDescriptionErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex_row_center_all prof_link_btns">
+                                <div class="">
+                                    <button class="normal_btn">
+                                        Create Interview
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script type="text/javascript">
+                    // Defining a function to display error message
+                    function printError(elemId, hintMsg) {
+                        document.getElementById(elemId).innerHTML = hintMsg;
+                    }
+
+                    $('#virtual_link_box').hide();
+
+                    $('#venue').change(function() {
+                        if ($(this).val() == 'Virtual') {
+                            $('#virtual_link_box').show();
+                        } else {
+                            $('#virtual_link_box').hide();
+                        }
+                    });
+                </script>
+
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('input.timepicker').timepicker({});
+
+                        var disabledDays = [0, 6];
+                        $('#interview_date').datepicker({
+                            minDate: new Date(), // Now can select only dates, which goes after today
+                            language: 'en',
+                            dateFormat: 'yyyy-mm-dd',
+                            onRenderCell: function(date, cellType) {
+                                if (cellType == 'day') {
+                                    var day = date.getDay(),
+                                        isDisabled = disabledDays.indexOf(day) != -1;
+
+                                    return {
+                                        disabled: isDisabled
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/assessments/get-create-assessment-params',
+                            type: 'get',
+
+                            success: function(data) {
+                                //Load all jobs
+                                var jobsAutoCompleteSelect = new SelectPure(".jobs-autocomplete-select", {
+                                    options: data.jobs,
+                                    value: [],
+                                    multiple: false,
+                                    autocomplete: true,
+                                    icon: "fa fa-times",
+                                    onChange: value => {
+                                        //console.log(value);
+                                        $('#job_assigned_to').val(value);
+                                    },
+                                });
+                            },
+
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

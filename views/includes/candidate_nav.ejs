@@ -1,0 +1,44 @@
+<body>
+    <aside>
+        <div class="flex_col side_nav">
+
+            <div class="close_nav_container">
+                <div class="flex_row_center_all dash_close_nav">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="dashboard_logo">
+                <img src="/images/logo.png" alt="">
+            </div>
+            <div class="dashboard_links">
+                <a href="/candidates/dashboard" class="<%= view == 'dashboard' ? 'active' : ''%>">
+                    <i class="fab fa-buromobelexperte"></i> Dashboard
+                </a>
+                <a href="/candidates/profile" class="<%= view == 'profile' ? 'active' : ''%>">
+                    <i class="far fa-id-badge"></i> CV/Resumé
+                </a>
+                <a href="/candidates/cv-fix" class="<%= view == 'cv-fix' ? 'active' : ''%>">
+                    <i class="fas fa-wrench"></i> CV Fix
+                </a>
+                <a href="/candidates/find-a-job" class="<%= view == 'find-a-job' ? 'active' : ''%>">
+                    <i class="fas fa-search"></i> Find a Job
+                </a>
+                <a href="/candidates/recommended-jobs" class="<%= view == 'recommended-jobs' ? 'active' : ''%>">
+                    <i class="fas fa-chalkboard-teacher"></i> Recommended Jobs
+                </a>
+                <a href="/candidates/job-applications" class="<%= view == 'job-applications' ? 'active' : ''%>">
+                    <i class="far fa-file-alt"></i> Job Applications
+                </a>
+                <a href="/candidates/saved-jobs" class="<%= view == 'saved-jobs' ? 'active' : ''%>">
+                    <i class="far fa-heart"></i> Saved Jobs
+                </a>
+                <a href="/candidates/settings" class="<%= view == 'settings' ? 'active' : ''%>">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <a href="/auth/logout">
+                    <i class="fas fa-sign-out-alt" style="color: red;"></i> Logout
+                </a>
+            </div>
+
+        </div>
+    </aside>

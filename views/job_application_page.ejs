@@ -1,0 +1,93 @@
+<% include includes/dashboard_header %>
+    <% include includes/candidate_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section class="job_details_section">
+
+                <div class="apply_page_wrapper">
+
+                    <div class="flex_row_align_center_justify_start job_details_top ">
+                        <!-- <div class="job_back">
+                        <p>
+                            <a href="#">
+                            <i class="fas fa-long-arrow-alt-left"></i>   Back
+                            </a>
+                        </p>
+                   </div> -->
+
+                        <div class="job_details_txt">
+                            <p>Apply to
+                                <%=jobData.company_name%> -
+                                    <%=jobData.job_name%>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="site_row job_desc_details">
+                        <form action="/jobs/processapply" method="post" enctype="multipart/form-data" onsubmit="return checkIfCVExists()">
+                            <div class="site_row pb-4">
+                                <div>
+                                    Cover Letter (Not required)
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="file_upload_design">
+                                    <textarea name="cover_letter" id="cover_letter" placeholder="Max 3000 Characters" rows="10"></textarea>
+                                    <div class="form_error_msg" id="coverLetterErr"></div>
+                                </div>
+                            </div><br><br>
+
+                            <div class="site_row pb-4">
+                                <label for="additional_file">Upload any Additional File (Not required)</label>
+                                <input type="file" name="additional_file" id="additional_file" accept=".doc,.docx,.pdf">
+                            </div>
+
+                            <input type="hidden" id="job_id" name="job_id" value="<%=jobData.job_id%>">
+                            <input type="hidden" id="job_title" name="job_title" value="<%=jobData.job_name%>">
+
+                            <div class="flex_row_justify_between_align_center pt-5">
+                                <button class="mx-auto normal_btn">
+                                Apply                       
+                            </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </section>
+
+            </div>
+            </section>
+
+
+
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    function checkIfCVExists() {
+                        var candidate_resume_url = "<%=candidate_resume_url%>";
+
+                        console.log('candidate_resume_url - ' + candidate_resume_url);
+                        if (candidate_resume_url == 'false') {
+                            swal({
+                                    title: 'Your CV/Resume is needed to apply for this job.',
+                                    type: 'warning',
+                                    confirmButtonText: 'Upload CV',
+                                    cancelButtonText: 'Cancel',
+                                },
+                                function(isConfirm) {
+                                    if (isConfirm) {
+                                        window.location.replace('/candidates/profile');
+                                    }
+                                });
+
+                            return false;
+                        }
+                    }
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

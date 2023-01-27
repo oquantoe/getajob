@@ -1,0 +1,305 @@
+<% include includes/dashboard_header %>
+    <% include includes/admin_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section class="job_edit_n_desc">
+                <div class="profile_form_div">
+                    <div class="row pb-4">
+                        <div class="col-md-12 text-center search_cv_head">
+                            <h5>
+                                Search for Talents/CVs
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 input_div">
+                            <label for="job_title">Job Title</label>
+                            <input type="text" id="job_title" name="job_title" placeholder="Enter Job Title">
+                        </div>
+                        <div class="col-md-6 input_div">
+                            <label for="keyword">Additional Keyword</label>
+                            <input type="text" id="keyword" name="keyword" placeholder="Skill, School etc.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 input_div">
+                            <label for="location">City or Region</label>
+                            <select name="location" id="location">
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 input_div">
+                            <label for="education_level">Level of Education</label>
+                            <select name="education_level" id="education_level">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="flex_row_center_all prof_link_btns">
+                            <div class="" id="search_btn">
+                                <button class="normal_btn">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result_text_box"></div>
+                </div>
+
+                <br><br>
+
+                <table id="talents_table">
+                    <thead>
+                        <tr>
+                            <th width="100%"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="talents_box"></tbody>
+                </table>
+            </section>
+
+            </div>
+            </section>
+
+
+
+            <% include includes/modals/purchase_cv_modal %>
+
+                <% include includes/global_dashboard_scripts %>
+
+                    <!-- Get All CV Search Params Script-->
+                    <script>
+                        $(document).ready(function() {
+
+                            $.ajax({
+                                url: '/jobs/get-all-cv-search-params',
+                                type: 'get',
+
+                                success: function(data) {
+                                    var stateContent = '';
+                                    var qualificationContent = '';
+
+                                    //Load all States
+                                    if (!data.states) {
+                                        stateContent = '<option value="">Select Location</option>';
+                                    } else {
+                                        stateContent = '<option value="">Select Location</option>';
+
+                                        for (var i = 0; i < data.states.length; i++) {
+                                            stateContent += '<option value="' + data.states[i].state_id + '">' +
+                                                data.states[i].state_name +
+                                                '</option>';
+                                        }
+                                    }
+
+                                    //Load all Qualifications
+                                    if (!data.qualifications) {
+                                        qualificationContent = '<option value="">Select Qualification</option>';
+                                    } else {
+                                        qualificationContent = '<option value="">Select Qualification</option>';
+
+                                        for (var i = 0; i < data.qualifications.length; i++) {
+                                            qualificationContent += '<option value="' + data.qualifications[i].qualification_id + '">' +
+                                                data.qualifications[i].qualification_name +
+                                                '</option>';
+                                        }
+                                    }
+
+
+                                    $('#location').html(stateContent);
+                                    $('#education_level').html(qualificationContent);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'All CV Search Params Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    </script>
+                    <!-- End All CV Search Params Script-->
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#search_btn').click(function() {
+                                $('#search_btn').html('<button class="normal_btn"><i class="fa fa-spinner fa-spin"></i> Loading</button>');
+
+                                var job_title = $('#job_title').val();
+                                var keyword = $('#keyword').val();
+                                var location = $('#location').val();
+                                var education_level = $('#education_level').val();
+
+                                searchTalents(job_title, keyword, location, education_level);
+                            });
+
+                            function searchTalents(job_title, keyword, location, education_level) {
+
+                                clearTable();
+
+                                //search talents
+                                $.ajax({
+                                    url: '/recruiters/search-talents',
+                                    type: 'post',
+                                    data: {
+                                        job_title: job_title,
+                                        keyword: keyword,
+                                        location: location,
+                                        education_level: education_level
+                                    },
+
+                                    success: function(data) {
+                                        var content = '';
+
+                                        if (!data || data.talents.length == 0) {
+                                            //content = 'No data Available. Please try the search again';
+                                            $('#result_text_box').html('<p style="color:green;">Search complete but 0 results. Please try another search.</p>');
+                                            $('#search_btn').html('<button class="normal_btn">Search</button>');
+                                        } else {
+                                            for (var i = 0; i < data.talents.length; i++) {
+
+                                                var full_name = data.talents[i].first_name + ' ' + data.talents[i].last_name;
+
+                                                var picture = typeof data.talents[i].photo_url != 'undefined' && data.talents[i].photo_url != null &&
+                                                    data.talents[i].photo_url != 'null' && (data.talents[i].photo_url != '') ?
+                                                    data.talents[i].photo_url : '/images/no-user.png';
+
+                                                var profile_summary = typeof data.talents[i].profile_summary != 'undefined' &&
+                                                    data.talents[i].profile_summary != 'null' &&
+                                                    data.talents[i].profile_summary != null &&
+                                                    data.talents[i].profile_summary != '' ?
+                                                    data.talents[i].profile_summary : 'No personal summary provided';
+
+
+                                                var tagline = typeof data.talents[i].tagline != 'undefined' && data.talents[i].tagline != null &&
+                                                    data.talents[i].tagline != 'null' && data.talents[i].tagline != '' ?
+                                                    data.talents[i].tagline : '';
+
+
+                                                content += '<tr> \
+                                            <td> \
+                                                <div class="site_row job_desc_details job_desc_content talent_pool_cvs"> \
+                                                    <div class="flex_row_justify_between_align_center job_role_n_time"> \
+                                                        <div class="flex_row_align_center_justify_start"> \
+                                                            <div class="mr-3 candidate_imag"> \
+                                                                <img src="' + picture + '" alt="Talent Picture"> \
+                                                            </div> \
+                                                            <div class="flex_col"> \
+                                                                <div> \
+                                                                    <p>' + full_name + '</p> \
+                                                                </div> \
+                                                                <div class="stu_grade_n_exp"> \
+                                                                    <span>' + tagline + '</span> \
+                                                                </div> \
+                                                            </div> \
+                                                        </div> \
+                                                        <div class="invite_btn" id="download_cv_btn"> \
+                                                            <button data-toggle="modal" data-target="#" onclick="downloadCV(' + data.talents[i].user_id + ')"> \
+                                                                Download CV \
+                                                            </button> \
+                                                        </div> \
+                                                    </div> \
+                                                    <div class="cv_description_wrapper"> \
+                                                        <div class="site_row3 prev_job_div"> \
+                                                            <div class="site_row3 prev_job_header"> \
+                                                                <h5>Summary</h5> \
+                                                            </div> \
+                                                            <div class="site_row3 prev_job_list"> \
+                                                                <p>' + truncate_long_text(profile_summary) + '</p> \
+                                                            </div> \
+                                                        </div> \
+                                                    </div> \
+                                                </div> \
+                                            </td> \
+                                        </tr>';
+                                            }
+
+                                            $('#result_text_box').html('<p style="color:green;">Search Complete. View results below.</p>');
+                                            $('#search_btn').html('<button class="normal_btn">Search</button>');
+                                        }
+
+                                        $('#talents_box').html(content);
+
+                                        $("#talents_table").DataTable({
+                                            'paging': true,
+                                            'processing': true,
+                                            'aaSorting': [],
+                                            'language': {
+                                                'loadingRecords': '&nbsp;',
+                                                'processing': 'Loading...',
+                                                'sEmptyTable': 'No Talents matching these filters. Try another search.'
+                                            }
+                                        });
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'All Talents Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+
+                            function clearTable() {
+                                var table = $('#talents_table').DataTable();
+                                //clear datatable
+                                table.clear().draw();
+
+                                //destroy datatable
+                                table.destroy();
+                            }
+
+                            function truncate_long_text(long_text) {
+                                var truncated_string = '';
+
+                                if (long_text.length > 100) {
+                                    truncated_string = long_text.substr(0, 500 - 1).trim() + ' [...]  ';
+                                } else {
+                                    truncated_string = long_text;
+                                }
+
+                                return truncated_string;
+                            }
+                        });
+                    </script>
+
+                    <!-- Download CV script-->
+                    <script>
+                        function downloadCV(candidate_id) {
+                            $.ajax({
+                                url: '/admin/download-resume-talent-pool',
+                                type: 'post',
+                                data: {
+                                    candidate_id: candidate_id
+                                },
+                                xhrFields: {
+                                    responseType: 'blob'
+                                },
+
+                                success: function(response, status, xhr) {
+                                    var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1];
+                                    fileName = fileName.substring(1, fileName.length - 1);
+                                    var a = document.createElement('a');
+                                    var url = window.URL.createObjectURL(response);
+                                    a.href = url;
+                                    a.download = fileName;
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Downloading CV/Resume Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+
+                                    swal({
+                                        title: 'No CV/Resume',
+                                        text: 'This candidate does not have their CV/Resume uploaded.',
+                                        type: 'warning',
+                                        confirmButtonText: 'Close',
+                                    });
+                                }
+                            });
+                        }
+                    </script>
+                    <!-- End Download CV script-->
+
+                    <% include includes/global_dashboard_bottom %>

@@ -1,0 +1,557 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section class="settings_section">
+
+                <div class="flex_row_justify_between">
+                    <div class="settings_toggle">
+                        <div class="site_row xxxx">
+                            <div class="flex_row justify-content-between settings_toggle_each active" id="personal_profile_settings">
+                                <div class="settings_icon">
+                                    Information
+                                </div>
+                                <div class="settings_title">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+
+                            <div class="flex_row justify-content-between settings_toggle_each" id="set_questions_btn">
+                                <div class="settings_icon">
+                                    Set Questions
+                                </div>
+                                <div class="settings_title">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings_form">
+
+                        <!-- Assessment Info-->
+                        <div class="site_row update_profile" id="assessment_info_div">
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="assessment_name">Assessment Title <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="assessment_name" id="e_assessment_name" placeholder="Give your assessment a name" required value="<%=typeof assessmentData.assessment_name != 'undefined' ? assessmentData.assessment_name : ''%>">
+                                    <div class="form_error_msg" id="assessmentNameErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col md-12 input_div">
+                                    <label for="assessment_type">Assessment Type <sup class="form_asterisk">*</sup></label>
+                                    <select name="assessment_type" id="e_assessment_type" required>
+                                    </select>
+                                    <div class="form_error_msg" id="assessmentTypeErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="job_assigned_to">Assign to a Job <sup class="form_asterisk">*</sup></label>
+                                    <span id="jobs_autocomplete_select" class="jobs-autocomplete-select"></span>
+                                    <input type="hidden" id="e_job_assigned_to" name="job_assigned_to" required>
+                                    <div class="form_error_msg" id="jobAssignedToErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 input_div">
+                                    <label for="assessment_time">Time for Assessment (In Minutes) <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="assessment_time" id="e_assessment_time" placeholder="60" value="<%=typeof assessmentData.time != 'undefined' ? assessmentData.time : ''%>" required>
+                                    <div class="form_error_msg" id="assessmentTimeErr"></div>
+                                </div>
+
+                                <div class="col-md-4 input_div">
+                                    <label for="pass_percentage">Pass Mark Percentage (Do not add a %) <sup class="form_asterisk">*</sup></label>
+                                    <input type="text" name="pass_percentage" id="e_pass_percentage" placeholder="80" value="<%=typeof assessmentData.pass_percentage != 'undefined' ? assessmentData.pass_percentage : ''%>" required>
+                                    <div class="form_error_msg" id="passPercentageErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 input_div">
+                                    <label for="assessment_description">Assessment Description <sup class="form_asterisk">*</sup></label>
+                                    <textarea name="assessment_description" id="e_assessment_description" placeholder="Some information or instructions about the assessment" cols="30" rows="10" required><%=typeof assessmentData.assessment_description != 'undefined' ? assessmentData.assessment_description : ''%></textarea>
+                                    <div class="form_error_msg" id="assessmentDescriptionErr"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex_row_justify_between_align_center prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="/recruiters/assessments">Cancel</a>
+                                </div>
+
+                                <div class="" id="edit_assessment_btn">
+                                    <button class="normal_btn" id="goto_next_two">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of Assessment Info -->
+
+
+                        <!-- Assessment Questions-->
+                        <div class="site_row change_password" id="assessment_questions_div">
+                            <div id="questions_box">
+                            </div>
+
+                            <div id="add_question_btn" class="site_row text-center green_link_underline py-5">
+                                <a href="#">
+                                    Add New Question
+                                </a>
+                            </div>
+
+                            <div class="site_row text-center">
+                                <b>NOTE:</b> Make sure the correct answer to questions are selected.
+                            </div>
+
+                            <div class="flex_row_justify_between_align_center mt-4 prof_link_btns">
+                                <div class="cancel_link">
+                                    <a href="/recruiters/assessments">Cancel</a>
+                                </div>
+
+                                <div class="" id="edit_questions_btn">
+                                    <button class="normal_btn" id="goto_next_three">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End of Assessment Questions-->
+                    </div>
+                </div>
+
+            </section>
+
+
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script type="text/javascript">
+                    // Defining a function to display error message
+                    function printError(elemId, hintMsg) {
+                        document.getElementById(elemId).innerHTML = hintMsg;
+                    }
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#set_questions_btn').click(function(e) {
+                            e.preventDefault();
+
+                            $(".update_profile").fadeOut(300);
+                            $(".change_password").delay(300).fadeIn();
+                        });
+                    });
+                </script>
+
+                <script>
+                    var no_of_questions;
+
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/assessments/get-edit-assessment-params',
+                            type: 'post',
+                            data: {
+                                assessment_id: '<%=assessmentData.assessment_id%>'
+                            },
+
+                            success: function(data) {
+                                var assessmentTypeContent = '';
+
+                                //Load all Assessment Types
+                                if (!data.assessment_types) {
+                                    assessmentTypeContent = '<option value="">Select Assessment Type</option>';
+                                } else {
+                                    assessmentTypeContent = '<option value="">Select Assessment Type</option>';
+
+                                    for (var i = 0; i < data.assessment_types.length; i++) {
+                                        assessmentTypeContent += '<option value="' + data.assessment_types[i].assessment_type_id + '">' +
+                                            data.assessment_types[i].assessment_type_name +
+                                            '</option>';
+                                    }
+                                }
+
+                                $('#e_assessment_type').html(assessmentTypeContent);
+
+                                setOtherData(data.jobs);
+                                setQuestions(data.questions);
+                                no_of_questions = data.questions.length;
+                            },
+
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All Assessment Params Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    function setOtherData(allJobs) {
+                        var assessmentType = "<%=typeof assessmentData.assessment_type != 'undefined' ? assessmentData.assessment_type : 0 %>";
+                        var jobAssignedTo = "<%=typeof assessmentData.job_assigned_to != 'undefined' ? assessmentData.job_assigned_to : 0 %>";
+
+                        $('#e_assessment_type').val(assessmentType);
+                        $('#e_job_assigned_to').val(jobAssignedTo);
+
+                        //Load all jobs
+                        var jobsAutoCompleteSelect = new SelectPure(".jobs-autocomplete-select", {
+                            options: allJobs,
+                            value: typeof jobAssignedTo != 'undefined' ? jobAssignedTo : [],
+                            multiple: false,
+                            autocomplete: true,
+                            icon: "fa fa-times",
+                            onChange: value => {
+                                console.log(value);
+                                $('#e_job_assigned_to').val(value);
+                            },
+                        });
+                    }
+
+                    function setQuestions(allQuestions) {
+                        var question_count = 1;
+
+                        for (var i = question_count; i <= allQuestions.length; i++) {
+                            var questionBox = '<% include includes/snippets/edit_single_choice_question_box %>';
+
+                            $('#questions_box').append(questionBox);
+
+                            processSingleAndMultipleOptionsInitially(question_count, allQuestions[i - 1].question_type);
+
+                            var questionTypeId = '#question_type_' + question_count;
+                            $(questionTypeId).val(allQuestions[i - 1].question_type);
+
+                            var options = [];
+                            options.push({
+                                index: 1,
+                                option: allQuestions[i - 1].possible_answera
+                            }, {
+                                index: 2,
+                                option: allQuestions[i - 1].possible_answerb
+                            }, {
+                                index: 3,
+                                option: allQuestions[i - 1].possible_answerc
+                            }, {
+                                index: 4,
+                                option: allQuestions[i - 1].possible_answerd
+                            });
+
+                            if (allQuestions[i - 1].question_type == '1') {
+                                var correct_answer = allQuestions[i - 1].correct_answer;
+
+                                for (var j = 0; j < options.length; j++) {
+                                    if (correct_answer == options[j].option) {
+                                        var correct_answer_radio_id = "input[name=single_correct_answer_" + question_count + "][value=" + options[j].index + "]";
+                                        $(correct_answer_radio_id).prop('checked', true);
+                                    }
+                                }
+                            } else if (allQuestions[i - 1].question_type == '2') {
+                                var correct_answers_arr = (allQuestions[i - 1].correct_answer).split(',');
+
+                                for (var j = 0; j < options.length; j++) {
+                                    var option_arr = [];
+                                    option_arr.push(options[j].option);
+
+                                    var found = correct_answers_arr.some(r => option_arr.includes(r));
+
+                                    if (found) {
+                                        var correct_answer_checkbox_id = "input[name=multiple_correct_answers_" + question_count + "][value=" + options[j].index + "]";
+                                        $(correct_answer_checkbox_id).prop('checked', true);
+                                    }
+                                }
+                            }
+
+                            question_count++;
+                        }
+                    }
+
+                    function processSingleAndMultipleOptionsInitially(no, question_type) {
+                        var id = "#question_type_" + no;
+
+                        var radioGroup = "input:radio[id='correct_answer_" + no + "']";
+                        var checkboxGroup = "input:checkbox[id='correct_answer_" + no + "']";
+
+                        if (question_type == '1') {
+                            $(checkboxGroup).hide();
+                        } else if (question_type == '2') {
+                            $(radioGroup).hide();
+                        }
+
+                        $(id).change(function() {
+                            if ($(this).val() == '1') {
+                                $(checkboxGroup).hide();
+                                $(radioGroup).show();
+                            } else if ($(this).val() == '2') {
+                                $(checkboxGroup).show();
+                                $(radioGroup).hide();
+                            } else if ($(this).val() == '3') {
+                                $(checkboxGroup).hide();
+                                $(radioGroup).hide();
+                            }
+                        });
+                    }
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#edit_assessment_btn").click(function() {
+                            var assessment_name = $.trim($('#e_assessment_name').val());
+                            var assessment_type = $('#e_assessment_type').val();
+                            var job_assigned_to = $('#e_job_assigned_to').val();
+                            var assessment_time = $('#e_assessment_time').val();
+                            var assessment_description = $('#e_assessment_description').val();
+                            var pass_percentage = $('#e_pass_percentage').val();
+
+
+                            var ifValidated = validateCreateAssessmentForm(assessment_name, assessment_type, job_assigned_to,
+                                assessment_time, assessment_description, pass_percentage);
+
+                            if (ifValidated) {
+                                editAssessment(assessment_name, assessment_type, job_assigned_to, assessment_time,
+                                    assessment_description, pass_percentage);
+                            }
+                        });
+
+                        function editAssessment(assessment_name, assessment_type, job_assigned_to, assessment_time,
+                            assessment_description, pass_percentage) {
+
+                            $.ajax({
+                                url: '/assessments/edit-assessment-data',
+                                type: 'post',
+                                data: {
+                                    assessment_id: '<%=assessmentData.assessment_id %>',
+                                    assessment_name: assessment_name,
+                                    assessment_type: assessment_type,
+                                    job_assigned_to: job_assigned_to,
+                                    assessment_time: assessment_time,
+                                    assessment_description: assessment_description,
+                                    pass_percentage: pass_percentage
+                                },
+
+                                success: function(data) {
+                                    if (data.result) {
+                                        swal({
+                                            title: 'Assessment information saved successfully',
+                                            type: 'success'
+                                        });
+
+                                        window.location.replace('/assessments/edit-assessment/<%=assessmentData.assessment_id %>');
+                                    } else {
+                                        swal({
+                                            title: 'An error occured editing assessment. Please try again',
+                                            type: 'error'
+                                        });
+                                    }
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'Edit Assessment Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        }
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#add_question_btn").click(function() {
+                            var question_count = no_of_questions += 1;
+
+                            var newQuestionBox = '<% include includes/snippets/single_choice_question_box %>';
+
+                            $('#questions_box').append(newQuestionBox);
+
+                            processSingleAndMultipleOptions(question_count);
+                        });
+
+                        function processSingleAndMultipleOptions(no) {
+                            var id = "#question_type_" + no;
+
+                            var radioGroup = "input:radio[id='correct_answer_" + no + "']";
+                            var checkboxGroup = "input:checkbox[id='correct_answer_" + no + "']";
+
+                            $(checkboxGroup).hide();
+                            // $(radioGroup).show();
+
+                            $(id).change(function() {
+                                if ($(this).val() == '1') {
+                                    $(checkboxGroup).hide();
+                                    $(radioGroup).show();
+                                } else if ($(this).val() == '2') {
+                                    $(checkboxGroup).show();
+                                    $(radioGroup).hide();
+                                } else if ($(this).val() == '3') {
+                                    $(checkboxGroup).hide();
+                                    $(radioGroup).hide();
+                                }
+
+                            });
+                        }
+
+                        $("#edit_questions_btn").click(function() {
+                            var ifConfirmed = confirm("Are you sure these Question set are correct?");
+
+                            if (ifConfirmed) {
+                                var question_set = [];
+                                var q_ids = [];
+                                var questions = [];
+                                var question_types = [];
+                                var all_options = [];
+                                var options = [];
+                                var scores = [];
+                                var times = [];
+                                var correct_answers = [];
+
+                                //Get all question ids
+                                $("input[name='q_ids[]']").each(function() {
+                                    q_ids.push($(this).val());
+                                });
+
+                                //Get all questions
+                                $("input[name='questions[]']").each(function() {
+                                    questions.push($(this).val());
+                                });
+
+                                //Get all question types
+                                $("select[name='question_types[]']").each(function() {
+                                    question_types.push($(this).val());
+                                });
+
+                                //Get all weighted scores
+                                $("input[name='weigted_scores[]']").each(function() {
+                                    scores.push($(this).val());
+                                });
+
+                                //Get all times
+                                $("input[name='times[]']").each(function() {
+                                    times.push($(this).val());
+                                });
+
+                                //Get all options
+                                $("input[name='question_options[]']").each(function() {
+                                    all_options.push($(this).val());
+                                });
+
+
+                                // Divide options array into 4s i.e each question has option a to d
+                                while (all_options.length) {
+                                    options.push(all_options.splice(0, 4));
+                                }
+
+                                //Get all Single & multiple choice correct answers
+                                for (var i = 1; i <= questions.length; i++) {
+                                    //Get single choice correct answer
+                                    var radio_name = "input[name='single_correct_answer_" + i + "']:checked";
+                                    var single_choice_answer = $(radio_name).val();
+
+                                    if (typeof single_choice_answer != 'undefined') {
+                                        correct_answers.push({
+                                            "question": i,
+                                            "correct_answer": single_choice_answer
+                                        });
+                                    }
+
+                                    //Get multiple choice correct answers
+                                    var checkbox_name = "input[name='multiple_correct_answers_" + i + "']:checked";
+                                    var answers = [];
+
+                                    $(checkbox_name).each(function() {
+                                        answers.push($(this).val());
+                                    });
+
+                                    if (answers.length > 0) {
+                                        correct_answers.push({
+                                            "question": i,
+                                            "correct_answer": answers
+                                        });
+                                    }
+                                }
+
+
+                                //Create question set
+                                for (var i = 0; i < questions.length; i++) {
+                                    var answer = [];
+
+                                    if (question_types[i] == '1') {
+                                        answer.push(options[i][(correct_answers[i].correct_answer - 1)]);
+
+                                    } else if (question_types[i] == '2') {
+                                        var ans = correct_answers[i].correct_answer;
+                                        var len = correct_answers[i].correct_answer.length;
+
+                                        for (var j = 0; j < len; j++) {
+                                            var x = parseInt(ans[j]);
+                                            answer.push(options[i][(x - 1)]);
+                                        }
+                                    }
+
+                                    question_set.push({
+                                        "question_id": q_ids[i],
+                                        "index": i + 1,
+                                        "question": questions[i],
+                                        "question_type": question_types[i],
+                                        "options": options[i],
+                                        "score": scores[i],
+                                        "time": times[i],
+                                        "correct_answer": answer
+                                    });
+                                }
+
+                                console.log(question_set);
+
+                                submitQuestions(question_set);
+
+                            }
+
+                            function submitQuestions(question_set) {
+                                var assessment_id = '<%=assessmentData.assessment_id%>';
+
+                                $.ajax({
+                                    url: '/assessments/edit-questions',
+                                    type: 'post',
+                                    data: {
+                                        question_set: JSON.stringify(question_set),
+                                        assessment_id: assessment_id
+                                    },
+
+                                    success: function(data) {
+                                        if (data.result) {
+                                            swal({
+                                                title: 'Questions Saved Successfully.',
+                                                type: 'success'
+                                            });
+
+                                            window.location.replace('/recruiters/assessments');
+                                        } else {
+                                            swal({
+                                                title: 'Something happened editing your questions. Please try again.',
+                                                type: 'error'
+                                            });
+                                        }
+
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Create Questions Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

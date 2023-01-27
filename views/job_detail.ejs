@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <% include includes/snippets/meta_tags%>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- CSS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+        <!-- Cookie Consent CDN -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <link rel="stylesheet" href="/css/responsiveness.css">
+        <link rel="stylesheet" href="/css/animation.css">
+
+        <% include includes/snippets/drift_snippet %>
+            <% include includes/snippets/gtag %>
+                <% include includes/snippets/google_job_posting_struc %>
+                    <% include includes/snippets/open_graph_tags%>
+
+                        <title>
+                            <%=jobData.job_name%> - GetaJobNG</title>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="site_header_two">
+            <div class="site_container">
+
+                <% include includes/landing_page/landing_page_nav %>
+
+                    <div class="row d-flex flex-row align-items-center justify-content-center py-5">
+                        <div class="center_text pt-5 header_with_just_text">
+                            <div class="site_row center_text">
+                                <h2>
+                                    <%=jobData.job_name%>
+                                </h2>
+                            </div>
+                            <div class="site_row center_text">
+                                <p class="job_desc_para">
+                                    <%=jobData.company_name%> -
+                                        <%=typeof jobData.state_name != 'undefined' || jobData.state_name != null ? jobData.state_name : ''%>,
+                                            <%=typeof jobData.country_name != 'undefined' || jobData.country_name != null ? jobData.country_name : ''%>
+                                </p>
+                            </div>
+
+                            <%  var link = '';
+                        
+                        if(userAuthenticated == 'true'){
+                            if(userData.role_id == 1){
+                                if(jobData.application_channel == '' || jobData.application_channel == 'getajobng'){
+                                    link = '/jobs/apply/'+ jobData.job_id;
+                                } else {
+                                    link = jobData.external_application_link;
+                                }
+                                
+                            } else{
+                                link = '/login';
+                            }
+                        } else{
+                            link = '/login';
+                        }
+                    %>
+                                <div class="site_row center_text">
+                                    <a target="_blank" href="<%=link%>">
+                                        <button>
+                                Apply Now
+                            </button>
+                                    </a>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- Main body -->
+
+    <main class="main__section">
+
+        <section class="job_full_desc">
+            <div class="site_row">
+                <div class="site_container job_full_desc">
+                    <section>
+                        <header>
+                            <h5>
+                                Job Summary
+                            </h5>
+                        </header>
+                        <article>
+
+                            <% if((typeof jobData.job_type_name != 'undefined') && (jobData.job_type_name != 'null') 
+                                && (jobData.job_type_name != null) && (jobData.job_type_name != '')){ %>
+                                <p><b>Job Type: </b>
+                                    <%=jobData.job_type_name%>
+                                </p>
+                                <% } %>
+
+                                    <% if((typeof jobData.job_category_name != 'undefined') && (jobData.job_category_name != 'null') 
+                                && (jobData.job_category_name != null) && (jobData.job_category_name != '')){ %>
+                                        <p><b>Job Category: </b>
+                                            <%=jobData.job_category_name%>
+                                        </p>
+                                        <% } %>
+
+                                            <% if((typeof jobData.experience_level_name != 'undefined') && (jobData.experience_level_name != 'null') 
+                                && (jobData.experience_level_name != null) && (jobData.experience_level_name != '')){ %>
+                                                <p><b>Experience Level: </b>
+                                                    <%=jobData.experience_level_name%>
+                                                </p>
+                                                <% } %>
+
+                                                    <% if((typeof jobData.min_year_of_experience != 'undefined') && (jobData.min_year_of_experience != 'null') 
+                                && (jobData.min_year_of_experience != null) && (jobData.min_year_of_experience != '')){ %>
+                                                        <p><b>Minimum Year of Experience: </b>
+                                                            <%=jobData.min_year_of_experience%> year(s)</p>
+                                                        <% } %>
+
+                                                            <% if((typeof jobData.min_qualification_name != 'undefined') && (jobData.min_qualification_name != 'null') 
+                                && (jobData.min_qualification_name != null) && (jobData.min_qualification_name != '')){ %>
+                                                                <p><b>Minimum Qualification: </b>
+                                                                    <%=jobData.min_qualification_name%>
+                                                                </p>
+                                                                <% } %>
+
+                                                                    <% if((typeof jobData.expected_salary != 'undefined') && (jobData.expected_salary != 'null') 
+                                && (jobData.expected_salary != null) && (jobData.expected_salary != '')){ %>
+                                                                        <p><b>Expected Salary: </b> &#8358;
+                                                                            <%=jobData.expected_salary%>
+                                                                        </p>
+                                                                        <% } %>
+
+                        </article>
+                    </section>
+
+
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="site_row">
+                <div class="site_container job_full_desc">
+
+                    <%if(jobData.company_description != ''){ %>
+                        <section>
+                            <header>
+                                <h5>
+                                    Where You’ll Work
+                                </h5>
+                            </header>
+                            <article>
+                                <p id="company_description"></p>
+                            </article>
+                        </section>
+                        <%}%>
+
+                            <%if(jobData.job_description != ''){ %>
+                                <section>
+                                    <header>
+                                        <h5>
+                                            What you’ll do & Responsibilities
+                                        </h5>
+                                    </header>
+                                    <article>
+                                        <p id="job_description"></p>
+                                    </article>
+
+
+                                </section>
+                                <%}%>
+
+                                    <p><b>Application Deadline: </b>
+                                        <%=jobData.application_deadline%>
+                                    </p>
+                </div>
+            </div>
+
+            <!-- 728 x 90 Ad size -->
+            <!-- <div class="ads-row ads-margin-top-medium">
+                <div class="ads seven28xx90">
+                    <h4>728 x 90</h4>
+                </div>
+            </div> -->
+        </section>
+
+        <aside class="job-details__side-nav">
+            <!-- 336 x 280 Ad size -->
+            <!-- <div class="ads-row">
+                <div class="ads three00xx250">
+                    <a href="#">
+                        <h4>300 x 250</h4>
+                        <img src="/images/ads/360_solutions/Half Page_300x600@1x.png" alt="360_solutions_ad">
+                    </a>
+                </div>
+            </div> -->
+
+            <!-- 336 x 280 Ad size -->
+            <!-- <div class="ads-row ads-margin-top-medium">
+                <div class="ads three00xx250">
+                    <h4>300 x 250</h4>
+                    <a href="#">
+                        <img src="/images/ads/360_solutions/Half Page_300x600@1x.png" alt="360_solutions_ad">
+                    </a>
+                </div>
+            </div> -->
+
+            <!-- 300 x 600 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads three00xx600">
+                    <a href="https://c-ileasing.com/360fleet" target="_blank">
+                        <img src="/images/ads/360_solutions/Half Page_300x600@1x.png" alt="360_solutions_ad">
+                    </a>
+                </div>
+            </div>
+
+            <!-- 300 x 600 Ad size -->
+            <div class="ads-row ads-margin-top-medium">
+                <div class="ads three00xx600">
+                    <a href="#" target="_blank">
+                        <img src="/images/ads/hertz/Half Page.png" alt="hertz_ad">
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+
+    <!--  -->
+
+    <% include includes/landing_page/footer %>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+        <script src="/js/jQuery.min.js"></script>
+        <script src="/js/main.js"></script>
+
+        <script>
+            function unescapeHTML(escapedHTML) {
+                return escapedHTML.replace(/&#34;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, "&").replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&rsquo;/g, "'").replace(/(?:\r\n|\r|\n)/g, '<br>');
+            }
+
+            $(document).ready(function() {
+                var company_description = "<%=jobData.company_description%>";
+                var job_description = "<%=jobData.job_description%>";
+                var job_responsibilities = "<%=jobData.job_responsibilities%>";
+
+                var company_description_after_edit = unescapeHTML(company_description);
+                var job_description_after_edit = unescapeHTML(job_description);
+                var job_responsibilities_after_edit = unescapeHTML(job_responsibilities);
+
+                $("#company_description").html(company_description_after_edit);
+                $("#job_description").html(job_description_after_edit);
+                $("#job_responsibilities").html(job_responsibilities_after_edit);
+            });
+        </script>
+</body>
+
+</html>

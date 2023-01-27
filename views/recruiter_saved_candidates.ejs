@@ -1,0 +1,172 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+
+            <section>
+                <div class="flex_row_justify_between add_jobbs_top">
+                    <div>
+                        <h5>
+                            Saved Candidates
+                        </h5>
+                    </div>
+                </div>
+            </section>
+
+            <section class="create_job_table_section">
+                <div class="site_row create_job_table">
+                    <table id="candidates_table">
+                        <thead>
+                            <tr>
+                                <th class="cand_image"></th>
+                                <th>
+                                    Full Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Gender
+                                </th>
+                                <th>
+                                    Tagline
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="candidates_data"></tbody>
+                    </table>
+
+                </div>
+            </section>
+            </div>
+            </section>
+
+
+            <% include includes/global_dashboard_scripts %>
+
+                <script>
+                    $(document).ready(function() {
+                        //Get all job applicants
+                        $.ajax({
+                            url: '/recruiters/get-all-saved-candidates',
+                            type: 'get',
+
+                            success: function(data) {
+                                var content = '';
+
+                                if (!data || data.candidates.length == 0) {
+                                    content = '';
+                                } else {
+                                    for (var i = 0; i < data.candidates.length; i++) {
+
+                                        var full_name = data.candidates[i].first_name + ' ' + data.candidates[i].last_name;
+
+                                        var applicantPicture = typeof data.candidates[i].photo_url != 'undefined' &&
+                                            data.candidates[i].photo_url != 'null' &&
+                                            (data.candidates[i].photo_url != '') ? data.candidates[i].photo_url : '/images/no-user.png';
+
+                                        content += '<tr> \
+                                        <td class="cand_image"> \
+                                            <div> \
+                                                <a href="/recruiters/saved-candidate-info/' + data.candidates[i].user_id + '"> \
+                                                    <img src="' + applicantPicture + '" alt="User Image"> \
+                                                </a> \
+                                            </div>' +
+                                            '</td> \
+                                        <td class="assess_title"> \
+                                            <p>' + full_name + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.candidates[i].email + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.candidates[i].phone_number + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.candidates[i].gender + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <p>' + data.candidates[i].tagline + '</p> \
+                                        </td> \
+                                        <td> \
+                                            <a href="/recruiters/saved-candidate-info/' + data.candidates[i].user_id + '"> \
+                                                <i style="color:#0000ff" class="far fa-eye"></i> \
+                                            </a> &nbsp;&nbsp;\
+                                            <a id="remove_candidate_link" title="Remove Candidate" href="#" onclick="removeCandidate(' + data.candidates[i].saved_resume_id + ');return false;"> \
+                                                <i style="color:#ff0000" class="far fa-trash-alt"></i> \
+                                            </a> \
+                                        </td> \
+                                    </tr>';
+                                    }
+                                }
+
+                                $('#candidates_data').html(content);
+
+                                $("#candidates_table").DataTable({
+                                    'paging': true,
+                                    'processing': true,
+                                    'aaSorting': [],
+                                    'language': {
+                                        'loadingRecords': '&nbsp;',
+                                        'processing': 'Loading...'
+                                    }
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All saved candidates Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <script>
+                    function removeCandidate(saved_resume_id) {
+                        $(document).ready(function() {
+                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                            if (ifConfirm) {
+                                //Remove Candidate
+                                $.ajax({
+                                    url: '/recruiters/remove-saved-candidate',
+                                    type: 'post',
+                                    data: {
+                                        saved_resume_id: saved_resume_id
+                                    },
+                                    success: function(data) {
+                                        if (data.affectedRows > 0) {
+                                            swal({
+                                                    title: 'Candidate Removed Successfully',
+                                                    type: 'success'
+                                                },
+                                                function(isConfirm) {
+                                                    if (isConfirm) {
+                                                        window.location.replace('/recruiters/saved-candidates');
+                                                    }
+                                                });
+                                        } else {
+                                            swal({
+                                                title: 'An error occurred',
+                                                text: 'Something happened with this operation. Please try again',
+                                                type: 'error'
+                                            });
+                                        }
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError) {
+                                        var errorMsg = 'Removing Candidate Request failed: ' + xhr.responseText;
+                                        console.log(errorMsg)
+                                    }
+                                });
+                            }
+                        });
+                    }
+                </script>
+
+                <% include includes/global_dashboard_bottom %>

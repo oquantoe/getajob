@@ -1,0 +1,145 @@
+<% include includes/dashboard_header %>
+    <% include includes/recruiter_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section>
+                <div class="site_row user_dashboard_header pt-5">
+                    <div style="padding: 30px 0 20px; font-size: 30px; color: #465A61">
+                        <h5>
+                            <%=interview_data.interview_name%>
+                        </h5>
+                    </div>
+                    <div class="flex_row_justify_between dasboard_cards mt-5">
+
+                        <div class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                            <h4 class="mb-2">
+                                <%=interview_data.date%>
+                            </h4>
+                            <p>
+                                Date
+                            </p>
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                            <h4 class="mb-2">
+                                <%=interview_data.interview_time%>
+                            </h4>
+                            <p>
+                                Time
+                            </p>
+                        </div>
+
+                        <div id="shortlist_count" class="d-flex flex-column justify-content-center align-items-center each_dashboard_card">
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section class="shortlisted_table_sect">
+                <div class="flex_row Shortlisted_top pb-4">
+                    <div>
+                        <h5>
+                            Shortlisted Candidates
+                        </h5>
+                    </div>
+                    <!-- <div>
+                        <a href="#">
+                                View all Candidates
+                        </a>
+                    </div> -->
+                </div>
+                <section>
+                    <div class="site_row mt-4 jod_desc_tabul">
+                        <table id="candidates_table">
+                            <thead>
+                                <tr>
+                                    <th class="cand_image"></th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Date Applied</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidates_data">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+            </div>
+            </section>
+
+
+            <% include includes/modals/add_notes_modal %>
+
+                <% include includes/global_dashboard_scripts %>
+
+                    <script>
+                        $(document).ready(function() {
+                            $.ajax({
+                                url: '/recruiters/get-all-candidates-for-interview',
+                                type: 'post',
+                                data: {
+                                    interview_id: '<%=interview_data.interview_id%>',
+                                    job_id: '<%=interview_data.job_id%>'
+                                },
+
+                                success: function(data) {
+                                    console.log(data)
+                                    var content = '';
+                                    var shorlistCount = '';
+
+                                    if (!data || data.candidates.length == 0) {
+                                        content = '';
+                                        shorlistCount = '<h4 class="mb-2">0</h4><p>Shortlisted</p>';
+                                    } else {
+                                        for (var i = 0; i < data.candidates.length; i++) {
+
+                                            var fullName = data.candidates[i].first_name + ' ' + data.candidates[i].last_name;
+
+                                            var applicantPicture = typeof data.candidates[i].photo_url != 'undefined' &&
+                                                data.candidates[i].photo_url != 'null' &&
+                                                (data.candidates[i].photo_url != '') ? data.candidates[i].photo_url : '/images/no-user.png';
+
+                                            content += '<tr> \
+                                                    <td class="cand_image"> \
+                                                        <div> \
+                                                            <img src="' + applicantPicture + '" alt="User Image"> \
+                                                        </div> \
+                                                    </td> \
+                                                    <td> ' + fullName + ' </td> \
+                                                    <td> ' + data.candidates[i].email + ' </td> \
+                                                    <td> ' + data.candidates[i].phone_number + ' </td> \
+                                                    <td> ' + data.candidates[i].application_date + ' </td> \
+                                                </tr>';
+
+                                            shorlistCount = '<h4 class="mb-2">' + data.candidates.length + '</h4><p>Shortlisted</p>';
+
+                                        }
+                                    }
+
+                                    $('#shortlist_count').html(shorlistCount);
+                                    $('#candidates_data').html(content);
+
+                                    $("#candidates_table").DataTable({
+                                        'paging': true,
+                                        'processing': true,
+                                        'language': {
+                                            'loadingRecords': '&nbsp;',
+                                            'processing': 'Loading...'
+                                        }
+                                    });
+                                },
+                                error: function(xhr, ajaxOptions, thrownError) {
+                                    var errorMsg = 'All Candidates Request failed: ' + xhr.responseText;
+                                    console.log(errorMsg)
+                                }
+                            });
+                        });
+                    </script>
+
+                    <% include includes/global_dashboard_bottom %>

@@ -1,0 +1,166 @@
+<% include includes/dashboard_header %>
+    <% include includes/candidate_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section class="job_details_section">
+
+                <div class="flex_row_align_center_justify_start job_details_top">
+                    <!-- <div class="job_back">
+
+                    <p>
+                        <a href="#">
+                        <i class="fas fa-long-arrow-alt-left"></i>   Back
+                        </a>
+                    </p>
+
+                   </div>-->
+
+
+                    <div class="job_details_txt">
+                        <p>Job Details</p>
+                    </div>
+                </div>
+
+
+                <div class="site_row job_desc_details">
+
+                    <div class="flex_row_justify_between_align_center job_details_header_top">
+                        <div class="user_image">
+                            <img id="company_logo_pic" src="<%= (typeof jobData.company_logo_url != 'undefined') && (jobData.company_logo_url != 'null') && (jobData.company_logo_url != null) 
+                            && (jobData.company_logo_url != '') ? jobData.company_logo_url : '/images/no-company-logo.png'%>" alt="Company Logo" style="width:60px;height:60px;">
+                        </div>
+
+                        <div>
+                            <% var data_url = "www.getajobng.com/job-detail/" + jobData.job_id; %>
+                                <p>Tell your friends:</p>
+                                <div class="likely likely-small" data-url="<%=data_url%>" data-title="Check out this amazing job. Sent from GetaJobNG.">
+                                    <div class="twitter" data-via="TWITTER USERNAME"></div>
+                                    <div class="facebook"></div>
+                                    <div class="gplus"></div>
+                                    <div class="telegram" data-text="Check this job out"></div>
+                                    <div class="linkedin"></div>
+                                    <div class="whatsapp"></div>
+                                </div>
+                        </div>
+
+                        <div id="apply_link">
+                        </div>
+                    </div>
+
+                    <div class="flex_row job_role_n_time">
+                        <div>
+                            <p>
+                                <%=jobData.company_name%> -
+                                    <%=jobData.job_name%>
+                                        <span>(<%=jobData.job_type_name%>)</span>
+                            </p>
+                            <span>
+                            <%=typeof jobData.state_name != 'undefined' || jobData.state_name != null ? jobData.state_name : ''%>, 
+                            <%=typeof jobData.country_name != 'undefined' || jobData.country_name != null ? jobData.country_name : ''%>
+                        </span>
+                            <br>
+                            <p>
+                                <b>Application Deadline: </b>
+                                <%=jobData.application_deadline %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="site_row main_job_desc">
+                        <h6>
+                            Job Description
+                        </h6><br>
+                        <div id="job_description_box">
+                        </div>
+                    </div>
+
+
+
+                    <!--
+                <div class="site_row job_responsibilities">
+                    <h6>
+                        Responsibilities
+                    </h6>
+                    <ul id="job_responsibilities">
+                        <%=//jobData.job_responsibilities%>
+                    </ul>
+                </div> -->
+
+                </div>
+
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/global_dashboard_scripts%>
+
+                <script>
+                    function unescapeHTML(escapedHTML) {
+                        return escapedHTML.replace(/&#34;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, "&").replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&rsquo;/g, "'").replace(/(?:\r\n|\r|\n)/g, '<br>');
+                    }
+
+                    $(document).ready(function() {
+                        //Load Job Description
+                        var job_description = unescapeHTML('<%=jobData.job_description%>');
+
+                        $("#job_description_box").html(job_description);
+                    });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $.ajax({
+                            url: '/jobs/check-application-status',
+                            type: 'post',
+                            data: {
+                                job_id: '<%=jobData.job_id%>'
+                            },
+
+                            success: function(data) {
+
+                                var applicationStatusContent = '';
+
+                                if (!data) {
+                                    applicationStatusContent = '<option value="Lagos">Lagos</option>';
+                                } else {
+                                    var applicationStatus = data.application_status;
+
+                                    var socials_sharing_links = '';
+
+                                    var application_link = '#';
+                                    var application_channel = '<%=jobData.application_channel%>';
+                                    var external_application_link = '<%=jobData.external_application_link%>';
+
+                                    if (application_channel == '' || application_channel == 'getajobng') {
+                                        application_link = '/jobs/apply/<%=jobData.job_id%>';
+                                    } else {
+                                        application_link = external_application_link;
+                                    }
+
+                                    if (applicationStatus == 0) {
+                                        applicationStatusContent = socials_sharing_links +
+                                            '<div class="aply_link"> \
+                                                        <a href="' + application_link + '"> \
+                                                            Apply \
+                                                        </a> \
+                                                    </div>';
+                                    } else {
+                                        applicationStatusContent = socials_sharing_links +
+                                            '<div class="green_text"> \
+                                                        Applied \
+                                                    </div>';
+                                    }
+                                }
+
+                                $('#apply_link').html(applicationStatusContent);
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                var errorMsg = 'All States Request failed: ' + xhr.responseText;
+                                console.log(errorMsg)
+                            }
+                        });
+                    });
+                </script>
+
+                <% include includes/global_dashboard_bottom%>

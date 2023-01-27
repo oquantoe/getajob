@@ -1,0 +1,1279 @@
+<% include includes/dashboard_header %>
+    <% include includes/candidate_nav %>
+        <% include includes/dashboard_top_bar %>
+
+            <section class="user_section">
+
+                <div class="flex_row">
+                    <div class="flex_row_center_spaceBetween user_details">
+
+                        <div class="flex_row_align_center">
+
+                            <div class="user_img">
+                                <img style="width:90px;height:90px;border-radius:50%;" src="<%= (typeof data.photo_url != 'undefined') && (data.photo_url != 'null') 
+                                    && (data.photo_url != '') ? data.photo_url : '/images/no-user.png'%>" alt="User Image">
+                            </div>
+                            <div class="user_name_n_post">
+                                <h5>
+                                    <% if (data.full_name == "null null") {%>
+                                        Candidate
+                                        <%} else {%>
+                                            <%=data.full_name %>
+                                                <%}%>
+                                </h5>
+
+                                <p>
+                                    <%=data.tagline%>
+                                </p>
+
+                                <% if (data.email !== null && data.email !== '') {%>
+                                    <a href="mailto:<%=data.email%>" target="_top">
+                                        (<span><%=data.email %></span>)
+                                    </a>
+                                    <%} else {%>
+                                        No Email
+                                        <%}%>
+
+                                            <p>
+                                                <% if (data.phone_number !== null && data.phone_number !== '') {%>
+                                                    <%=data.phone_number %>
+                                                        <%} else {%>
+                                                            No Phone Number
+                                                            <%}%>
+                                            </p>
+                            </div>
+
+                        </div>
+
+                        <div id="cv_box">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- progress bar -->
+            <div class="site_row progress_bar">
+                <div class="site_row progress_bar_title">
+                    <h6>
+                        Profile Strength (Finish completing your profile and get noticed even faster!)
+                    </h6>
+                </div>
+                <div class="progress" id="progress_box">
+                </div>
+            </div>
+            <!-- End of progress bar -->
+
+            <section class="user_information">
+                <div class="flex_row_justify_between">
+                    <div class="flex_col summary_n_ex">
+                        <!-- Summary-->
+                        <div class="site_row user_summary">
+                            <div class="flex_row_justify_between summary_title_text">
+                                <div>
+                                    <h4>
+                                        Summary
+                                    </h4>
+                                </div>
+
+                                <div class="pen_edit" id="summary_pen_edit" data-toggle="modal" data-target="#update_summary_modal">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </div>
+                            </div>
+
+                            <div class="site_row summary_text" id="summary_box">
+                            </div>
+                        </div>
+                        <!-- End of Summary-->
+
+                        <!-- Work WE-->
+                        <div class="site_row user_experience">
+                            <div class="flex_row_justify_between experience_title_text">
+                                <div>
+                                    <h4>
+                                        Experience History
+                                    </h4>
+                                </div>
+                                <div class="exp_add" id="add_experience_btn" data-toggle="modal" data-target="#add_experience_modal">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                            </div>
+
+                            <div id="work_experience_box">
+                            </div>
+                        </div>
+                        <!-- End of WE-->
+
+                        <!-- 728 x 90 Ad size -->
+                        <!-- <div class="ads-row ads-margin-top-medium">
+                            <div class="ads seven28xx90">
+                                <h4>728 x 90</h4>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="skills_n_edu">
+                        <!--To Do List-->
+                        <div class="" id="to_do_content">
+                        </div>
+                        <!-- End of To Do List-->
+
+                        <!-- Skills-->
+                        <div class="site_row user_experience">
+                            <div class="flex_row_justify_between experience_title_text">
+                                <div>
+                                    <h4>Skills</h4>
+                                </div>
+
+                                <div class="exp_add" id="add_skill_btn" data-toggle="modal" data-target="#add_skill_modal">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </div>
+                            </div>
+
+                            <div id="skills_box">
+                            </div>
+                        </div>
+                        <!-- End of Skills-->
+
+                        <!-- Education History-->
+                        <div class="site_row user_experience">
+                            <div class="flex_row_justify_between experience_title_text">
+                                <div>
+                                    <h4>
+                                        Education History
+                                    </h4>
+                                </div>
+
+                                <div class="exp_add" id="add_education_btn" data-toggle="modal" data-target="#add_education_modal">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                            </div>
+
+                            <div id="education_box">
+                            </div>
+                        </div>
+                        <!-- End of Education History-->
+
+                        <!-- Certification-->
+                        <div class="site_row user_experience">
+                            <div class="flex_row_justify_between experience_title_text">
+                                <div>
+                                    <h4>
+                                        Certificates
+                                    </h4>
+                                </div>
+
+                                <div class="exp_add" data-toggle="modal" data-target="#add_certification_modal">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                            </div>
+
+                            <div id="certification_box">
+                            </div>
+                        </div>
+                        <!-- End of Certification-->
+
+                    </div>
+                </div>
+            </section>
+
+            </div>
+            </section>
+
+            <% include includes/modals/upload_resume_modal %>
+
+                <% include includes/modals/update_summary_modal %>
+
+                    <% include includes/modals/add_experience_modal %>
+                        <% include includes/modals/edit_experience_modal %>
+
+                            <% include includes/modals/add_education_modal %>
+                                <% include includes/modals/edit_education_modal %>
+
+                                    <% include includes/modals/add_skill_modal %>
+
+                                        <% include includes/modals/add_certification_modal %>
+                                            <% include includes/modals/edit_certification_modal %>
+
+                                                <% include includes/global_dashboard_scripts%>
+
+
+                                                    <script>
+                                                        function setExperienceDatainModal(companyName, jobTitle, employerAddress, stateDate, endDate, jobDescription,
+                                                            experienceId) {
+
+                                                            //Set data in modal
+                                                            var start_dates = stateDate.split(',');
+                                                            var end_dates = endDate.split(',');
+                                                            var addresses = employerAddress.split(',');
+
+                                                            $('#update_experience_id').val(experienceId)
+                                                            $('#update_company_name').val(companyName)
+                                                            $('#update_job_title').val(jobTitle)
+                                                            $('#update_state').val(addresses[0])
+                                                            $('#update_country').val(addresses[1].trim())
+                                                            $('#update_start_month').val(start_dates[0].trim())
+                                                            $('#update_start_year').val(start_dates[1].trim())
+                                                            $('#update_end_month').val(end_dates[0].trim())
+                                                            $('#update_end_year').val(end_dates[1].trim())
+                                                            $('#update_job_description').val(jobDescription)
+                                                        }
+
+                                                        function setEducationDatainModal(nameOfInstitution, courseOfStudy, qualification, startDate, endDate,
+                                                            educationId) {
+
+                                                            //Set data in modal
+                                                            var start_dates = startDate.split(',');
+                                                            var end_dates = endDate.split(',');
+
+                                                            $('#update_edu_education_id').val(educationId)
+                                                            $('#update_edu_name_of_institution').val(nameOfInstitution)
+                                                            $('#update_edu_course_of_study').val(courseOfStudy)
+                                                            $('#update_edu_qualification').val(qualification)
+                                                            $('#update_edu_start_month').val(start_dates[0].trim())
+                                                            $('#update_edu_start_year').val(start_dates[1].trim())
+                                                            $('#update_edu_end_month').val(end_dates[0].trim())
+                                                            $('#update_edu_end_year').val(end_dates[1].trim())
+                                                        }
+
+                                                        function setCertificationDatainModal(certification_id, certification_name, certification_description,
+                                                            date_obtained) {
+
+                                                            //Set data in modal
+                                                            var date_obtained_splitted = date_obtained.split(',');
+
+                                                            $('#update_certification_id').val(certification_id);
+                                                            $('#update_certification_name').val(certification_name);
+                                                            $('#update_certification_description').val(certification_description);
+                                                            $('#update_date_obtained_month').val(date_obtained_splitted[0].trim());
+                                                            $('#update_date_obtained_year').val(date_obtained_splitted[1].trim());
+                                                        }
+
+                                                        function deleteEducation(education_id, name_of_institution) {
+                                                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                                                            if (ifConfirm) {
+                                                                //Delete Education
+                                                                $.ajax({
+                                                                    url: '/resume/delete-candidate-education',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        education_id: education_id,
+                                                                        name_of_institution: name_of_institution
+                                                                    },
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Education could not delete',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Education Deleted',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Deleting Candidate Education Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+
+                                                        function deleteExperience(experience_id, company_name) {
+                                                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                                                            if (ifConfirm) {
+                                                                //Delete Experience
+                                                                $.ajax({
+                                                                    url: '/resume/delete-candidate-experience',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        experience_id: experience_id,
+                                                                        company_name: company_name
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Experience could not delete',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Experience Deleted',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Deleting Candidate Experience Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+
+                                                        function deleteCertification(certification_id, certification_name) {
+                                                            var ifConfirm = confirm("Are you sure you want to delete?");
+
+                                                            if (ifConfirm) {
+                                                                //Delete Experience
+                                                                $.ajax({
+                                                                    url: '/resume/delete-candidate-certification',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        certification_id: certification_id,
+                                                                        certification_name: certification_name
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Certification could not delete',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Certification Deleted',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Deleting Candidate Certification Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    </script>
+
+                                                    <!-- Load All Resume Info Script-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            function getSkillsData() {
+                                                                var allSkills = [];
+
+                                                                $.ajax({
+                                                                    url: '/jobs/get-all-job-post-params',
+                                                                    type: 'get',
+                                                                    async: false,
+
+                                                                    success: function(data) {
+                                                                        allSkills = data.skills;
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'All Job Post Params Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+
+                                                                return allSkills;
+                                                            }
+
+                                                            $.ajax({
+                                                                url: '/candidates/get-all-resume-info',
+                                                                type: 'get',
+
+                                                                success: function(data) {
+                                                                    var cvBoxContent = '';
+                                                                    var summaryBoxContent = '';
+                                                                    var summaryModalContent = '';
+                                                                    var workExperienceBoxContent = '';
+                                                                    var skillBoxContent = '';
+                                                                    var educationBoxContent = '';
+                                                                    var certificationBoxContent = '';
+
+                                                                    if (data.resume.resume_file_url == null || data.resume.resume_file_url == '') {
+                                                                        cvBoxContent = '<div class="flex_row_align_center" id="upload_resume_action_btn" data-toggle="modal" data-target="#upload_resume_modal">\
+                                        <button class="normal_btn"> \
+                                            Upload CV/Resumé \
+                                        </button> \
+                                    </div>';
+                                                                    } else {
+                                                                        cvBoxContent = '<div class="flex_row_align_center"> \
+                                        <button class="normal_btn_light"> \
+                                            <i class="fas fa-check mr-1"></i> CV/Resumé Uploaded \
+                                        </button> \
+                                    </div>';
+                                                                    }
+
+                                                                    if (data.resume.profile_summary == null || data.resume.profile_summary == '') {
+                                                                        summaryBoxContent = '<p>Add any additional information you would like on your resume</p>';
+                                                                    } else {
+                                                                        summaryBoxContent = '<p>' + data.resume.profile_summary + '</p>';
+                                                                        summaryModalContent = data.resume.profile_summary;
+                                                                    }
+
+                                                                    if (!data.work_experience || data.work_experience == null || data.work_experience.length == 0) {
+                                                                        workExperienceBoxContent = '<div class="flex_row_center_all empty_experience"> \
+                                                    <div class="align_text"> \
+                                                        <p>You don’t have any work experience.</p> \
+                                                        <p id="add_experience_btn" data-toggle="modal" data-target="#add_experience_modal"> \
+                                                            <a href="#"> \
+                                                                Add New \
+                                                            </a> \
+                                                        </p> \
+                                                    </div> \
+                                                </div>';
+                                                                    } else {
+                                                                        for (var i = 0; i < data.work_experience.length; i++) {
+
+                                                                            var companyName = data.work_experience[i].employer_name;
+                                                                            var jobTitle = data.work_experience[i].job_title;
+                                                                            var employerAddress = data.work_experience[i].employer_address;
+                                                                            var startDate = data.work_experience[i].start_date;
+                                                                            var endDate = data.work_experience[i].end_date;
+                                                                            var jobDescription = data.work_experience[i].job_responsibility;
+                                                                            var experienceId = data.work_experience[i].experience_id;
+
+
+                                                                            workExperienceBoxContent += '<div class="experieces"> \
+                                                        <div class="flex_row_justify_between experieces_header"> \
+                                                            <div> \
+                                                                <p> \
+                                                                    <span>' + companyName + '</span> - ' + jobTitle + ' \
+                                                                </p> \
+                                                                <p> \
+                                                                    <span>' + startDate + ' - ' + endDate + '</span> \
+                                                                </p> \
+                                                            </div> \
+                                                            <div class="edit_trash"> \
+                                                                <div data-toggle="modal" data-target="#edit_experience_modal"> \
+                                                                    <i class="fas fa-pencil-alt mr-3" \
+                                                                        onclick="setExperienceDatainModal(' + `'${companyName}'` + ', ' + `'${jobTitle}'` + ', ' + `'${employerAddress}'` + ', ' + `'${startDate}'` + ', ' + `'${endDate}'` + ', ' + `'${jobDescription}'` + ', ' + `'${experienceId}'` + ');" \
+                                                                        id="edit_experience_btn_' + (i + 1) + '"> \
+                                                                    </i> \
+                                                                </div> \
+                                                                <i class="far fa-trash-alt" \
+                                                                    onclick="deleteExperience(' + `'${experienceId}'` + ', ' + `'${companyName}'` + ');" \
+                                                                    id="delete_experience_btn_' + (i + 1) + '"> \
+                                                                </i> \
+                                                            </div> \
+                                                        </div> \
+                                                        <div class="site_row experiece_list"> \
+                                                            <ul> \
+                                                                <li>' + jobDescription + '</li> \
+                                                            </ul> \
+                                                        </div> \
+                                                    </div>';
+                                                                        }
+                                                                    }
+
+                                                                    if (!data.skills || data.skills == null || data.skills.length == 0) {
+                                                                        skillBoxContent = '<div class="flex_row_center_all empty_skill_n_edu"> \
+                                            <div class="align_text"> \
+                                                <p>You have not added any skills</p> \
+                                                <a href="#" data-toggle="modal" data-target="#add_skill_modal"> \
+                                                    Add New \
+                                                </a> \
+                                            </div> \
+                                        </div>';
+
+                                                                        //Set Skills for modal
+                                                                        var requiredSkillAutoCompleteSelect = new SelectPure(".rs-autocomplete-select", {
+                                                                            options: getSkillsData(),
+                                                                            value: [],
+                                                                            multiple: true,
+                                                                            autocomplete: true,
+                                                                            icon: "fa fa-times",
+                                                                            onChange: value => {
+                                                                                $('#skills').val(value);
+                                                                            },
+                                                                        });
+                                                                    } else {
+                                                                        var candidate_skills_id = [];
+
+                                                                        for (var i = 0; i < data.skills.length; i++) {
+                                                                            var skill_name = data.skills[i].label;
+
+                                                                            skillBoxContent += '<div class="site_row mt-3 skills_list"> \
+                                                <ul> \
+                                                    <li>' + skill_name + '</li> \
+                                                </ul> \
+                                            </div>';
+
+                                                                            candidate_skills_id.push(data.skills[i].value);
+                                                                        }
+
+                                                                        //Set Skills for modal
+                                                                        var requiredSkillAutoCompleteSelect = new SelectPure(".rs-autocomplete-select", {
+                                                                            options: getSkillsData(),
+                                                                            value: data.skills.length > 0 ? candidate_skills_id : [],
+                                                                            multiple: true,
+                                                                            autocomplete: true,
+                                                                            icon: "fa fa-times",
+                                                                            onChange: value => {
+                                                                                $('#skills').val(value);
+                                                                            },
+                                                                        });
+                                                                    }
+
+                                                                    if (!data.education || data.education == null || data.education.length == 0) {
+                                                                        educationBoxContent = '<div class="flex_row_center_all empty_skill_n_edu"> \
+                                                <div class="align_text"> \
+                                                    <p>You have not added any Education History</p> \
+                                                        <a href="#" data-toggle="modal" data-target="#add_education_modal"> \
+                                                            Add New \
+                                                        </a> \
+                                                </div> \
+                                            </div>';
+
+                                                                    } else {
+                                                                        for (var i = 0; i < data.education.length; i++) {
+                                                                            var nameOfInstitution = data.education[i].name_of_institution;
+                                                                            var courseOfStudy = data.education[i].course_of_study;
+                                                                            var qualification = data.education[i].qualification;
+                                                                            var startDate = data.education[i].start_date;
+                                                                            var endDate = data.education[i].end_date;
+                                                                            var educationId = data.education[i].education_id;
+
+                                                                            educationBoxContent += '<div class="site_row mt-3 skills_list certs"> \
+                                                    <ul> \
+                                                        <div class="flex_row_justify_between experieces_header"> \
+                                                            <li>' + nameOfInstitution + '<br> \
+                                                                <span>' + startDate + ' - ' + endDate + '</span> \
+                                                            </li> \
+                                                            <div class="edit_trash"> \
+                                                                <div data-toggle="modal" data-target="#edit_education_modal"> \
+                                                                    <i class="fas fa-pencil-alt mr-3" \
+                                                                        onclick="return setEducationDatainModal(' + `'${nameOfInstitution}'` + ', ' + `'${courseOfStudy}'` + ', ' + `'${qualification}'` + ', ' + `'${startDate}'` + ', ' + `'${endDate}'` + ', ' + `'${educationId}'` + ')"> \
+                                                                    </i> \
+                                                                </div> \
+                                                                <i class="far fa-trash-alt" \
+                                                                    onclick="deleteEducation(' + educationId + ', ' + `'${nameOfInstitution}'` + ')"> \
+                                                                </i> \
+                                                            </div> \
+                                                        </div> \
+                                                    </ul> \
+                                                </div>';
+
+                                                                        }
+                                                                    }
+
+                                                                    if (!data.certification || data.certification == null || data.certification.length == 0) {
+                                                                        certificationBoxContent = '<div class="flex_row_center_all empty_skill_n_edu"> \
+                                                    <div class="align_text"> \
+                                                        <p>You have not added any Certification</p> \
+                                                            <a href="#" data-toggle="modal" data-target="#add_certification_modal"> \
+                                                                Add New \
+                                                            </a> \
+                                                    </div> \
+                                                </div>';
+                                                                    } else {
+                                                                        for (var i = 0; i < data.certification.length; i++) {
+                                                                            var certification_id = data.certification[i].certification_id;
+                                                                            var certification_name = data.certification[i].certification_name;
+                                                                            var certification_description = data.certification[i].certification_description;
+                                                                            var date_obtained = data.certification[i].date_obtained;
+
+                                                                            certificationBoxContent += '<div class="site_row mt-3 skills_list certs"> \
+                                                        <ul> \
+                                                            <div class="flex_row_justify_between experieces_header"> \
+                                                                <li>' + certification_name + '<br> \
+                                                                    <span>' + date_obtained + '</span> \
+                                                                </li> \
+                                                                <div class="edit_trash"> \
+                                                                    <div data-toggle="modal" data-target="#edit_certification_modal"> \
+                                                                        <i class="fas fa-pencil-alt mr-3" \
+                                                                            onclick="return setCertificationDatainModal(' + `'${certification_id}'` + ', ' + `'${certification_name}'` + ', ' + `'${certification_description}'` + ', ' + `'${date_obtained}'` + ')"> \
+                                                                        </i> \
+                                                                    </div> \
+                                                                    <i class="far fa-trash-alt" \
+                                                                        onclick="deleteCertification(' + certification_id + ', ' + `'${certification_name}'` + ')"> \
+                                                                    </i> \
+                                                                </div> \
+                                                            </div> \
+                                                        </ul> \
+                                                    </div>';
+                                                                        }
+                                                                    }
+
+
+                                                                    $('#cv_box').html(cvBoxContent);
+                                                                    $('#summary_box').html(summaryBoxContent);
+                                                                    $('#summary').html(summaryModalContent);
+                                                                    $('#work_experience_box').html(workExperienceBoxContent);
+                                                                    $('#skills_box').html(skillBoxContent);
+                                                                    $('#education_box').html(educationBoxContent);
+                                                                    $('#certification_box').html(certificationBoxContent);
+                                                                },
+                                                                error: function(xhr, ajaxOptions, thrownError) {
+                                                                    var errorMsg = 'All Resume Info Request failed: ' + xhr.responseText;
+                                                                    console.log(errorMsg)
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <!-- End All Resume Info Script-->
+
+                                                    <script type="text/javascript">
+                                                        //Dynamically load years
+                                                        $(document).ready(function() {
+                                                            var d = new Date();
+                                                            for (var i = 0; i <= 50; i++) {
+                                                                var option = "<option value=" + parseInt(d.getFullYear() - i) + ">" + parseInt(d.getFullYear() - i) + "</option>"
+                                                                $('[id*=start_year]').append(option);
+                                                                $('[id*=end_year]').append(option);
+                                                                $('[id*=edu_start_year]').append(option);
+                                                                $('[id*=edu_end_year]').append(option);
+                                                                $('[id*=date_obtained_year]').append(option);
+                                                                $('[id*=update_date_obtained_year]').append(option);
+                                                            }
+                                                        });
+                                                    </script>
+
+                                                    <!-- Get Profile Percentage Script-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $.ajax({
+                                                                url: '/candidates/get-profile-percentage',
+                                                                type: 'get',
+
+                                                                success: function(data) {
+                                                                    var progressContent = '';
+                                                                    var profile_completeness = parseInt(data.profile_completeness);
+
+                                                                    if (!data) {
+                                                                        progressContent = '<div class="progress-bar" style="width: 0%;background: #f02E2E;"></div>';
+                                                                    } else if (profile_completeness <= 40) {
+                                                                        progressContent = '<div class="progress-bar" style="width: ' + profile_completeness + '%;background: #f02E2E;"></div>';
+                                                                    } else if (profile_completeness > 40 && profile_completeness <= 70) {
+                                                                        progressContent = '<div class="progress-bar" style="width: ' + profile_completeness + '%;background: #DB9C21;"></div>';
+                                                                    } else {
+                                                                        progressContent = '<div class="progress-bar" style="width: ' + profile_completeness + '%;background: #06942A;"></div>';
+                                                                    }
+
+                                                                    $('#progress_box').html(progressContent);
+                                                                },
+                                                                error: function(xhr, ajaxOptions, thrownError) {
+                                                                    var errorMsg = 'Profile Percentage Request failed: ' + xhr.responseText;
+                                                                    console.log(errorMsg)
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <!-- End Profile Percentage Script-->
+
+
+                                                    <!-- Get All States Script-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            //Get All States
+                                                            $.ajax({
+                                                                url: '/jobs/get-all-states',
+                                                                type: 'get',
+
+                                                                success: function(data) {
+                                                                    var stateContent = '';
+
+                                                                    if (!data) {
+                                                                        stateContent = '<option value="Lagos">Lagos</option>';
+                                                                    } else {
+                                                                        //Load state filters
+                                                                        for (var i = 0; i < data.states.length; i++) {
+                                                                            stateContent += '<option value="' + data.states[i].state_name + '">' +
+                                                                                data.states[i].state_name +
+                                                                                '</option>';
+                                                                        }
+                                                                    }
+
+                                                                    $('#state').html(stateContent);
+                                                                    $('#update_state').html(stateContent);
+                                                                },
+                                                                error: function(xhr, ajaxOptions, thrownError) {
+                                                                    var errorMsg = 'All States Request failed: ' + xhr.responseText;
+                                                                    console.log(errorMsg)
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <!-- End All States Script-->
+
+
+                                                    <!-- Experience Scripts-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $("#save_experience_btn").click(function() {
+                                                                var company_name = $('#company_name').val();
+                                                                var job_title = $('#job_title').val();
+                                                                var state = $('#state').val();
+                                                                var country = $('#country').val();
+                                                                var start_month = $('#start_month').val();
+                                                                var start_year = $('#start_year').val();
+                                                                var end_month = $('#end_month').val();
+                                                                var end_year = $('#end_year').val();
+                                                                var job_description = $('#job_description').val();
+
+                                                                saveCandidateExperience(company_name, job_title, state, country, start_month,
+                                                                    start_year, end_month, end_year, job_description);
+                                                            });
+
+                                                            function saveCandidateExperience(company_name, job_title, state, country, start_month,
+                                                                start_year, end_month, end_year, job_description) {
+
+                                                                //Add Experience
+                                                                $.ajax({
+                                                                    url: '/resume/save-candidate-experience',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        company_name: company_name,
+                                                                        job_title: job_title,
+                                                                        state: state,
+                                                                        country: country,
+                                                                        start_month: start_month,
+                                                                        start_year: start_year,
+                                                                        end_month: end_month,
+                                                                        end_year: end_year,
+                                                                        job_description: job_description
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Experience not added',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Experience Added',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Saving Candidate Experience Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $("#update_experience_btn").click(function() {
+                                                                var company_name = $('#update_company_name').val();
+                                                                var job_title = $('#update_job_title').val();
+                                                                var state = $('#update_state').val();
+                                                                var country = $('#update_country').val();
+                                                                var start_month = $('#update_start_month').val();
+                                                                var start_year = $('#update_start_year').val();
+                                                                var end_month = $('#update_end_month').val();
+                                                                var end_year = $('#update_end_year').val();
+                                                                var job_description = $('#update_job_description').val();
+                                                                var experience_id = $('#update_experience_id').val();
+
+                                                                editExperience(experience_id, company_name, job_title, state, country, start_month, start_year,
+                                                                    end_month, end_year, job_description)
+
+                                                            });
+
+                                                            function editExperience(experience_id, company_name, job_title, state, country, start_month, start_year,
+                                                                end_month, end_year, job_description) {
+
+                                                                var ifConfirm = confirm("Are your information correct?");
+
+                                                                if (ifConfirm) {
+                                                                    //Delete Experience
+                                                                    $.ajax({
+                                                                        url: '/resume/edit-candidate-experience',
+                                                                        type: 'post',
+                                                                        data: {
+                                                                            experience_id: experience_id,
+                                                                            company_name: company_name,
+                                                                            job_title: job_title,
+                                                                            state: state,
+                                                                            country: country,
+                                                                            start_month: start_month,
+                                                                            start_year: start_year,
+                                                                            end_month: end_month,
+                                                                            end_year: end_year,
+                                                                            job_description: job_description
+                                                                        },
+
+                                                                        success: function(data) {
+                                                                            if (!data) {
+                                                                                swal({
+                                                                                    title: 'Something happened',
+                                                                                    text: 'Experience edit failed',
+                                                                                    type: 'error'
+                                                                                });
+                                                                            } else {
+                                                                                swal({
+                                                                                    title: 'Experience Saved Successfully',
+                                                                                    type: 'success'
+                                                                                });
+
+                                                                                //Redirect to resume page again
+                                                                                window.location.replace('/candidates/profile')
+                                                                            }
+                                                                        },
+                                                                        error: function(xhr, ajaxOptions, thrownError) {
+                                                                            var errorMsg = 'Edit Candidate Experience Request failed: ' + xhr.responseText;
+                                                                            console.log(errorMsg)
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+                                                    </script>
+                                                    <!-- End Experience Script-->
+
+
+                                                    <!-- Get All Qualification Script-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            //Get All Qualification
+                                                            $.ajax({
+                                                                url: '/resume/get-all-qualification',
+                                                                type: 'get',
+
+                                                                success: function(data) {
+                                                                    var qualificationContent = '';
+
+                                                                    if (!data) {
+                                                                        qualificationContent = '<option value="4">Bachelor Degree</option>';
+                                                                    } else {
+                                                                        //Load state filters
+                                                                        for (var i = 0; i < data.qualifications.length; i++) {
+                                                                            qualificationContent += '<option value="' + data.qualifications[i].qualification_id + '">' +
+                                                                                data.qualifications[i].qualification_name +
+                                                                                '</option>';
+                                                                        }
+                                                                    }
+
+                                                                    $('#edu_qualification').html(qualificationContent);
+                                                                    $('#update_edu_qualification').html(qualificationContent);
+                                                                },
+                                                                error: function(xhr, ajaxOptions, thrownError) {
+                                                                    var errorMsg = 'All Qualification Request failed: ' + xhr.responseText;
+                                                                    console.log(errorMsg)
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <!-- End All Qualification Script-->
+
+
+                                                    <!-- Education scripts-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $("#save_education_btn").click(function() {
+                                                                var name_of_institution = $('#edu_name_of_institution').val();
+                                                                var qualification = $('#edu_qualification').val();
+                                                                var course_of_study = $('#edu_course_of_study').val();
+                                                                var start_month = $('#edu_start_month').val();
+                                                                var start_year = $('#edu_start_year').val();
+                                                                var end_month = $('#edu_end_month').val();
+                                                                var end_year = $('#edu_end_year').val();
+                                                                var currently_attend = $('#edu_currently_attend').val();
+
+                                                                saveCandidateEducation(name_of_institution, qualification, course_of_study, start_month,
+                                                                    start_year, end_month, end_year, currently_attend);
+                                                            });
+
+                                                            function saveCandidateEducation(name_of_institution, qualification, course_of_study, start_month,
+                                                                start_year, end_month, end_year, currently_attend) {
+
+                                                                //Add Education
+                                                                $.ajax({
+                                                                    url: '/resume/save-candidate-education',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        name_of_institution: name_of_institution,
+                                                                        qualification: qualification,
+                                                                        course_of_study: course_of_study,
+                                                                        start_month: start_month,
+                                                                        start_year: start_year,
+                                                                        end_month: end_month,
+                                                                        end_year: end_year,
+                                                                        currently_attend: currently_attend
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Education not added',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Education Added',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Saving Candidate Education Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            // Edit Education processes
+                                                            $("#update_education_btn").click(function() {
+                                                                var name_of_institution = $('#update_edu_name_of_institution').val();
+                                                                var course_of_study = $('#update_edu_course_of_study').val();
+                                                                var qualification = $('#update_edu_qualification').val();
+                                                                var start_month = $('#update_start_month').val();
+                                                                var start_year = $('#update_start_year').val();
+                                                                var end_month = $('#update_end_month').val();
+                                                                var end_year = $('#update_end_year').val();
+                                                                var education_id = $('#update_edu_education_id').val();
+
+                                                                editEducation(education_id, name_of_institution, course_of_study, qualification, start_month, start_year,
+                                                                    end_month, end_year);
+                                                            });
+
+                                                            function editEducation(education_id, name_of_institution, course_of_study, qualification, start_month, start_year,
+                                                                end_month, end_year) {
+
+                                                                var ifConfirm = confirm("Are your information correct?");
+
+                                                                if (ifConfirm) {
+                                                                    $.ajax({
+                                                                        url: '/resume/edit-candidate-education',
+                                                                        type: 'post',
+                                                                        data: {
+                                                                            education_id: education_id,
+                                                                            name_of_institution: name_of_institution,
+                                                                            course_of_study: course_of_study,
+                                                                            qualification: qualification,
+                                                                            start_month: start_month,
+                                                                            start_year: start_year,
+                                                                            end_month: end_month,
+                                                                            end_year: end_year
+                                                                        },
+
+                                                                        success: function(data) {
+                                                                            if (!data) {
+                                                                                swal({
+                                                                                    title: 'Something happened',
+                                                                                    text: 'Education edit failed',
+                                                                                    type: 'error'
+                                                                                });
+                                                                            } else {
+                                                                                swal({
+                                                                                    title: 'Education Saved Successfully',
+                                                                                    type: 'success'
+                                                                                });
+
+                                                                                //Redirect to resume page again
+                                                                                window.location.replace('/candidates/profile')
+                                                                            }
+                                                                        },
+                                                                        error: function(xhr, ajaxOptions, thrownError) {
+                                                                            var errorMsg = 'Edit Candidate Education Request failed: ' + xhr.responseText;
+                                                                            console.log(errorMsg)
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+                                                    </script>
+                                                    <!-- End Education scripts-->
+
+                                                    <!-- Certification scripts-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $("#save_certification_btn").click(function() {
+                                                                var certification_name = $('#certification_name').val();
+                                                                var certification_description = $('#certification_description').val();
+                                                                var date_obtained_month = $('#date_obtained_month').val();
+                                                                var date_obtained_year = $('#date_obtained_year').val();
+
+                                                                saveCandidateCertification(certification_name, certification_description, date_obtained_month,
+                                                                    date_obtained_year);
+                                                            });
+
+                                                            function saveCandidateCertification(certification_name, certification_description, date_obtained_month,
+                                                                date_obtained_year) {
+
+                                                                //Add Certification
+                                                                $.ajax({
+                                                                    url: '/resume/save-candidate-certification',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        certification_name: certification_name,
+                                                                        certification_description: certification_description,
+                                                                        date_obtained_month: date_obtained_month,
+                                                                        date_obtained_year: date_obtained_year
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Certification not added',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                title: 'Certification Added',
+                                                                                type: 'success'
+                                                                            });
+
+                                                                            //Redirect to resume page again
+                                                                            window.location.replace('/candidates/profile')
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Saving Candidate Certification Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            // Edit Certification processes
+                                                            $("#update_certification_btn").click(function() {
+                                                                var certification_id = $('#update_certification_id').val();
+                                                                var certification_name = $('#update_certification_name').val();
+                                                                var certification_description = $('#update_certification_description').val();
+                                                                var date_obtained_month = $('#update_date_obtained_month').val();
+                                                                var date_obtained_year = $('#update_date_obtained_year').val();
+
+                                                                editCertification(certification_id, certification_name, certification_description,
+                                                                    date_obtained_month, date_obtained_year);
+                                                            });
+
+                                                            function editCertification(certification_id, certification_name, certification_description,
+                                                                date_obtained_month, date_obtained_year) {
+
+                                                                var ifConfirm = confirm("Are your information correct?");
+
+                                                                if (ifConfirm) {
+                                                                    $.ajax({
+                                                                        url: '/resume/edit-candidate-certification',
+                                                                        type: 'post',
+                                                                        data: {
+                                                                            certification_id: certification_id,
+                                                                            certification_name: certification_name,
+                                                                            certification_description: certification_description,
+                                                                            date_obtained_month: date_obtained_month,
+                                                                            date_obtained_year: date_obtained_year
+                                                                        },
+
+                                                                        success: function(data) {
+                                                                            if (!data) {
+                                                                                swal({
+                                                                                    title: 'Something happened',
+                                                                                    text: 'Certification edit failed',
+                                                                                    type: 'error'
+                                                                                });
+                                                                            } else {
+                                                                                swal({
+                                                                                    title: 'Certification Saved Successfully',
+                                                                                    type: 'success'
+                                                                                });
+
+                                                                                //Redirect to resume page again
+                                                                                window.location.replace('/candidates/profile')
+                                                                            }
+                                                                        },
+                                                                        error: function(xhr, ajaxOptions, thrownError) {
+                                                                            var errorMsg = 'Edit Candidate Certification Request failed: ' + xhr.responseText;
+                                                                            console.log(errorMsg)
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+                                                    </script>
+                                                    <!-- End Certification scripts-->
+
+                                                    <!-- Skills Scripts-->
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            $('#save_skills_btn').click(function() {
+
+                                                                var skills = $('#skills').val();
+
+                                                                //Add Skills
+                                                                $.ajax({
+                                                                    url: '/resume/update-candidate-skills',
+                                                                    type: 'post',
+                                                                    data: {
+                                                                        skills: skills
+                                                                    },
+
+                                                                    success: function(data) {
+                                                                        if (!data) {
+                                                                            swal({
+                                                                                title: 'Something happened',
+                                                                                text: 'Skills not saved',
+                                                                                type: 'error'
+                                                                            });
+                                                                        } else {
+                                                                            swal({
+                                                                                    title: 'Skills Saved',
+                                                                                    type: 'success',
+                                                                                    confirmButtonText: 'Ok'
+                                                                                },
+                                                                                function(isConfirm) {
+                                                                                    if (isConfirm) {
+                                                                                        //Redirect to resume page again
+                                                                                        window.location.replace('/candidates/profile')
+                                                                                    }
+                                                                                });
+
+                                                                        }
+                                                                    },
+                                                                    error: function(xhr, ajaxOptions, thrownError) {
+                                                                        var errorMsg = 'Saving Candidate Skills Request failed: ' + xhr.responseText;
+                                                                        console.log(errorMsg)
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <!-- End Skills Scripts-->
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            //Get Candidate To - Do
+                                                            $.ajax({
+                                                                url: '/candidates/get-all-resume-info',
+                                                                type: 'get',
+
+                                                                success: function(data) {
+
+                                                                    var content = '';
+
+                                                                    if (data.resume) {
+                                                                        if (data.resume.resume_file_url == null || data.resume.resume_file_url == '' ||
+                                                                            data.resume.profile_summary == null || data.resume.profile_summary == '' ||
+                                                                            !data.work_experience || data.work_experience == null || data.work_experience.length == 0 ||
+                                                                            !data.skills || data.skills == null || data.skills.length == 0 ||
+                                                                            !data.education || data.education == null || data.education.length == 0 ||
+                                                                            data.userData.gender == null || data.userData.gender == '' ||
+                                                                            data.userData.dob == null || data.userData.dob == '' ||
+                                                                            data.userData.tagline == null || data.userData.tagline == '' ||
+                                                                            data.userData.industry == null || data.userData.industry == '' || data.userData.industry == 0) {
+
+                                                                            content += '<div class="flex_row_justify_between recomm_header"> \
+                                                                        <h4> \
+                                                                            To-Do List \
+                                                                        </h4> \
+                                                                    </div> \
+                                                                    <div class="histories_wrapper"> \
+                                                                        <div class="site_row histories"> \
+                                                                            <p><b>Complete your profile to increase your chance to get noticed</b></p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.resume.resume_file_url == null || data.resume.resume_file_url == '') {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/profile">Upload your CV/Resumé</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.resume.profile_summary == null || data.resume.profile_summary == '') {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/profile">Enter your Personal Summary</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (!data.work_experience || data.work_experience == null || data.work_experience.length == 0) {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/profile">Enter your Work Experiences</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (!data.skills || data.skills == null || data.skills.length == 0) {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/profile">Enter your Skills</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (!data.education || data.education == null || data.education.length == 0) {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/profile">Enter your Education History</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.userData.gender == null || data.userData.gender == '') {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/settings">Select your Gender</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.userData.dob == null || data.userData.dob == '') {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/settings">Enter your Date of Birth</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.userData.tagline == null || data.userData.tagline == '') {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/settings">Enter your Tagline</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        if (data.userData.industry == null || data.userData.industry == '' || data.userData.industry == 0) {
+                                                                            content += '<div class="site_row histories"> \
+                                                                            <p><i class="fas fa-exclamation-triangle"></i> \
+                                                                                &nbsp;<a href="/candidates/settings">Choose your Industry</a> \
+                                                                            </p> \
+                                                                        </div>';
+                                                                        }
+
+                                                                        content += '</div><br><br>';
+                                                                    }
+
+                                                                    $('#to_do_content').html(content);
+                                                                },
+                                                                error: function(xhr, ajaxOptions, thrownError) {
+                                                                    var errorMsg = 'To Do List Request failed: ' + xhr.responseText;
+                                                                    console.log(errorMsg)
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <% include includes/global_dashboard_bottom%>

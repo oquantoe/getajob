@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <% include includes/snippets/meta_tags%>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- CSS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+        <!-- Font Awesome CDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+        <link rel="stylesheet" href="/css/responsiveness.css">
+        <link rel="stylesheet" href="/css/animation.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+        <% include includes/snippets/gtag %>
+
+            <title>
+                <%=assessmentData.assessment_name%> - GetaJobNG</title>
+
+</head>
+
+<body>
+
+    <nav>
+        <div class="test_site_header">
+            <div class="site_container">
+                <div class="row d-flex flex-row align-items-center justify-content-center py-5">
+                    <div class="center_text pt-5 header_with_just_text">
+                        <div class="site_row center_text">
+                            <h2>
+                                <%=assessmentData.assessment_name%>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="assessment_question_section">
+        <div class="site_row">
+            <div class="site_container" id="questions_box">
+            </div>
+
+            <!-- Buttons -->
+            <div class="take_test_btn center_text" id="submit_test_btn">
+                <button class="next">Submit Test</button>
+            </div>
+            <!-- Buttons -->
+        </div>
+    </section>
+
+
+    <% include includes/landing_page/footer %>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="/js/jQuery.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                var assessment_id = "<%=assessmentData.assessment_id%>";
+
+                setQuestions(assessment_id);
+
+                function setQuestions(assessment_id) {
+                    $.ajax({
+                        url: '/assessments/get-assessment-questions',
+                        type: 'post',
+                        data: {
+                            assessment_id: assessment_id
+                        },
+
+                        success: function(data) {
+                            var questionsContent = '';
+
+                            if (data.questionsData.length == 0) {
+                                questionsContent = '<p>No Questions for this assessment.</p>';
+                            } else {
+                                for (var i = 0; i < data.questionsData.length; i++) {
+
+                                    questionsContent += '<div class="assessments_questions_wrapper"> \
+                                                        <div class="site_row question_numbers"> \
+                                                            <input type="hidden" id="q_ids[]" name="q_ids[]" value="' + data.questionsData[i].question_id + '"> \
+                                                            <input type="hidden" id="q_ts[]" name="q_ts[]" value="' + data.questionsData[i].question_type + '"> \
+                                                            <span class="current_question_number">' + (i + 1) + '</span> \
+                                                            <span>/</span> \
+                                                            <span class="current_question_number">' + data.questionsData.length + '</span> \
+                                                        </div> \
+                                                        <div class="site_row the_assessment_question"> \
+                                                            <p>' + data.questionsData[i].questions + '</p> \
+                                                        </div>' +
+                                        setOptions(data.questionsData[i], (i + 1)) +
+                                        '</div> \
+                                                    <hr><br>'
+                                }
+
+                                $('#questions_box').html(questionsContent);
+                            }
+
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            var errorMsg = 'Get Assessment Questions Request failed: ' + xhr.responseText;
+                            console.log(errorMsg)
+                        }
+                    });
+                }
+
+                function setOptions(questionsData, index) {
+                    var options = '';
+
+                    if (questionsData.question_type == "1") {
+                        //Single choice question
+                        options = '<div class="site_row options_section"> \
+                                    <div class="site_row header"> \
+                                        <p>Choose the correct answer</p> \
+                                    </div> \
+                                    <div class="site_row"> \
+                                        <input type="radio" name="single_choice_answer_' + index + '" id="a" \
+                                        value="' + questionsData.possible_answera + '"> \
+                                        <label for="a"> ' + questionsData.possible_answera + '</label><br> \
+                                        <input type="radio" name="single_choice_answer_' + index + '" id="b" \
+                                        value="' + questionsData.possible_answerb + '"> \
+                                        <label for="a"> ' + questionsData.possible_answerb + '</label><br> \
+                                        <input type="radio" name="single_choice_answer_' + index + '" id="c" \
+                                        value="' + questionsData.possible_answerc + '"> \
+                                        <label for="a"> ' + questionsData.possible_answerc + '</label><br> \
+                                        <input type="radio" name="single_choice_answer_' + index + '" id="d" \
+                                        value="' + questionsData.possible_answerd + '"> \
+                                        <label for="a"> ' + questionsData.possible_answerd + '</label> \
+                                    </div> \
+                                </div>';
+
+                    } else if (questionsData.question_type == "2") {
+                        // Multiple choice question
+                        options = '<div class="site_row options_section"> \
+                                    <div class="site_row header"> \
+                                        <p>Select the correct answers</p> \
+                                    </div> \
+                                    <div class="site_row"> \
+                                        <label for="a" class="containerr"> ' + questionsData.possible_answera +
+                            '<input type="checkbox" name="multiple_choice_answer_' + index + '" id="a" \
+                                            value="' + questionsData.possible_answera + '"> \
+                                            <span class="checkmark"></span> \
+                                        </label> \
+                                        <label for="b" class="containerr"> ' + questionsData.possible_answerb +
+                            '<input type="checkbox" name="multiple_choice_answer_' + index + '" id="b" \
+                                            value="' + questionsData.possible_answerb + '"> \
+                                            <span class="checkmark"></span> \
+                                        </label> \
+                                        <label for="c" class="containerr"> ' + questionsData.possible_answerc +
+                            '<input type="checkbox" name="multiple_choice_answer_' + index + '" id="c" \
+                                            value="' + questionsData.possible_answerc + '"> \
+                                            <span class="checkmark"></span> \
+                                        </label> \
+                                        <label for="d" class="containerr"> ' + questionsData.possible_answerd +
+                            '<input type="checkbox" name="multiple_choice_answer_' + index + '" id="d" \
+                                            value="' + questionsData.possible_answerd + '"> \
+                                            <span class="checkmark"></span> \
+                                        </label> \
+                                    </div> \
+                                </div>';
+                    } else {
+                        //Paragraph
+                    }
+
+                    return options;
+                }
+
+                $("#submit_test_btn").click(function() {
+                    var ifConfirmed = confirm("Are you sure you want to submit?");
+
+                    if (ifConfirmed) {
+                        var selected_answers = [];
+                        var q_ids = [];
+                        var q_ts = [];
+
+                        //Get all q_ids
+                        $("input[name='q_ids[]']").each(function() {
+                            q_ids.push($(this).val());
+                        });
+
+                        //console.log(q_ids);
+
+                        //Get all q_ts
+                        $("input[name='q_ts[]']").each(function() {
+                            q_ts.push($(this).val());
+                        });
+                        //console.log(q_ts);
+
+                        //Get all Single & multiple choice correct answers
+                        for (var i = 1; i <= q_ids.length; i++) {
+                            if (q_ts[i - 1] == "1") {
+
+                                //Get single choice correct answer
+                                var radio_name = "input[name='single_choice_answer_" + i + "']:checked";
+                                var single_choice_answer = $(radio_name).val();
+
+                                if (typeof single_choice_answer != 'undefined') {
+                                    selected_answers.push({
+                                        "q_id": q_ids[i - 1],
+                                        "q_t": q_ts[i - 1],
+                                        "chosen_answer": single_choice_answer
+                                    });
+                                }
+                            } else if (q_ts[i - 1] == "2") {
+                                //Get multiple choice correct answers
+                                var checkbox_name = "input[name='multiple_choice_answer_" + i + "']:checked";
+                                var answers = [];
+
+                                $(checkbox_name).each(function() {
+                                    answers.push($(this).val());
+                                });
+
+                                if (answers.length > 0) {
+                                    selected_answers.push({
+                                        "q_id": q_ids[i - 1],
+                                        "q_t": q_ts[i - 1],
+                                        "chosen_answer": answers
+                                    });
+                                }
+                            }
+                        }
+
+                        //console.log(selected_answers);
+
+                        submitAssessment(selected_answers);
+                    }
+                });
+
+                function submitAssessment(selected_answers) {
+                    var assessment_id = "<%=assessmentData.assessment_id%>";
+
+                    //console.log("assessment_id - " + assessment_id);
+
+                    $.ajax({
+                        url: '/assessments/process-assessment-submission',
+                        type: 'post',
+                        data: {
+                            selected_answers: JSON.stringify(selected_answers),
+                            assessment_id: assessment_id
+                        },
+
+                        success: function(data) {
+                            if (!data) {
+                                swal({
+                                    title: 'An error occured. Please try again.',
+                                    type: 'error'
+                                });
+                            } else {
+                                swal({
+                                        title: 'Assessment Submitted Successfully',
+                                        text: 'The recruitment team will get back to you on next steps. This page will now close.',
+                                        type: 'success',
+                                        confirmButtonText: 'Ok',
+                                    },
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            //window.close();
+                                            window.open('https://getajobng.com/', '_self', '');
+                                            window.close();
+                                        }
+                                    });
+
+                                // window.location.replace('/recruiters/assessments')
+                            }
+
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            var errorMsg = 'Submit Assessment Request failed: ' + xhr.responseText;
+                            console.log(errorMsg)
+                        }
+                    });
+                }
+            });
+        </script>
+</body>
+
+</html>

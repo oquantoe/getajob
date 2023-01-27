@@ -689,7 +689,7 @@ var helpers = {
             const session = await req.session.passport;
             logger.log("this is the session" + req.session);
             if (!session) {
-                logger.log("user is not authenticated..back to login");
+                logger.log("Main here - user is not authenticated..back to login");
 
                 var go_to_login_file = `${appRoot}/views/go_to_login.html`;
 

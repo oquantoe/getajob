@@ -43,7 +43,7 @@ router.get('/dashboard', async (req, res) => {
     try {
         await helpers.checkifAuthenticated(req, res);
 
-        var userData = await req.session?.passport?.user;
+        var userData = await req.session.passport.user;
 
         res.render('admin_dashboard', {
             view: 'dashboard',

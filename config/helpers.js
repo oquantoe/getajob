@@ -697,7 +697,7 @@ var helpers = {
 
                 return false;
             } else {
-                logger.log("user is already authenticated..proceed");
+                logger.log("AM here user is already authenticated..proceed");
 
                 return true;
             }

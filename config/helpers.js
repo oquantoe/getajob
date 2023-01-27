@@ -689,6 +689,10 @@ var helpers = {
             const session = await req.session;
 
             if (session["user"]) {
+                logger.log("AM here user is already authenticated..proceed");
+
+                return true;
+            } else {
                 logger.log("Main here - user is not authenticated..back to login");
 
                 var go_to_login_file = `${appRoot}/views/go_to_login.html`;
@@ -696,10 +700,6 @@ var helpers = {
                 res.sendFile(go_to_login_file);
 
                 return false;
-            } else {
-                logger.log("AM here user is already authenticated..proceed");
-
-                return true;
             }
         } catch (error) {
             logger.log(error);

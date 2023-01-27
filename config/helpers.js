@@ -686,8 +686,8 @@ var helpers = {
 
     checkifAuthenticated: async (req, res) => {
         try {
-            const session = await req.session;
-            logger.log("is Auth" + " " + session.passport);
+            const session = await req.session.passport;
+            
             if (session) {
                 logger.log("AM here user is already authenticated..proceed");
 

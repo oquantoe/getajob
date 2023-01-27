@@ -32,8 +32,8 @@ auth.use(session({
     saveUninitialized: config.session_save_uninitialized,
     // cookie: { maxAge: config.session_cookie_max_age }
     cookie: {
-        sameSite: "none", // cross site // set lax while working with http:localhost, but none when in prod
-        secure: "true", // only https // auto when in development, true when in prod
+        sameSite: "none", 
+        secure: "true",
         maxAge: config.session_cookie_max_age,
     },
 }));

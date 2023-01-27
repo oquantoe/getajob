@@ -37,13 +37,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use(session({
-    secret: config.session_secret,
-    resave: config.session_resave,
-    key: config.session_key,
-    saveUninitialized: config.session_save_uninitialized,
-    cookie: { maxAge: config.session_cookie_max_age }
-}));
+// app.use(session({
+//     secret: config.session_secret,
+//     resave: config.session_resave,
+//     key: config.session_key,
+//     saveUninitialized: config.session_save_uninitialized,
+//     cookie: { maxAge: config.session_cookie_max_age }
+// }));
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

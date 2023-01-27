@@ -27,13 +27,13 @@ router.use(cookieParser());
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-// router.use(session({
-//     secret: config.session_secret,
-//     resave: config.session_resave,
-//     key: config.session_key,
-//     saveUninitialized: config.session_save_uninitialized,
-//     cookie: { maxAge: config.session_cookie_max_age }
-// }));
+router.use(session({
+    secret: config.session_secret,
+    resave: config.session_resave,
+    key: config.session_key,
+    saveUninitialized: config.session_save_uninitialized,
+    cookie: { maxAge: config.session_cookie_max_age }
+}));
 
 router.get("/", (req, res, next) => {
     helpers.checkifAuthenticated(req, res);

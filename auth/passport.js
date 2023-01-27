@@ -25,10 +25,6 @@ const auth = express.Router();
 
 auth.use(cookieParser());
 auth.use(bodyParser.urlencoded({ extended: false }));
-auth.use(passport.initialize());
-auth.use(passport.session());
-auth.use(flash());
-
 auth.use(session({
     secret: config.session_secret,
     resave: config.session_resave,
@@ -36,6 +32,10 @@ auth.use(session({
     saveUninitialized: config.session_save_uninitialized,
     cookie: { maxAge: config.session_cookie_max_age }
 }));
+
+auth.use(passport.initialize());
+auth.use(passport.session());
+auth.use(flash());
 
 
 // Passport session setup.
@@ -137,8 +137,8 @@ passport.use(new LocalStrategy({
 auth.post('/login', passport.authenticate('local', {
     failureRedirect: '/login?f=l&r=f', // redirect back to the signup page if there is an error
     failureFlash: true,
-    failureMessage: "Invalid Email/Password. Please try again."
-
+    failureMessage: "Invalid Email/Password. Please try again.",
+    keepSessionInfo: true,
 }), function (req, res) {
     try {
         //logger.log("User exist and is redirecting");
@@ -182,8 +182,8 @@ auth.post('/login', passport.authenticate('local', {
 auth.get('/login', passport.authenticate('local', {
     failureRedirect: '/login?f=l&r=f', // redirect back to the signup page if there is an error
     failureFlash: true,
-    failureMessage: "Invalid Email/Password. Please try again."
-
+    failureMessage: "Invalid Email/Password. Please try again.",
+    keepSessionInfo: true,
 }), function (req, res) {
     try {
         //logger.log("User exist and is redirecting");

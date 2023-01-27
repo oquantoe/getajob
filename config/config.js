@@ -97,6 +97,13 @@ module.exports = {
     "local_db_password": process.env.DB_PASS || "",
     "local_database": process.env.DB_NAME || "getajobng_prod_sample",
 
+    // "use_database": true,
+    // "local_db_host": "c-ileasingmysqlserver.mysql.database.azure.com",
+    // "local_db_username": "ServerAdmin@c-ileasingmysqlserver",
+    // "local_db_password": "@!234getaXlease",
+    // "local_database": "getajobng",
+
+
     "sql_server_host": "sa",
     "sql_server_username": "sa",
     "sql_server_password": "Password@2019",

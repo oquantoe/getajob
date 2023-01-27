@@ -12,11 +12,13 @@ var helpers = require('../config/helpers');
 var mailer = require('../config/mail/mailer');
 var logger = require('./../config/log4js');
 var formidable = require('formidable');
+var flash = require('connect-flash');
 
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var bcrypt = require('bcryptjs');
+var passport = require('passport');
 
 var AzureHelper = require('../config/azure_helpers');
 const Admin = require('../models/admin');
@@ -27,13 +29,21 @@ router.use(cookieParser());
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
-// router.use(session({
-//     secret: config.session_secret,
-//     resave: config.session_resave,
-//     key: config.session_key,
-//     saveUninitialized: config.session_save_uninitialized,
-//     cookie: { maxAge: config.session_cookie_max_age }
-// }));
+const app = express();
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+
+
+router.use(session({
+    secret: config.session_secret,
+    resave: config.session_resave,
+    key: config.session_key,
+    saveUninitialized: config.session_save_uninitialized,
+    cookie: { maxAge: config.session_cookie_max_age }
+}));
 
 router.get("/", (req, res, next) => {
     helpers.checkifAuthenticated(req, res);

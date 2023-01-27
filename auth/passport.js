@@ -503,7 +503,7 @@ const ensureAuthenticated = (req, res, next) => {
             return next();
         }
 
-        logger.log("user is not authenticated..back to login");
+        logger.log("Am here user is not authenticated..back to login");
         res.redirect('/login');
     } catch (error) {
         logger.log(error);

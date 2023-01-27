@@ -687,7 +687,7 @@ var helpers = {
     checkifAuthenticated: async (req, res) => {
         try {
             const session = await req.session;
-            logger.log(req.isAuthenticated());
+            logger.log("is Auth" + req.isAuthenticated());
             if (req.isAuthenticated()) {
                 logger.log("AM here user is already authenticated..proceed");
 

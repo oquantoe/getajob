@@ -687,19 +687,26 @@ var helpers = {
     checkifAuthenticated: async (req, res) => {
         try {
             const session = req.session.passport;
+            const user_id = req.cookies.user_id;
             logger.log("User_id" + " " + req.cookies.user_id);
             if (session) {
                 logger.log("AM here user is already authenticated..proceed");
 
                 return true;
             } else {
-                logger.log("Main here - user is not authenticated..back to login");
+                if (user_id) {
+                    // res.redirect("/dashboard");
+                    logger.log("AM here user is already authenticated..proceed");
+                    return true;
+                } else {
+                    logger.log("Main here - user is not authenticated..back to login");
 
-                var go_to_login_file = `${appRoot}/views/go_to_login.html`;
+                    var go_to_login_file = `${appRoot}/views/go_to_login.html`;
 
-                res.sendFile(go_to_login_file);
+                    res.sendFile(go_to_login_file);
 
-                return false;
+                    return false;
+                }
             }
         } catch (error) {
             logger.log(error);

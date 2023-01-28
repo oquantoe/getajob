@@ -62,7 +62,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
     try {
-        logger.log("Deserialize" + user);
+        logger.log("Deserialize" + JSON.stringify(user));
         if (user) {
             done(null, user);
         } else {

@@ -688,14 +688,23 @@ var helpers = {
         try {
             const session = req.session.passport;
             const user_id = req.cookies.user_id;
-            logger.log("User_id" + " " + req.cookies.user_id);
+            logger.log("User_id" + " " + req.cookies.logged_user_id);
             if (session) {
                 logger.log("AM here user is already authenticated..proceed");
 
                 return true;
             } else {
-                if (user_id) {
+                if (logged_user_id) {
                     // res.redirect("/dashboard");
+                    db.query(User.getUserByIdQuery(logged_user_id), (err, data) => {
+                        if (err) { logger.log(err) } else {
+                            var userInfo = data[0];
+                            req.session.passport = userInfo;
+                            req.session.save();
+                            logger.log("user"+ " " + userInfo)
+                            logger.log("AM here user is already authenticated..proceed");
+                        }});
+
                     logger.log("AM here user is already authenticated..proceed");
                     return true;
                 } else {

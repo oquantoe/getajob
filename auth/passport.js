@@ -49,7 +49,7 @@ auth.use(flash());
 passport.serializeUser((user, done) => {
     try {
         logger.log("This is user id serializwd -----" + user.user_id);
-
+        logger.log(JSON.stringify(user))
         if (user) {
             done(null, user);
         } else {
@@ -63,6 +63,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
     try {
         if (user) {
+            logger.log()
             done(null, user);
         } else {
             done(new Error("THAT_USER_DOESNT_EXIST"));
@@ -151,7 +152,7 @@ auth.post('/login', passport.authenticate('local', {
         //logger.log(req.user);
         var userData = req.user;
 
-       
+        res.cookie('logged_user_id', userData.user_id, {maxAge: config.session_cookie_max_age});
 
         db.query(User.getUserRoleByUserId(userData.user_id), (err, data) => {
             if (!err) {

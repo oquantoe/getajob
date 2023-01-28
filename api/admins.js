@@ -35,7 +35,11 @@ router.use(session({
     resave: config.session_resave,
     key: config.session_key,
     saveUninitialized: config.session_save_uninitialized,
-    cookie: { maxAge: config.session_cookie_max_age }
+    cookie: {
+        maxAge: config.session_cookie_max_age,
+        secure: false,
+        httpOnly: false, 
+     }
 }));
 
 router.use(passport.initialize());

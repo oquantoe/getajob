@@ -694,28 +694,13 @@ var helpers = {
 
                 return true;
             } else {
-                if (logged_user_id) {
-                    // res.redirect("/dashboard");
-                    db.query(User.getUserByIdQuery(logged_user_id), (err, data) => {
-                        if (err) { logger.log(err) } else {
-                            var userInfo = data[0];
-                            req.session.passport = userInfo;
-                            req.session.save();
-                            logger.log("user"+ " " + userInfo)
-                            logger.log("AM here user is already authenticated..proceed");
-                        }});
+                logger.log("Main here - user is not authenticated..back to login");
 
-                    logger.log("AM here user is already authenticated..proceed");
-                    return true;
-                } else {
-                    logger.log("Main here - user is not authenticated..back to login");
+                var go_to_login_file = `${appRoot}/views/go_to_login.html`;
 
-                    var go_to_login_file = `${appRoot}/views/go_to_login.html`;
+                res.sendFile(go_to_login_file);
 
-                    res.sendFile(go_to_login_file);
-
-                    return false;
-                }
+                return false;
             }
         } catch (error) {
             logger.log(error);

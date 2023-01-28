@@ -33,8 +33,6 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
 
 app.use(session({
@@ -44,6 +42,9 @@ app.use(session({
     saveUninitialized: config.session_save_uninitialized,
     cookie: { maxAge: config.session_cookie_max_age }
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -62,7 +63,7 @@ app.use("/invites", invites);
 app.use("/assessments", assessments);
 app.use("/admin", admins);
 
-app.get('/faq', function(req, res) {
+app.get('/faq', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -80,7 +81,7 @@ app.get('/faq', function(req, res) {
     }
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     try {
         var job = new Job();
         db.query(job.get10LatestJobs(), (err, data) => {
@@ -124,7 +125,7 @@ app.get('/', function(req, res) {
 
 });
 
-app.get('/company-info', function(req, res) {
+app.get('/company-info', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -142,7 +143,7 @@ app.get('/company-info', function(req, res) {
     }
 });
 
-app.get('/find-a-job', function(req, res) {
+app.get('/find-a-job', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -160,7 +161,7 @@ app.get('/find-a-job', function(req, res) {
     }
 });
 
-app.get('/sterling-oil-jobs', function(req, res) {
+app.get('/sterling-oil-jobs', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -178,7 +179,7 @@ app.get('/sterling-oil-jobs', function(req, res) {
     }
 });
 
-app.get('/skilled-jobs', function(req, res) {
+app.get('/skilled-jobs', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -196,7 +197,7 @@ app.get('/skilled-jobs', function(req, res) {
     }
 });
 
-app.get('/job-detail/:jobId', function(req, res) {
+app.get('/job-detail/:jobId', function (req, res) {
     try {
         var jobId = req.params.jobId;
 
@@ -269,7 +270,7 @@ app.get('/job-detail/:jobId', function(req, res) {
 
 });
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
     try {
         var redirectFrom = req.query.f;
         var response = req.query.r;
@@ -319,7 +320,7 @@ app.get('/login', function(req, res) {
 
 });
 
-app.get('/candidate-info', function(req, res) {
+app.get('/candidate-info', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -337,7 +338,7 @@ app.get('/candidate-info', function(req, res) {
     }
 });
 
-app.get('/recruiter-info', function(req, res) {
+app.get('/recruiter-info', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -356,7 +357,7 @@ app.get('/recruiter-info', function(req, res) {
 
 });
 
-app.get('/assessment', function(req, res) {
+app.get('/assessment', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -374,7 +375,7 @@ app.get('/assessment', function(req, res) {
     }
 });
 
-app.get('/career-advice', function(req, res) {
+app.get('/career-advice', function (req, res) {
     try {
         res.redirect('http://blog.getajobng.com');
     } catch (error) {
@@ -382,7 +383,7 @@ app.get('/career-advice', function(req, res) {
     }
 });
 
-app.get('/cv-fix', function(req, res) {
+app.get('/cv-fix', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -400,7 +401,7 @@ app.get('/cv-fix', function(req, res) {
     }
 });
 
-app.get('/process-cv-fix', function(req, res) {
+app.get('/process-cv-fix', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             res.redirect('/candidates/cv-fix');
@@ -412,7 +413,7 @@ app.get('/process-cv-fix', function(req, res) {
     }
 });
 
-app.get('/post-a-job', function(req, res) {
+app.get('/post-a-job', function (req, res) {
     try {
         res.render('login');
     } catch (error) {
@@ -420,7 +421,7 @@ app.get('/post-a-job', function(req, res) {
     }
 });
 
-app.get('/register', function(req, res) {
+app.get('/register', function (req, res) {
     try {
         var response = req.query.v;
 
@@ -447,7 +448,7 @@ app.get('/register', function(req, res) {
     }
 });
 
-app.get('/forgot-password', function(req, res) {
+app.get('/forgot-password', function (req, res) {
     try {
         var response = req.query.v;
 
@@ -506,7 +507,7 @@ app.post("/create-password-for-user", (req, res, next) => {
     }
 });
 
-app.get('/privacy-policy', function(req, res) {
+app.get('/privacy-policy', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -524,7 +525,7 @@ app.get('/privacy-policy', function(req, res) {
     }
 });
 
-app.get('/cookie-policy', function(req, res) {
+app.get('/cookie-policy', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -542,7 +543,7 @@ app.get('/cookie-policy', function(req, res) {
     }
 });
 
-app.get('/about-us', function(req, res) {
+app.get('/about-us', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -560,7 +561,7 @@ app.get('/about-us', function(req, res) {
     }
 });
 
-app.get('/contact-us', function(req, res) {
+app.get('/contact-us', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -578,7 +579,7 @@ app.get('/contact-us', function(req, res) {
     }
 });
 
-app.get('/disclaimer', function(req, res) {
+app.get('/disclaimer', function (req, res) {
     try {
         if (typeof req.session.passport != 'undefined' || req.session.passport || req.session.passport != null) {
             var userData = req.session.passport.user;
@@ -596,7 +597,7 @@ app.get('/disclaimer', function(req, res) {
     }
 });
 
-app.get('/h1dd3n_s1t3map', function(req, res) {
+app.get('/h1dd3n_s1t3map', function (req, res) {
     try {
         var sitemap_file = `${appRoot}/views/includes/sitemap/sitemap.xml`;
 

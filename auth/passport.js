@@ -1,3 +1,5 @@
+/* global localStorage, */
+
 var db = require('../db/database');
 var User = require('../models/user');
 var Company = require('../models/company');
@@ -32,9 +34,9 @@ auth.use(session({
     saveUninitialized: config.session_save_uninitialized,
     // cookie: { maxAge: config.session_cookie_max_age }
     cookie: {
-        sameSite: "none", 
-        secure: "true",
-        maxAge: config.session_cookie_max_age,
+        secure: false,  // if true only transmit cookie over https
+        httpOnly: false, // if true prevent client side JS from reading the cookie
+        maxAge: 1000 * 60 * 10,
     },
 }));
 
@@ -47,7 +49,7 @@ auth.use(flash());
 passport.serializeUser((user, done) => {
     try {
         logger.log("This is user id serializwd -----" + user.user_id);
-        logger.log(user);
+
         if (user) {
             done(null, user);
         } else {
@@ -60,7 +62,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
     try {
-        logger.log(user);
+        logger.log("Deserialize" + user);
         if (user) {
             done(null, user);
         } else {
@@ -149,6 +151,8 @@ auth.post('/login', passport.authenticate('local', {
 
         //logger.log(req.user);
         var userData = req.user;
+
+       
 
         db.query(User.getUserRoleByUserId(userData.user_id), (err, data) => {
             if (!err) {

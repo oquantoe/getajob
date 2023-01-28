@@ -14,8 +14,10 @@ var logger = require('./../config/log4js');
 var formidable = require('formidable');
 
 var session = require('express-session');
+var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var passport = require('passport');
 var bcrypt = require('bcryptjs');
 
 var AzureHelper = require('../config/azure_helpers');
@@ -26,6 +28,7 @@ const router = express.Router();
 router.use(cookieParser());
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
+router.use(flash());
 
 router.use(session({
     secret: config.session_secret,
@@ -35,15 +38,19 @@ router.use(session({
     cookie: { maxAge: config.session_cookie_max_age }
 }));
 
+router.use(passport.initialize());
+router.use(passport.session());
+router.use(flash());
+
 router.get("/", (req, res, next) => {
     helpers.checkifAuthenticated(req, res);
 });
 
 router.get('/dashboard', async (req, res) => {
     try {
-        await helpers.checkifAuthenticated(req, res);
+        helpers.checkifAuthenticated(req, res);
 
-        var userData = await req.session.passport.user;
+        var userData = req.session.passport.user;
 
         res.render('admin_dashboard', {
             view: 'dashboard',

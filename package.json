@@ -7,7 +7,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js"
+        "start": "nodemon server.js"
     },
     "dependencies": {
         "@azure/abort-controller": "^1.0.0",
